@@ -2012,8 +2012,6 @@ async def _Toggle(ctx):
 
 @Client_Bot.command(aliases = ['Post', 'Advertise'])
 async def _Post(ctx):
-    global BigSize
-    BigSize = False
     Today = date.today()
     Now = datetime.now()
     current_time = Now.strftime("%H:%M:%S")
@@ -2029,7 +2027,9 @@ async def _Post(ctx):
     class Button(discord.ui.View):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.green)
         async def Claim_Button(self, Claimed: discord.ui.Button, interaction: discord.Interaction):
+            
             if Claimed.label == 'Claim':
+                BigSize = False
                 Claimed.label = 'Unclaim'
                 Claimed.style = discord.ButtonStyle.red
                 PostClaimed = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
@@ -2064,6 +2064,7 @@ async def _Post(ctx):
                 PostClaimed.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostClaimed,view=self)
             elif Claimed.label == "Unclaim":
+                BigSize = False
                 Claimed.label = 'Claim'
                 Claimed.style = discord.ButtonStyle.green
                 PostUnClaimed = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
@@ -2099,6 +2100,7 @@ async def _Post(ctx):
                 await interaction.response.edit_message(embed=PostUnClaimed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, Edit: discord.ui.Button, interaction: discord.Interaction):   
+            
             await interaction.user.send("Please reply to this text with your note!")
             await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
@@ -2110,6 +2112,7 @@ async def _Post(ctx):
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
             elif isinstance(Note.channel, discord.channel.DMChannel):
+                BigSize = False
                 PostEdit = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
                 PostEdit.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
                 PostEdit.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
@@ -2151,6 +2154,7 @@ async def _Post(ctx):
     class Button(discord.ui.View):
         @discord.ui.button(label='Hiring', style=discord.ButtonStyle.green)
         async def Hiring(self, Hiring: discord.ui.Button, interaction: discord.Interaction):
+            BigSize = False
             Post = discord.Embed(title="**Post System**", description=f"{Report.content}")
             Post.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
             List = []
