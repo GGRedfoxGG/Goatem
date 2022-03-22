@@ -2036,7 +2036,7 @@ async def _Post(ctx):
                 PostClaimed.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
                 PostClaimed.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
                 PostClaimed.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                PostClaimed.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+                PostClaimed.set_author(name=f'{TicketType} Post', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostClaimed,view=self)
             elif Claimed.label == "Unclaim":
                 BigSize = False
@@ -2070,7 +2070,7 @@ async def _Post(ctx):
                 PostUnClaimed.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
                 PostUnClaimed.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
                 PostUnClaimed.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                PostUnClaimed.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+                PostUnClaimed.set_author(name=f'{TicketType} Post', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostUnClaimed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, Edit: discord.ui.Button, interaction: discord.Interaction):   
@@ -2119,7 +2119,7 @@ async def _Post(ctx):
                 PostEdit.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
                 PostEdit.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
                 PostEdit.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                PostEdit.set_author(name=f'{TicketType}', icon_url=ctx.author.avatar.url)
+                PostEdit.set_author(name=f'{TicketType} Post', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostEdit, view=self)
 
         @discord.ui.button(label='Deny', style=discord.ButtonStyle.red)
@@ -2156,7 +2156,7 @@ async def _Post(ctx):
             DeniedPost.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             DeniedPost.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
             DeniedPost.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            DeniedPost.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            DeniedPost.set_author(name=f'{TicketType} Post', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view2.children:
                     child.disabled = True
@@ -2197,7 +2197,7 @@ async def _Post(ctx):
             Final.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Final.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
             Final.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Final.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            Final.set_author(name=f'{TicketType} Post', icon_url=ctx.author.avatar.url)
 
 #
             Final2 = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
@@ -2229,7 +2229,7 @@ async def _Post(ctx):
             Final2.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             Final2.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Final2.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Final2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            Final2.set_author(name=f'{TicketType} Post', icon_url=ctx.author.avatar.url)
 
             if BigSize == False:
                 for child in view2.children:
@@ -2281,7 +2281,7 @@ async def _Post(ctx):
             Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Post.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            Post.set_author(name=f'Hiring Post', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
@@ -2320,7 +2320,7 @@ async def _Post(ctx):
             Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Post.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            Post.set_author(name=f'Hireable Post', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
@@ -2359,7 +2359,7 @@ async def _Post(ctx):
             Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Post.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            Post.set_author(name=f'Advertisement', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
@@ -2398,7 +2398,7 @@ async def _Post(ctx):
             Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Post.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            Post.set_author(name=f'Selling Post', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
