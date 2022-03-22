@@ -2036,6 +2036,7 @@ async def _Post(ctx):
                 PostClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
                 PostClaimed.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
                 List = []
+                NumberNew = 0
                 for Attackment in Report2.attachments:
                     if Report.attachments:
                         NumberNew = NumberNew + 1
@@ -2069,6 +2070,7 @@ async def _Post(ctx):
                 PostUnClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
                 PostUnClaimed.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
                 List = []
+                NumberNew = 0
                 for Attackment in Report2.attachments:
                     if Report.attachments:
                         NumberNew = NumberNew + 1
@@ -2112,6 +2114,7 @@ async def _Post(ctx):
                 PostEdit.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
                 PostEdit.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
                 List = []
+                NumberNew = 0
                 for Attackment in Report2.attachments:
                     if Report.attachments:
                         NumberNew = NumberNew + 1
@@ -2151,6 +2154,7 @@ async def _Post(ctx):
             Post = discord.Embed(title="**Post System**", description=f"{Report.content}")
             Post.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
             List = []
+            NumberNew = 0 
             for Attackment in Report2.attachments:
                 if Report.attachments:
                     NumberNew = NumberNew + 1
