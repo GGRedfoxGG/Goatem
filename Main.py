@@ -2032,9 +2032,9 @@ async def _Post(ctx):
                 Claimed.style = discord.ButtonStyle.red
                 PostClaimed = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
                 PostClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
-                PostClaimed.add_field(name='__**Post**__: ', value=f'{Container}', inline=False)
+                PostClaimed.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
                 List = []
-                for Attackment in Report.attachments:
+                for Attackment in Report2.attachments:
                     if Report.attachments:
                         NumberNew = NumberNew + 1
                         List.append(Attackment.url)
@@ -2054,7 +2054,7 @@ async def _Post(ctx):
                 else:
                     await interaction.response.send_message('Too many Files')
                     BigSize = True
-                PostClaimed.add_field(name='__**Payment**__: ', value=f'{Payment}', inline=False)
+                PostClaimed.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
                 PostClaimed.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
                 PostClaimed.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
                 PostClaimed.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -2065,9 +2065,9 @@ async def _Post(ctx):
                 Claimed.style = discord.ButtonStyle.green
                 PostUnClaimed = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
                 PostUnClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
-                PostUnClaimed.add_field(name='__**Post**__: ', value=f'{Container}', inline=False)
+                PostUnClaimed.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
                 List = []
-                for Attackment in Report.attachments:
+                for Attackment in Report2.attachments:
                     if Report.attachments:
                         NumberNew = NumberNew + 1
                         List.append(Attackment.url)
@@ -2087,7 +2087,7 @@ async def _Post(ctx):
                 else:
                     await interaction.response.send_message('Too many Files')
                     BigSize = True
-                PostUnClaimed.add_field(name='__**Payment**__: ', value=f'{Payment}', inline=False)
+                PostUnClaimed.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
                 PostUnClaimed.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
                 PostUnClaimed.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
                 PostUnClaimed.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -2108,9 +2108,9 @@ async def _Post(ctx):
             elif isinstance(Note.channel, discord.channel.DMChannel):
                 PostEdit = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
                 PostEdit.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
-                PostEdit.add_field(name='__**Post**__: ', value=f'{Container}', inline=False)
+                PostEdit.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
                 List = []
-                for Attackment in Report.attachments:
+                for Attackment in Report2.attachments:
                     if Report.attachments:
                         NumberNew = NumberNew + 1
                         List.append(Attackment.url)
@@ -2130,7 +2130,7 @@ async def _Post(ctx):
                 else:
                     await interaction.response.send_message('Too many Files')
                     BigSize = True
-                PostEdit.add_field(name='__**Payment**__: ', value=f'{Payment}', inline=False)
+                PostEdit.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
                 PostEdit.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
                 PostEdit.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
                 PostEdit.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
@@ -2147,9 +2147,9 @@ async def _Post(ctx):
         @discord.ui.button(label='Hiring', style=discord.ButtonStyle.green)
         async def Hiring(self, Hiring: discord.ui.Button, interaction: discord.Interaction):
             Post = discord.Embed(title="**Post System**", description=f"{Report.content}")
-            Post.add_field(name='__**Post**__: ', value=f'{Container}', inline=False)
+            Post.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
             List = []
-            for Attackment in Report.attachments:
+            for Attackment in Report2.attachments:
                 if Report.attachments:
                     NumberNew = NumberNew + 1
                     List.append(Attackment.url)
@@ -2169,7 +2169,7 @@ async def _Post(ctx):
             else:
                 await interaction.response.send_message('Too many Files')
                 BigSize = True
-            Post.add_field(name='__**Payment**__: ', value=f'{Payment}', inline=False)
+            Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
             Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
