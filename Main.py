@@ -2024,7 +2024,15 @@ async def _Post(ctx):
     global Text
     Text = 'None'
 
-    class Button(discord.ui.View):
+    class YesNo(discord.ui.View):
+        @discord.ui.button(label='Yes', style=discord.ButtonStyle.green)
+        async def YesButton(self, Yes: discord.ui.Button, interaction: discord.Interaction):
+            print('Hey')
+        @discord.ui.button(label='No', style=discord.ButtonStyle.red)
+        async def NoButton(self, No: discord.ui.Button, interaction: discord.Interaction):
+            print('Hey')
+
+    class EditButtons(discord.ui.View):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.green)
         async def Claim_Button(self, Claimed: discord.ui.Button, interaction: discord.Interaction):
             
@@ -2032,9 +2040,7 @@ async def _Post(ctx):
                 BigSize = False
                 Claimed.label = 'Unclaim'
                 Claimed.style = discord.ButtonStyle.red
-                PostClaimed = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
-                PostClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
-                PostClaimed.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
+                PostClaimed = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}",color=0xe67e22)
                 List = []
                 NumberNew = 0
                 for Attackment in Report2.attachments:
@@ -2067,9 +2073,8 @@ async def _Post(ctx):
                 BigSize = False
                 Claimed.label = 'Claim'
                 Claimed.style = discord.ButtonStyle.green
-                PostUnClaimed = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
+                PostUnClaimed = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
                 PostUnClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
-                PostUnClaimed.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
                 List = []
                 NumberNew = 0
                 for Attackment in Report2.attachments:
@@ -2113,9 +2118,8 @@ async def _Post(ctx):
                 await interaction.response.edit_message(view=self)
             elif isinstance(Note.channel, discord.channel.DMChannel):
                 BigSize = False
-                PostEdit = discord.Embed(title="**Post System**", description=f"{Report.content}", color=0xe67e22)
+                PostEdit = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}", color=0xe67e22)
                 PostEdit.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
-                PostEdit.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
                 List = []
                 NumberNew = 0
                 for Attackment in Report2.attachments:
@@ -2155,8 +2159,7 @@ async def _Post(ctx):
         @discord.ui.button(label='Hiring', style=discord.ButtonStyle.green)
         async def Hiring(self, Hiring: discord.ui.Button, interaction: discord.Interaction):
             BigSize = False
-            Post = discord.Embed(title="**Post System**", description=f"{Report.content}")
-            Post.add_field(name='__**Post**__: ', value=f'{Report2.content}', inline=False)
+            Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
             List = []
             NumberNew = 0 
             for Attackment in Report2.attachments:
@@ -2250,7 +2253,7 @@ async def _Post(ctx):
                 Type.set_thumbnail(url=ctx.author.avatar.url)
                 Type.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
                 view = Button(timeout=120)
-                view2 = Button(timeout=15780000)
+                view2 = EditButtons(timeout=15780000)
                 Msg = view.message = await ctx.author.send(embed=Type, view=view)
 
 Client_Bot.run('OTU1NTY1MjU3MDY0MDYyOTg4.Yjjhfg.qixG0oriBPAHK-V-Jj7InJWIbM4') 
