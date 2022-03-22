@@ -2028,13 +2028,12 @@ async def _Post(ctx):
     class EditButtons(discord.ui.View):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.blurple)
         async def Claim_Button(self, Claimed: discord.ui.Button, interaction: discord.Interaction):
-            
             if Claimed.label == 'Claim':
                 BigSize = False
                 Claimed.label = 'Unclaim'
                 Claimed.style = discord.ButtonStyle.red
                 PostClaimed = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}",color=0xe67e22)
-                PostUnClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
+                PostClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
                 List = []
                 NumberNew = 0
                 for Attackment in Report2.attachments:
@@ -2143,6 +2142,7 @@ async def _Post(ctx):
                 PostEdit.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
                 PostEdit.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
                 PostEdit.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+                Text = Note.content
                 await interaction.user.send('Everything was saved successfully!')
 
         @discord.ui.button(label='Deny', style=discord.ButtonStyle.red)
@@ -2181,7 +2181,7 @@ async def _Post(ctx):
             DeniedPost.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
             DeniedPost.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             if BigSize == False:
-                for child in view.children:
+                for child in view2.children:
                     child.disabled = True
                 await ctx.author.send(embed=DeniedPost)
                 await interaction.response.edit_message(view=self, embed=DeniedPost)
@@ -2257,7 +2257,7 @@ async def _Post(ctx):
             Final2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
 
             if BigSize == False:
-                for child in view.children:
+                for child in view2.children:
                     child.disabled = True
 
                 if TicketType == 'Hiring':
