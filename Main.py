@@ -2099,7 +2099,8 @@ async def _Post(ctx):
                 await interaction.response.edit_message(embed=PostUnClaimed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, Edit: discord.ui.Button, interaction: discord.Interaction):   
-            
+            global Text
+            Text = Note.content
             await interaction.user.send("Please reply to this text with your note!")
             await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
@@ -2142,7 +2143,6 @@ async def _Post(ctx):
                 PostEdit.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
                 PostEdit.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
                 PostEdit.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-                Text = Note.content
                 await interaction.user.send('Everything was saved successfully!')
 
         @discord.ui.button(label='Deny', style=discord.ButtonStyle.red)
