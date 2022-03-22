@@ -2088,6 +2088,7 @@ async def _Post(ctx):
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
             elif isinstance(Note.channel, discord.channel.DMChannel):
+                await interaction.user.send('Everything was saved successfully!')
                 BigSize = False
                 PostEdit = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}", color=0xe67e22)
                 PostEdit.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
@@ -2118,8 +2119,7 @@ async def _Post(ctx):
                 PostEdit.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
                 PostEdit.add_field(name='__**Note**__: ', value=f'{Text}', inline=False)
                 PostEdit.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                PostEdit.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-                await interaction.user.send('Everything was saved successfully!')
+                PostEdit.set_author(name=f'{TicketType}', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostEdit, view=self)
 
         @discord.ui.button(label='Deny', style=discord.ButtonStyle.red)
@@ -2239,7 +2239,7 @@ async def _Post(ctx):
                     await hire.send(embed=Final2)
                 elif TicketType == 'Hireable':
                     await hiringable.send(embed=Final2)
-                elif TicketType == 'AD':
+                elif TicketType == 'Advertisement':
                     await Ad.send(embed=Final2)
                 elif TicketType == 'Selling':
                     await Sell.send(embed=Final2)
@@ -2329,7 +2329,7 @@ async def _Post(ctx):
         @discord.ui.button(label='Advertise', style=discord.ButtonStyle.green)
         async def Advertise(self, Advertise: discord.ui.Button, interaction: discord.Interaction):
             global TicketType
-            TicketType = 'AD'
+            TicketType = 'Advertisement'
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
             List = []
