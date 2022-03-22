@@ -1908,10 +1908,9 @@ async def _Verify(ctx):
 
 @Client_Bot.event
 async def on_message(message):
-    Channel = Client_Bot.get_channel(952975874460876842)
-    Channel2 = Client_Bot.get_channel(952975764633047110)
+    Channel = Client_Bot.get_channel(955895594705096705)
     
-    if message.content.startswith('```') and message.channel.id == 952975874460876842:
+    if message.content.startswith('```') and message.channel.id == 955895594705096705:
         class Button(discord.ui.View):
             @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
             async def Approve_Button(self, Approve: discord.ui.Button, interaction: discord.Interaction):
@@ -1936,31 +1935,7 @@ async def on_message(message):
         view = Button(timeout=15780000)
         Msg = view.message = await Channel.send(f'**__Inactivity Notice:__** {message.content}', view=view)
         await message.delete()
-    if message.content.startswith('```') and message.channel.id == 952975764633047110:
-        class Button(discord.ui.View):
-            @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
-            async def Approve_Button(self, Approve: discord.ui.Button, interaction: discord.Interaction):
-                Approve.label = f'Approved by {interaction.user}'
-                Approve.disabled = True
-                Approve.style = discord.ButtonStyle.gray
-                await interaction.response.edit_message(view=self)
 
-
-            @discord.ui.button(label=f'Report from {message.author}', style=discord.ButtonStyle.gray, disabled=True)
-            async def Author(self, Author: discord.ui.Button, interaction: discord.Interaction):
-                Author.disabled = True
-
-            def __init__(self, timeout):
-                super().__init__(timeout=timeout)
-                self.response = None 
-
-            async def on_timeout(self):
-                for child in self.children: 
-                    child.disabled = True
-                await self.message.edit(view=self)
-        view = Button(timeout=15780000)
-        Msg = view.message = await Channel2.send(f'**__Report:__** {message.content}', view=view)
-        await message.delete()
     await Client_Bot.process_commands(message)
         
 
@@ -1969,7 +1944,7 @@ async def _Toggle(ctx):
     class List(discord.ui.Select):
         def __init__(self):
             Options = [
-                discord.SelectOption(label='Inactivity Period', description='Toggle The Inactivity Period role'),
+                discord.SelectOption(label='Secret Easter egg', description='Toggle The Inactivity Period role'),
             ]
 
             super().__init__(placeholder='Toggle a role...', min_values=1, max_values=1, options=Options)
@@ -2099,12 +2074,13 @@ async def _Post(ctx):
                 await interaction.response.edit_message(embed=PostUnClaimed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, Edit: discord.ui.Button, interaction: discord.Interaction):   
-            global Text
-            Text = Note.content
             await interaction.user.send("Please reply to this text with your note!")
             await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
+            global Text
+            Text = Note.content
             if isinstance(Note.channel, discord.channel.TextChannel):
+                
                 Cancelled = discord.Embed(title="**Ticket System**", description=f"Note cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
                 Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
                 Cancelled.set_author(name=f'{interaction.user} ({interaction.user.id})', icon_url=interaction.user.avatar.url)
