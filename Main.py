@@ -2170,7 +2170,7 @@ async def _Post(ctx):
                 await interaction.response.send_message('Too many Files')
                 BigSize = True
             Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
-            Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
+            Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}>', inline=False)
             Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
             Post.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
