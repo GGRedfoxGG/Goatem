@@ -1,4 +1,5 @@
 from cProfile import label
+from code import interact
 from dis import dis
 from logging import fatal
 from pickle import TRUE
@@ -119,7 +120,7 @@ async def on_command_error(ctx, error):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         current_Date = today.strftime("%B %d, %Y")
-        Channel = Client.get_channel(955594490645717082)
+        Channel = Client_Bot.get_channel(955594490645717082)
         Embed = discord.Embed(title="Error Was Found", description='If you think this is a mistake please contact the system developer.', color=0xe67e22)
         Embed.set_author(name='Error Logs', icon_url=ctx.author.avatar.url)
         Embed.add_field(name="Error Message:", value=f'__**{error}**__', inline=False)
@@ -1957,10 +1958,22 @@ async def on_message(message):
         class Button(discord.ui.View):
             @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
             async def Approve_Button(self, Approve: discord.ui.Button, interaction: discord.Interaction):
-                Approve.label = f'Approved by {interaction.user}'
-                Approve.disabled = True
-                Approve.style = discord.ButtonStyle.gray
-                await interaction.response.edit_message(view=self)
+                IsSenior = False
+                role1 = [
+                    discord.utils.get(message.guild.roles, id=956257698733781003), 
+                ]
+                for Main in role1:
+                    for roles in interaction.user.roles:
+                        if roles==Main:
+                            IsSenior = True
+                
+                if IsSenior == True:
+                    Approve.label = f'Approved by {interaction.user}'
+                    Approve.disabled = True
+                    Approve.style = discord.ButtonStyle.gray
+                    await interaction.response.edit_message(view=self)
+                else:
+                    await interaction.response.send_message("You're not allowed to use this! If you think this is a mistake please contact the system developer!", ephemeral=True)
 
 
             @discord.ui.button(label=f'Notice from {message.author}', style=discord.ButtonStyle.gray, disabled=True)
