@@ -124,7 +124,6 @@ async def on_command_error(ctx, error):
         Embed = discord.Embed(title="Error Was Found", description='If you think this is a mistake please contact the system developer.', color=0xe67e22)
         Embed.set_author(name='Error Logs', icon_url=ctx.author.avatar.url)
         Embed.add_field(name="Error Message:", value=f'__**{error}**__', inline=False)
-        Embed.add_field(name="Command aliases:", value=f'__**{ctx.command.aliases}**__', inline=False)
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
         await ctx.channel.send(embed=Embed)
@@ -147,10 +146,9 @@ async def on_member_join(Member):
     Join = discord.Embed(title='New Member Joined')
     Join.add_field(name="Account information: ", value=
 f'''
-Account ID: `{Member.id}`
-Account Age: {Member.created_at.month}(s), {Member.created_at.year} 
-Account Name: {Member}
-Discriminator: #{Member.Discriminator}
+__Account ID__: `{Member.id}`
+__Account Age__: {Member.created_at.month}(s), {Member.created_at.year} 
+__Account Name__: {Member}
 ''',
     inline=False)
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
@@ -170,10 +168,9 @@ async def _JoinTest(ctx, Member: Union[discord.Member,discord.Object]):
     Join = discord.Embed(title='New Member Joined')
     Join.add_field(name="Account information: ", value=
 f'''
-Account ID: `{Member.id}`
-Account Age: {Member.created_at.month}(s), {Member.created_at.year} 
-Account Name: {Member}
-Discriminator: #{Member.Discriminator}
+__Account ID__: `{Member.id}`
+__Account Age__: {Member.created_at.month}(s), {Member.created_at.year} 
+__Account Name__: {Member}
 ''',   
     inline=False)
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
@@ -1588,6 +1585,8 @@ async def _Help(ctx):
 `,Random`
 
 `,Toggle`
+
+`,Post`
             
             ''', inline=False)
                 Misc.set_footer(text=f' Page 5/5', icon_url=ctx.author.avatar.url)
@@ -1768,6 +1767,8 @@ async def _Help(ctx):
 `,Stats`
 
 `,Toggle`
+
+`,Post`
             
             ''', inline=False)
                 Misc.set_footer(text=f' Page 5/5', icon_url=ctx.author.avatar.url)
