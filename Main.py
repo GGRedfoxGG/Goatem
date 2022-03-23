@@ -336,7 +336,7 @@ async def _SoftBan(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
             Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
             Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
             Cursor.execute(Q, Par)
-            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({Member.id}, {Code1})")
+            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
             Database.commit()
             await ctx.guild.ban(User,reason=Reason, delete_message_days=7)
             await ctx.guild.unban(User)
@@ -402,7 +402,7 @@ async def _Deafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason):
         Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
         Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
         Cursor.execute(Q, Par)
-        Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({Member.id}, {Code1})")
+        Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
         Database.commit()
         await ctx.send(embed=Embed)
         await Member.edit(deafen = True)
@@ -787,7 +787,7 @@ async def _Ban(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
             Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
             Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
             Cursor.execute(Q, Par)
-            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({Member.id}, {Code1})")
+            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
             Database.commit()
             await ctx.guild.ban(User, reason=Reason)
             view = Button(timeout=15780000)
@@ -917,7 +917,7 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
             Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
             Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
             Cursor.execute(Q, Par)
-            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({Member.id}, {Code1})")
+            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
             Database.commit()
             await Member.kick(reason=Reason)
             view = Button(timeout=15780000)
@@ -1061,7 +1061,7 @@ async def _Warn(ctx, Member: discord.Member, *, Reason):
         Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
         Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
         Cursor.execute(Q, Par)
-        Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({Member.id}, {Code1})")
+        Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
         Database.commit()
         view = Button(timeout=15780000)
         Msg = view.message = await Channel.send(f"<@{Member.id}>",embed=Infraction, view=view)
