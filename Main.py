@@ -150,7 +150,7 @@ Account ID: `{Member.id}`
 Account Age: {Member.created_at.month}(s), {Member.created_at.year} 
 Account Name: {Member}
 Discriminator: #{Member.Discriminator}
-'''   
+''',
     inline=False)
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
     Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minutes}')
@@ -173,7 +173,7 @@ Account ID: `{Member.id}`
 Account Age: {Member.created_at.month}(s), {Member.created_at.year} 
 Account Name: {Member}
 Discriminator: #{Member.Discriminator}
-'''   
+''',   
     inline=False)
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
     Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minutes}')
