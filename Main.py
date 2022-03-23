@@ -152,6 +152,7 @@ Account ID: `{Member.id}`
 Account Age: {Member.created_at.month}, {Member.created_at.year} 
 Account Name: {Member}
 Account Ping: <@{Member.id}>
+Account Ping: <@{Member.id}>
 
 ''',
     inline=False)
@@ -327,7 +328,7 @@ async def _SoftBan(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
             Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
             Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-            await ctx.channel.send(embed=Embed)
+            await ctx.send(embed=Embed)
             view = Button(timeout=15780000)
             Msg = view.message = await Channel.send(embed=Infraction, view=view)
 
@@ -910,7 +911,7 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
             Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
             Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-            await Channel.send(embed=Infraction)    
+            await ctx.send(embed=Infraction)   
             await Logging(ctx, ctx.message.content,ctx.author, Member, Reason, ctx.channel)
             print(Time)
             Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
