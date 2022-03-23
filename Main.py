@@ -146,35 +146,15 @@ async def on_member_join(Member):
     Join = discord.Embed(title='New Member Joined')
     Join.add_field(name="Account information: ", value=
 f'''
-__Account ID__: `{Member.id}`
-__Account Age__: {Member.created_at.month}(s), {Member.created_at.year} 
-__Account Name__: {Member}
+
+
+Account ID: `{Member.id}`
+Account Age: {Member.created_at.month}, {Member.created_at.year} 
+Account Name: {Member}
 ''',
     inline=False)
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
-    Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minute}')
-
-    await Channel.send(embed=Join)
-
-
-@Client_Bot.command(aliases = ['JoinTest'], pass_context=True)
-async def _JoinTest(ctx, Member: Union[discord.Member,discord.Object]):
-    Channel = Client_Bot.get_channel(956252232226074674)
-    today = date.today()
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    current_Date = today.strftime("%B %d %Y")
-    Time = f'{current_Date} {current_time}'
-    Join = discord.Embed(title='New Member Joined')
-    Join.add_field(name="Account information: ", value=
-f'''
-__Account ID__: `{Member.id}`
-__Account Age__: {Member.created_at.month}(s), {Member.created_at.year} 
-__Account Name__: {Member}
-''',   
-    inline=False)
-    Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
-    Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minute}')
+    Join.set_footer(text=f'Joined at {Time}')
 
     await Channel.send(embed=Join)
 
