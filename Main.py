@@ -101,7 +101,7 @@ class Bot(commands.Bot):
 @Client_Bot.event
 async def on_ready():
     
-    await Client_Bot.change_presence(activity=discord.Activity(type = discord.ActivityType.listening, name = "The Limitless void"))
+    await Client_Bot.change_presence(activity=discord.Activity(type = discord.ActivityType.listening, name = "The Limitless World"))
     guild = Client_Bot.get_guild(791288635470643200)
     for black in Blacklisted:
         User = await Client_Bot.fetch_user(black)
@@ -151,6 +151,8 @@ f'''
 Account ID: `{Member.id}`
 Account Age: {Member.created_at.month}, {Member.created_at.year} 
 Account Name: {Member}
+Account Ping: <@{Member.id}>
+
 ''',
     inline=False)
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
