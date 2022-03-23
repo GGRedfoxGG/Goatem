@@ -109,7 +109,7 @@ async def on_ready():
     print(f'Logged in')
     print('------------------------------')
 
-@Client.event
+@Client_Bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CommandNotFound):
         await ctx.send(f'{ctx.message.content} is an invalid command.')
