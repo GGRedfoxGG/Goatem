@@ -149,9 +149,8 @@ f'''
 
 
 Account ID: `{Member.id}`
-Account Age: {Member.created_at.month}, {Member.created_at.year} 
+Created at: {Member.created_at.month}, {Member.created_at.year} 
 Account Name: {Member}
-Account Ping: <@{Member.id}>
 Account Ping: <@{Member.id}>
 
 ''',
