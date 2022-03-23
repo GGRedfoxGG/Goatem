@@ -1,4 +1,5 @@
 from cProfile import label
+from dis import dis
 from logging import fatal
 from pickle import TRUE
 from platform import python_version
@@ -108,34 +109,76 @@ async def on_ready():
     print(f'Logged in')
     print('------------------------------')
 
-@Client_Bot.event
+@Client.event
 async def on_command_error(ctx, error):
-    today = date.today()
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    current_Date = today.strftime("%B %d, %Y")
-    Channel = Client_Bot.get_channel(955594490645717082) 
-    Embed = discord.Embed(title="Error Was Found", description='If you think this is a mistake please contact the system developer.', color=0xe67e22)
-    Embed.set_author(name='Error Logs', icon_url=ctx.author.avatar.url)
-    Embed.set_thumbnail(url=ctx.author.avatar.url)
-    Embed.add_field(name="Error Message:", value=f'__**{error}**__', inline=False)
-    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-    Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
-    await ctx.channel.send(embed=Embed)
-    await Channel.send(embed=Embed)
-    pass
+    if isinstance(error, commands.errors.CommandNotFound):
+        await ctx.send(f'{ctx.message.content} is an invalid command.')
+        pass
+    else:
+        today = date.today()
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        current_Date = today.strftime("%B %d, %Y")
+        Channel = Client.get_channel(955594490645717082)
+        Embed = discord.Embed(title="Error Was Found", description='If you think this is a mistake please contact the system developer.', color=0xe67e22)
+        Embed.set_author(name='Error Logs', icon_url=ctx.author.avatar.url)
+        Embed.add_field(name="Error Message:", value=f'__**{error}**__', inline=False)
+        Embed.add_field(name="Command aliases:", value=f'__**{ctx.command.aliases}**__', inline=False)
+        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+        Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
+        await ctx.channel.send(embed=Embed)
+        await Channel.send(embed=Embed)
+        pass
+
+
 
 bot = Bot()
 
 
 @Client_Bot.event
 async def on_member_join(Member):
+    Channel = Client_Bot.get_channel(956252232226074674)
     today = date.today()
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_Date = today.strftime("%B %d %Y")
     Time = f'{current_Date} {current_time}'
+    Join = discord.Embed(title='New Member Joined')
+    Join.add_field(name="Account information: ", value=
+f'''
+Account ID: `{Member.id}`
+Account Age: {Member.created_at.month}(s), {Member.created_at.year} 
+Account Name: {Member}
+Discriminator: #{Member.Discriminator}
+'''   
+    inline=False)
+    Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
+    Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minutes}')
 
+    await Channel.send(embed=Join)
+
+
+@Client_Bot.command(aliases = ['JoinTest'], pass_context=True)
+async def _JoinTest(ctx, Member: Union[discord.Member,discord.Object]):
+    Channel = Client_Bot.get_channel(956252232226074674)
+    today = date.today()
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d %Y")
+    Time = f'{current_Date} {current_time}'
+    Join = discord.Embed(title='New Member Joined')
+    Join.add_field(name="Account information: ", value=
+f'''
+Account ID: `{Member.id}`
+Account Age: {Member.created_at.month}(s), {Member.created_at.year} 
+Account Name: {Member}
+Discriminator: #{Member.Discriminator}
+'''   
+    inline=False)
+    Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
+    Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minutes}')
+
+    await Channel.send(embed=Join)
 
 async def RoleChecker(ctx, User):
 
@@ -1292,7 +1335,7 @@ async def _Ticket(ctx):
         async def Scam(self, Scam: discord.ui.Button, interaction: discord.Interaction):      
             Text = None
             global TypeTicket
-            TypeTicket = "Bug Report"
+            TypeTicket = "Scam Report"
             global BigSize
             BigSize = False
             NumberNew = 0
