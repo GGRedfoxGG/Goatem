@@ -152,7 +152,7 @@ __Account Name__: {Member}
 ''',
     inline=False)
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
-    Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minutes}')
+    Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minute}')
 
     await Channel.send(embed=Join)
 
@@ -174,7 +174,7 @@ __Account Name__: {Member}
 ''',   
     inline=False)
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
-    Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minutes}')
+    Join.set_footer(text=f'Joined at {Member.joined_at.month}, {Member.joined_at.year} at {Member.joined_at.hour}:{Member.joined_at.minute}')
 
     await Channel.send(embed=Join)
 
