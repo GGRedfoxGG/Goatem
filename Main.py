@@ -1092,13 +1092,11 @@ async def _Stats(ctx):
 
 
 
-TypeTicket = "None"
 
 @Client_Bot.command(aliases = ['Ticket', 'Report', 'Feedback', 'Suggestion', 'Suggest'])
 async def _Ticket(ctx):
     
-    global TypeTicket
-    global Text 
+    TypeTicket = "None" 
     Text = None
     UserReport = Client_Bot.get_channel(955563961053483148)
     ScamReport = Client_Bot.get_channel(955563857236070432)
@@ -1202,7 +1200,6 @@ async def _Ticket(ctx):
             elif isinstance(Note.channel, discord.channel.DMChannel):
                 NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket}', color=0xe67e22)
                 NoteEdit.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
-                global Text
                 Text = Note.content
                 List = []
                 NumberNew = 0
@@ -1268,9 +1265,7 @@ async def _Ticket(ctx):
         @discord.ui.button(label='General', style=discord.ButtonStyle.green)
         async def General(self, General: discord.ui.Button, interaction: discord.Interaction):   
             Text = None
-            global TypeTicket
             TypeTicket = "General"
-            global BigSize
             BigSize = False
             NumberNew = 0
             Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
@@ -1314,9 +1309,7 @@ async def _Ticket(ctx):
         @discord.ui.button(label='Scam Report', style=discord.ButtonStyle.green)
         async def Scam(self, Scam: discord.ui.Button, interaction: discord.Interaction):      
             Text = None
-            global TypeTicket
             TypeTicket = "Scam Report"
-            global BigSize
             BigSize = False
             NumberNew = 0
             Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
@@ -1360,9 +1353,7 @@ async def _Ticket(ctx):
         @discord.ui.button(label='User Report', style=discord.ButtonStyle.green)
         async def UserR(self, UserR: discord.ui.Button, interaction: discord.Interaction):    
             Text = None
-            global TypeTicket
             TypeTicket = "User Report"
-            global BigSize
             BigSize = False
             NumberNew = 0
             Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
@@ -1406,9 +1397,7 @@ async def _Ticket(ctx):
         @discord.ui.button(label='Staff Report', style=discord.ButtonStyle.red)
         async def Staff(self, Staff: discord.ui.Button, interaction: discord.Interaction):     
             Text = None
-            global TypeTicket
             TypeTicket = "Staff Report"
-            global BigSize
             BigSize = False
             NumberNew = 0
             Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
@@ -1546,14 +1535,12 @@ async def _Rule(ctx):
 
 @Client_Bot.command(aliases = ['Help', 'Cmds', 'Commands'],  pass_context=True)
 async def _Help(ctx):
-    global Current_Page
     Current_Page = 1
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
 
     class Button(discord.ui.View):
         @discord.ui.button(label='<', style=discord.ButtonStyle.green)
         async def Previous(self, Previous: discord.ui.Button, interaction: discord.Interaction):   
-            global Current_Page
             if Current_Page == 1:
                 Current_Page = 5
                 Misc = discord.Embed(title="**Help System**", description=f"Page information: __**Misc**__", color=0x7289da)
@@ -1658,7 +1645,6 @@ async def _Help(ctx):
 
         @discord.ui.button(label='>', style=discord.ButtonStyle.green)
         async def Next(self, Next: discord.ui.Button, interaction: discord.Interaction):   
-            global Current_Page
             if Current_Page == 1:
                 Current_Page = Current_Page + 1
                 Moderation = discord.Embed(title="**Help System**", description=f"Page information: __**Moderation**__", color=0x7289da)
@@ -2026,6 +2012,7 @@ async def _Toggle(ctx):
 
 @Client_Bot.command(aliases = ['Post', 'Advertise'])
 async def _Post(ctx):
+    TicketType = 'None'
     Today = date.today()
     Now = datetime.now()
     current_time = Now.strftime("%H:%M:%S")
@@ -2035,7 +2022,6 @@ async def _Post(ctx):
     hiringable = Client_Bot.get_channel(955544519921762354)
     Ad = Client_Bot.get_channel(955544601207398482)
     MSL = Client_Bot.get_channel(955601587248721940)
-    global Text
     Text = 'None'
 
 
@@ -2116,7 +2102,6 @@ async def _Post(ctx):
             await interaction.user.send("Please reply to this text with your note!")
             await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
-            global Text
             Text = Note.content
             if isinstance(Note.channel, discord.channel.TextChannel):
                 
@@ -2126,7 +2111,7 @@ async def _Post(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
-            elif isinstance(Note.channel, discord.channel.DMChannel):
+            elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message == Note.message:
                 await interaction.user.send('Everything was saved successfully!')
                 BigSize = False
                 PostEdit = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}", color=0xe67e22)
@@ -2289,7 +2274,6 @@ async def _Post(ctx):
     class Button(discord.ui.View):
         @discord.ui.button(label='Hiring', style=discord.ButtonStyle.green)
         async def Hiring(self, Hiring: discord.ui.Button, interaction: discord.Interaction):
-            global TicketType
             TicketType = 'Hiring'
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
@@ -2328,7 +2312,6 @@ async def _Post(ctx):
                 await interaction.response.edit_message(view=self, embed=Post)   
         @discord.ui.button(label='Hireable', style=discord.ButtonStyle.green)
         async def Hireable(self, Hireable: discord.ui.Button, interaction: discord.Interaction):
-            global TicketType
             TicketType = 'Hireable'
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
@@ -2367,7 +2350,6 @@ async def _Post(ctx):
                 await interaction.response.edit_message(view=self, embed=Post)
         @discord.ui.button(label='Advertise', style=discord.ButtonStyle.green)
         async def Advertise(self, Advertise: discord.ui.Button, interaction: discord.Interaction):
-            global TicketType
             TicketType = 'Advertisement'
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
@@ -2406,7 +2388,6 @@ async def _Post(ctx):
                 await interaction.response.edit_message(view=self, embed=Post)
         @discord.ui.button(label='Selling', style=discord.ButtonStyle.green)
         async def Selling(self, Selling: discord.ui.Button, interaction: discord.Interaction):
-            global TicketType
             TicketType = 'Selling'
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
