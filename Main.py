@@ -1195,7 +1195,7 @@ async def _Ticket(ctx):
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
             await interaction.user.send("Please reply to this text with your note!")
-            await interaction.response.edit(view=self)
+            await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
             if isinstance(Note.channel, discord.channel.TextChannel):
                 Cancelled = discord.Embed(title="**Ticket System**", description=f"Note cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
