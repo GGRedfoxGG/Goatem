@@ -1550,6 +1550,7 @@ async def _Rule(ctx):
 
 @Client_Bot.command(aliases = ['Help', 'Cmds', 'Commands'],  pass_context=True)
 async def _Help(ctx):
+    print('Cmds')
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
     global Current_Page
     Current_Page = 1
