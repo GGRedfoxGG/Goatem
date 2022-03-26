@@ -5,6 +5,7 @@ from logging import fatal
 from pickle import TRUE
 from platform import python_version
 from pydoc import cli
+from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
 from tokenize import group
 from discord import Embed, __version__ as discord_version
 from psutil import Process, virtual_memory
@@ -1978,6 +1979,23 @@ async def on_message(message):
 
     await Client_Bot.process_commands(message)
         
+@Client.event
+async def on_message_edit(before, after):
+    if True == True:
+        Channel = Client.get_channel(955563873312845924)
+        today = date.today()
+        now = datetime.now()
+
+        current_time = now.strftime("%H:%M:%S")
+        current_Date = today.strftime("%B %d %Y")
+
+        Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{before.author.id}>')
+        Embed.add_field(name='Before: ', value=f'{before.content}', inline=False)
+        Embed.add_field(name='After: ', value=f'{after.content}', inline=False)
+        Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
+        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+        await Channel.send(embed=Embed)
+    await Client.process_commands(before)
 
 @Client_Bot.command(aliases = ['Toggle'],  pass_context=True)
 async def _Toggle(ctx):
@@ -2493,6 +2511,40 @@ async def _Post(ctx):
                 view2 = EditButtons(timeout=15780000)
                 Msg = view.message = await ctx.author.send(embed=Type, view=view)
 
+
+
+@Client_Bot.command(aliases= ['Mute', 'Timeout'])
+async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
+    await RoleChecker(ctx, ctx.author)
+    result_from_errorrank = await RoleChecker(ctx, ctx.author)
+    In_Group = result_from_errorrank
+    seconds1 = seconds1 % (Length * 3600)
+    print(seconds1)
+    if In_Group == True or ctx.author.guild_permissions.administrator:
+        if Length <= 48:
+            seconds = seconds % (Length * 3600)
+            await Logging(ctx, ctx.message.content,ctx.author, Member, F"<@{Member.id}> have been muted/timeout for {Length} hour(s)", ctx.channel)
+            await Member.timeout(time_out_until=seconds)
+            await ctx.send('Muted the user')
+        else:
+            await MissingPermission(ctx, ctx.author)
+    else:
+        await MissingPermission(ctx, ctx.author)
+        
+
+
 Client_Bot.run('OTU1NTY1MjU3MDY0MDYyOTg4.Yjjhfg.WsH4dAEs4Vn-EKR9XHjPuiv5Q-0') 
 
 
+#s = """User Id(s): 4505093
+#Roblox User Id(s): 54930583
+#Ban Length: 12w
+#Reason: Reason
+#Evidence: [Link"""
+#for i in s.splitlines():
+#    print(i.split(':')[1])
+
+
+
+
+#await member.timeout(time_out_until=5)
