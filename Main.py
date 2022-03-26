@@ -2515,14 +2515,71 @@ async def _Post(ctx):
 
 @Client_Bot.command(aliases= ['Mute', 'Timeout'])
 async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
+    class Button(discord.ui.View):
+        @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
+        async def Approve(self, Approve: discord.ui.Button, interaction: discord.Interaction):  
+            Infraction2 = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> kicked <@{Member.id}>.")
+            Infraction2.add_field(name='**Infraction Code: **', value=f'{Number}/{Code1}', inline=False)
+            Infraction2.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
+            Infraction2.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
+            Infraction2.add_field(name='**Approved by: **', value=f'<@{interaction.user.id}>', inline=False)
+            Infraction2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            for child in self.children: 
+                child.disabled = True
+            await interaction.response.edit_message(view=self, embed=Infraction2) 
+
+
+        def __init__(self, timeout):
+            super().__init__(timeout=timeout)
+            self.response = None 
+
+        async def on_timeout(self):
+            for child in self.children: 
+                child.disabled = True
+            await self.message.edit(view=self) 
+
+    today = date.today()
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d, %Y")
+    Time = f'{current_Date} {current_time}'
+    Selected_Code = "select thing from strike_logs"
+    Cursor.execute(Selected_Code)
+    records = Cursor.fetchall()
+    Number = 0
+    for record in records:
+        Number = Number + 1
+    Number = Number + 1
+    Type = 'Mute'
+    Code1 = random.randint(0,999999999999999999)
     await RoleChecker(ctx, ctx.author)
     result_from_errorrank = await RoleChecker(ctx, ctx.author)
     In_Group = result_from_errorrank
     if In_Group == True or ctx.author.guild_permissions.administrator:
         if Length <= 48:
+            Embed = discord.Embed(title="Member Was muted Successfuly")
+            Embed.add_field(name=f'__**{Member}**__ was muted successfuly because of: ', value=f'{Reason}', inline=False)
+            Embed.set_author(name='Muted ', icon_url=Member.avatar.url)
+            Embed.set_thumbnail(url=Member.avatar.url)
+            Embed.set_footer(text=f'Muted by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            Channel = Client_Bot.get_channel(955594847434186802)
+            Infraction = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> muted <@{Member.id}>.")
+            Infraction.add_field(name='**Infraction Code: **', value=f'{Number}/{Code1}', inline=False)
+            Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
+            Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
+            Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            await ctx.send(embed=Infraction)   
+            await Logging(ctx, ctx.message.content,ctx.author, Member, Reason, ctx.channel)
+            Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
+            Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
+            Cursor.execute(Q, Par)
+            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
+            Database.commit()
             await Logging(ctx, ctx.message.content,ctx.author, Member, F"<@{Member.id}> have been muted/timeout for {Length} hour(s)", ctx.channel)
-            await Member.timeout(when = discord.utils.utcnow() + timedelta(hours=Length))
-            await ctx.send('Muted the user')
+            view = Button(timeout=15780000)
+            Msg = view.message = await Channel.send(embed=Infraction, view=view)
+            await Member.timeout(discord.utils.utcnow() + timedelta(hours=Length))
+            await ctx.send(embed=Embed)
         elif Length < 1:
             await MissingPermission(ctx, ctx.author)
         else:
