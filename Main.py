@@ -1937,6 +1937,7 @@ async def _Verify(ctx):
 @Client_Bot.event
 async def on_message(message):
     Channel = Client_Bot.get_channel(955895594705096705)
+    Channel2 = Client_Bot.get_channel(957030663758954496)
     
     if message.content.startswith('```') and message.channel.id == 955895594705096705:
         class Button(discord.ui.View):
@@ -2010,7 +2011,7 @@ async def on_message(message):
                     child.disabled = True
                 await self.message.edit(view=self)
         view = Button(timeout=15780000)
-        Msg = view.message = await Channel.send(f'**__Scam Report:__** {message.content}', view=view)
+        Msg = view.message = await Channel2.send(f'**__Scam Report:__** {message.content}', view=view)
         await message.delete()
     await Client_Bot.process_commands(message)
         
@@ -2059,7 +2060,6 @@ async def on_member_update(before, after):
     Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
     Embed.add_field(name='Before: ', value=f'{before.nickname}', inline=False)
     Embed.add_field(name='After: ', value=f'{after.nickname}', inline=False)
-    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
     Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     await Channel.send(embed=Embed)
     await Client_Bot.process_commands(before)
@@ -2076,7 +2076,6 @@ async def on_member_update(before, after):
     Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
     Embed.add_field(name='Before: ', value=f'{before.status}', inline=False)
     Embed.add_field(name='After: ', value=f'{after.status}', inline=False)
-    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
     Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     await Channel.send(embed=Embed)
     await Client_Bot.process_commands(before)
@@ -2093,7 +2092,6 @@ async def on_member_update(before, after):
     Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
     Embed.add_field(name='Before: ', value=f'{before.roles}', inline=False)
     Embed.add_field(name='After: ', value=f'{after.roles}', inline=False)
-    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
     Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     await Channel.send(embed=Embed)
     await Client_Bot.process_commands(before)
@@ -2110,7 +2108,6 @@ async def on_member_update(before, after):
     Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
     Embed.add_field(name='Before: ', value=f'{before.name}', inline=False)
     Embed.add_field(name='After: ', value=f'{after.name}', inline=False)
-    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
     Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     await Channel.send(embed=Embed)
     await Client_Bot.process_commands(before)
