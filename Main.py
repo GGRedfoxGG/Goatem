@@ -1551,6 +1551,8 @@ async def _Rule(ctx):
 @Client_Bot.command(aliases = ['Help', 'Cmds', 'Commands'],  pass_context=True)
 async def _Help(ctx):
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
+    global Current_Page
+    Current_Page = 1
     class Button(discord.ui.View):
         @discord.ui.button(label='<', style=discord.ButtonStyle.green)
         async def Previous(self, interaction: discord.Interaction, Previous: discord.ui.Button):   
@@ -1779,8 +1781,6 @@ async def _Help(ctx):
     Home.set_footer(text=f' Page 1/5', icon_url=ctx.author.avatar.url)
     Home.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
     await ctx.send(embed=Main)
-    global Current_Page
-    Current_Page = 1
     view = Button(timeout=180)
     Msg = view.message = await ctx.author.send(embed=Home, view=view)
 
