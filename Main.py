@@ -2066,6 +2066,7 @@ async def on_message_delete(message):
 @Client_Bot.event
 async def on_member_update(before, after):
     if before.nick != after.nick:
+        
         Channel = Client_Bot.get_channel(955563873312845924)
         today = date.today()
         now = datetime.now()
