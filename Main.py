@@ -2057,9 +2057,9 @@ async def _Post(ctx):
                 PostClaimed.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
                 PostClaimed.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
                 PostClaimed.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-                PostClaimed.add_field(name='__**Note**__: ', value=f'{Text[0]}', inline=False)
+                PostClaimed.add_field(name='__**Note**__: ', value=f'{Text[-1]}', inline=False)
                 PostClaimed.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                PostClaimed.set_author(name=f'{TicketType[0]} Post', icon_url=ctx.author.avatar.url)
+                PostClaimed.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostClaimed,view=self)
             elif claimed.label == "Unclaim":
                 BigSize = False
@@ -2091,9 +2091,9 @@ async def _Post(ctx):
                 PostUnClaimed.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
                 PostUnClaimed.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
                 PostUnClaimed.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-                PostUnClaimed.add_field(name='__**Note**__: ', value=f'{Text[0]}', inline=False)
+                PostUnClaimed.add_field(name='__**Note**__: ', value=f'{Text[-1]}', inline=False)
                 PostUnClaimed.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                PostUnClaimed.set_author(name=f'{TicketType[0]} Post', icon_url=ctx.author.avatar.url)
+                PostUnClaimed.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostUnClaimed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, Edit: discord.ui.Button):   
@@ -2139,9 +2139,9 @@ async def _Post(ctx):
                 PostEdit.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
                 PostEdit.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
                 PostEdit.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-                PostEdit.add_field(name='__**Note**__: ', value=f'{Text[0]}', inline=False)
+                PostEdit.add_field(name='__**Note**__: ', value=f'{Text[-1]}', inline=False)
                 PostEdit.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                PostEdit.set_author(name=f'{TicketType[0]} Post', icon_url=ctx.author.avatar.url)
+                PostEdit.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostEdit, view=self)
 
         @discord.ui.button(label='Deny', style=discord.ButtonStyle.red)
@@ -2176,9 +2176,9 @@ async def _Post(ctx):
             DeniedPost.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
             DeniedPost.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             DeniedPost.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-            DeniedPost.add_field(name='__**Note**__: ', value=f'{Text[0]}', inline=False)
+            DeniedPost.add_field(name='__**Note**__: ', value=f'{Text[-1]}', inline=False)
             DeniedPost.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            DeniedPost.set_author(name=f'{TicketType[0]} Post', icon_url=ctx.author.avatar.url)
+            DeniedPost.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view2.children:
                     child.disabled = True
@@ -2217,9 +2217,9 @@ async def _Post(ctx):
             Final.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
             Final.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             Final.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-            Final.add_field(name='__**Note**__: ', value=f'{Text[0]}', inline=False)
+            Final.add_field(name='__**Note**__: ', value=f'{Text[-1]}', inline=False)
             Final.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Final.set_author(name=f'{TicketType[0]} Post', icon_url=ctx.author.avatar.url)
+            Final.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
 
 #
             Final2 = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
@@ -2251,19 +2251,19 @@ async def _Post(ctx):
             Final2.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
             Final2.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
             Final2.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Final2.set_author(name=f'{TicketType[0]} Post', icon_url=ctx.author.avatar.url)
+            Final2.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
 
             if BigSize == False:
                 for child in view2.children:
                     child.disabled = True
 
-                if TicketType[0] == 'Hiring':
+                if TicketType[-1] == 'Hiring':
                     await hire.send(embed=Final2)
-                elif TicketType[0] == 'Hireable':
+                elif TicketType[-1] == 'Hireable':
                     await hiringable.send(embed=Final2)
-                elif TicketType[0] == 'Advertisement':
+                elif TicketType[-1] == 'Advertisement':
                     await Ad.send(embed=Final2)
-                elif TicketType[0] == 'Selling':
+                elif TicketType[-1] == 'Selling':
                     await Sell.send(embed=Final2)
                 else:
                     await ctx.send("There's a problem, please redo the post process.")
@@ -2467,7 +2467,7 @@ async def _Post(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
             elif isinstance(Report.channel, discord.channel.DMChannel):
-                TicketType = ['None']
+                TicketType = []
                 Text = ['None']
                 Type = discord.Embed(title="Post Type", description='Please select the ticket type you want to make.', color=0x546e7a)
                 Type.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
