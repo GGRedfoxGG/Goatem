@@ -2038,7 +2038,7 @@ async def on_message_edit(before,after):
         ''', inline=False)
         Embed.add_field(name='After: ', value=f'''
 ```
-{before.content}
+{after.content}
 ```
         ''', inline=False)
         Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
