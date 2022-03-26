@@ -1204,7 +1204,7 @@ async def _Ticket(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
-            elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Msg.id:
+            elif isinstance(Note.channel, discord.channel.DMChannel):
                 Today2 = date.today()
                 Now2 = datetime.now()
                 current_time2 = Now2.strftime("%H:%M:%S")
