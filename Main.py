@@ -1979,7 +1979,7 @@ async def on_message(message):
 
     await Client_Bot.process_commands(message)
         
-@Client.event
+@Client_Bot.event
 async def on_message_edit(before, after):
     if True == True:
         Channel = Client.get_channel(955563873312845924)
