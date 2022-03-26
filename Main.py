@@ -1116,10 +1116,10 @@ async def _Ticket(ctx):
     Code = random.randint(0,999999999999999999)
     class Button(discord.ui.View):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.green)
-        async def Claim_Button(self, Claimed: discord.ui.Button, interaction: discord.Interaction):
-            if Claimed.label == 'Claim':
-                Claimed.label = 'Unclaim'
-                Claimed.style = discord.ButtonStyle.red
+        async def Claim_Button(self, interaction: discord.Interaction, claimed: discord.ui.Button):
+            if claimed.label == 'Claim':
+                claimed.label = 'Unclaim'
+                claimed.style = discord.ButtonStyle.red
                 Claimed_Embed = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket}', color=0xe67e22)
                 Claimed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 CurrentType = "Claim"
@@ -1149,9 +1149,9 @@ async def _Ticket(ctx):
                 Claimed_Embed.set_thumbnail(url=ctx.author.avatar.url)
                 Claimed_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Claimed_Embed,view=self)
-            elif Claimed.label == "Unclaim":
-                Claimed.label = 'Claim'
-                Claimed.style = discord.ButtonStyle.green
+            elif claimed.label == "Unclaim":
+                claimed.label = 'Claim'
+                claimed.style = discord.ButtonStyle.green
                 Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
                 Final_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 List = []
@@ -1186,7 +1186,7 @@ async def _Ticket(ctx):
                 Final_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)  
                 await interaction.response.edit_message(embed=Final_Embed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
-        async def Edit_Button(self, Edit: discord.ui.Button, interaction: discord.Interaction):   
+        async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
             await interaction.user.send("Please reply to this text with your note!")
             await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
@@ -1229,7 +1229,7 @@ async def _Ticket(ctx):
                 await interaction.user.send('Everything was saved successfully!')
 
         @discord.ui.button(label='Close', style=discord.ButtonStyle.red)
-        async def Close_Button(self, Close: discord.ui.Button, interaction: discord.Interaction):  
+        async def Close_Button(self, interaction: discord.Interaction, close: discord.ui.Button):  
             CurrentType = "Close"
             Closed_Embed = discord.Embed(title=f"Ticket Closed by {interaction.user}", description=f'Ticket Type: {TypeTicket}', color=0xe74c3c)
             Closed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
@@ -1263,7 +1263,7 @@ async def _Ticket(ctx):
     
     class Tickets(discord.ui.View):
         @discord.ui.button(label='General', style=discord.ButtonStyle.green)
-        async def General(self, General: discord.ui.Button, interaction: discord.Interaction):   
+        async def General(self, interaction: discord.Interaction, general: discord.ui.Button):   
             Text = None
             TypeTicket = "General"
             BigSize = False
@@ -1307,7 +1307,7 @@ async def _Ticket(ctx):
                 Main3 = view2.message = await GeneralReport.send(embed=Final_Embed, view=view2)
                 await interaction.response.edit_message(view=self, embed=Final_Embed)
         @discord.ui.button(label='Scam Report', style=discord.ButtonStyle.green)
-        async def Scam(self, Scam: discord.ui.Button, interaction: discord.Interaction):      
+        async def Scam(self, interaction: discord.Interaction, scam: discord.ui.Button):      
             Text = None
             TypeTicket = "Scam Report"
             BigSize = False
@@ -1351,7 +1351,7 @@ async def _Ticket(ctx):
                 Main3 = view2.message = await ScamReport.send(embed=Final_Embed, view=view2)
                 await interaction.response.edit_message(view=self, embed=Final_Embed)
         @discord.ui.button(label='User Report', style=discord.ButtonStyle.green)
-        async def UserR(self, UserR: discord.ui.Button, interaction: discord.Interaction):    
+        async def UserR(self, interaction: discord.Interaction, userr: discord.ui.Button):    
             Text = None
             TypeTicket = "User Report"
             BigSize = False
@@ -1395,7 +1395,7 @@ async def _Ticket(ctx):
                 Main3 = view2.message = await UserReport.send(embed=Final_Embed, view=view2)
                 await interaction.response.edit_message(view=self, embed=Final_Embed)
         @discord.ui.button(label='Staff Report', style=discord.ButtonStyle.red)
-        async def Staff(self, Staff: discord.ui.Button, interaction: discord.Interaction):     
+        async def Staff(self, interaction: discord.Interaction, staff: discord.ui.Button):     
             Text = None
             TypeTicket = "Staff Report"
             BigSize = False
@@ -1540,7 +1540,7 @@ async def _Help(ctx):
 
     class Button(discord.ui.View):
         @discord.ui.button(label='<', style=discord.ButtonStyle.green)
-        async def Previous(self, Previous: discord.ui.Button, interaction: discord.Interaction):   
+        async def Previous(self, interaction: discord.Interaction, Previous: discord.ui.Button):   
             if Current_Page == 1:
                 Current_Page = 5
                 Misc = discord.Embed(title="**Help System**", description=f"Page information: __**Misc**__", color=0x7289da)
@@ -1644,7 +1644,7 @@ async def _Help(ctx):
                 await interaction.response.edit_message(embed=Home,view=self)
 
         @discord.ui.button(label='>', style=discord.ButtonStyle.green)
-        async def Next(self, Next: discord.ui.Button, interaction: discord.Interaction):   
+        async def Next(self, interaction: discord.Interaction, Next: discord.ui.Button):   
             if Current_Page == 1:
                 Current_Page = Current_Page + 1
                 Moderation = discord.Embed(title="**Help System**", description=f"Page information: __**Moderation**__", color=0x7289da)
@@ -1799,7 +1799,7 @@ async def _Verify(ctx):
 
 
         @discord.ui.button(label='Confirm', style=discord.ButtonStyle.green)
-        async def Confirm(self, Confirm: discord.ui.Button, interaction: discord.Interaction):  
+        async def Confirm(self, interaction: discord.Interaction, confirm: discord.ui.Button):  
             query3 = f"select userid, robloxid from verified where userid = {ctx.author.id}"
 
             Cursor.execute(query3)
@@ -1926,7 +1926,7 @@ async def on_message(message):
     if message.content.startswith('```') and message.channel.id == 955895594705096705:
         class Button(discord.ui.View):
             @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
-            async def Approve_Button(self, Approve: discord.ui.Button, interaction: discord.Interaction):
+            async def Approve_Button(self, interaction: discord.Interaction, approve: discord.ui.Button):
                 IsSenior = False
                 role1 = [
                     discord.utils.get(message.guild.roles, id=956257698733781003), 
@@ -1937,9 +1937,9 @@ async def on_message(message):
                             IsSenior = True
                 
                 if IsSenior == True:
-                    Approve.label = f'Approved by {interaction.user}'
-                    Approve.disabled = True
-                    Approve.style = discord.ButtonStyle.gray
+                    approve.label = f'Approved by {interaction.user}'
+                    approve.disabled = True
+                    approve.style = discord.ButtonStyle.gray
                     await interaction.response.edit_message(view=self)
                 else:
                     await interaction.response.send_message("You're not allowed to use this! If you think this is a mistake please contact the system developer!", ephemeral=True)
@@ -2025,11 +2025,11 @@ async def _Post(ctx):
 
     class EditButtons(discord.ui.View):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.blurple)
-        async def Claim_Button(self, Claimed: discord.ui.Button, interaction: discord.Interaction):
-            if Claimed.label == 'Claim':
+        async def Claim_Button(self, interaction: discord.Interaction, claimed: discord.ui.Button):
+            if claimed.label == 'Claim':
                 BigSize = False
-                Claimed.label = 'Unclaim'
-                Claimed.style = discord.ButtonStyle.red
+                claimed.label = 'Unclaim'
+                claimed.style = discord.ButtonStyle.red
                 PostClaimed = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}",color=0xe67e22)
                 PostClaimed.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
                 List = []
@@ -2061,10 +2061,10 @@ async def _Post(ctx):
                 PostClaimed.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
                 PostClaimed.set_author(name=f'{TicketType} Post', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostClaimed,view=self)
-            elif Claimed.label == "Unclaim":
+            elif claimed.label == "Unclaim":
                 BigSize = False
-                Claimed.label = 'Claim'
-                Claimed.style = discord.ButtonStyle.blurple
+                claimed.label = 'Claim'
+                claimed.style = discord.ButtonStyle.blurple
                 PostUnClaimed = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
                 List = []
                 NumberNew = 0
@@ -2096,7 +2096,7 @@ async def _Post(ctx):
                 PostUnClaimed.set_author(name=f'{TicketType} Post', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=PostUnClaimed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
-        async def Edit_Button(self, Edit: discord.ui.Button, interaction: discord.Interaction):   
+        async def Edit_Button(self, interaction: discord.Interaction, Edit: discord.ui.Button):   
             await interaction.user.send("Please reply to this text with your note!")
             await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
@@ -2145,7 +2145,7 @@ async def _Post(ctx):
                 await interaction.response.edit_message(embed=PostEdit, view=self)
 
         @discord.ui.button(label='Deny', style=discord.ButtonStyle.red)
-        async def Deny(self, Deny: discord.ui.Button, interaction: discord.Interaction):  
+        async def Deny(self, interaction: discord.Interaction, Deny: discord.ui.Button):  
             BigSize = False
             DeniedPost = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}", color=0xe74c3c)
             DeniedPost.add_field(name='__**Ticket denied by**__: ', value=f'{interaction.user}', inline=False)
@@ -2186,7 +2186,7 @@ async def _Post(ctx):
                 await interaction.response.edit_message(view=self, embed=DeniedPost)
 
         @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
-        async def Approve(self, Approve: discord.ui.Button, interaction: discord.Interaction):  
+        async def Approve(self, interaction: discord.Interaction, Approve: discord.ui.Button):  
             BigSize = False
             Final = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
             Final.add_field(name='__**Ticket Accepted by**__: ', value=f'{interaction.user}', inline=False)
@@ -2271,7 +2271,7 @@ async def _Post(ctx):
 
     class Button(discord.ui.View):
         @discord.ui.button(label='Hiring', style=discord.ButtonStyle.green)
-        async def Hiring(self, Hiring: discord.ui.Button, interaction: discord.Interaction):
+        async def Hiring(self, interaction: discord.Interaction, Hiring: discord.ui.Button):
             TicketType = 'Hiring'
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
@@ -2309,7 +2309,7 @@ async def _Post(ctx):
                 Main3 = view2.message = await MSL.send(embed=Post, view=view2)
                 await interaction.response.edit_message(view=self, embed=Post)   
         @discord.ui.button(label='Hireable', style=discord.ButtonStyle.green)
-        async def Hireable(self, Hireable: discord.ui.Button, interaction: discord.Interaction):
+        async def Hireable(self, interaction: discord.Interaction, Hireable: discord.ui.Button):
             TicketType = 'Hireable'
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
@@ -2347,7 +2347,7 @@ async def _Post(ctx):
                 Main3 = view2.message = await MSL.send(embed=Post, view=view2)
                 await interaction.response.edit_message(view=self, embed=Post)
         @discord.ui.button(label='Advertise', style=discord.ButtonStyle.green)
-        async def Advertise(self, Advertise: discord.ui.Button, interaction: discord.Interaction):
+        async def Advertise(self, interaction: discord.Interaction, Advertisement: discord.ui.Button):
             TicketType = 'Advertisement'
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
@@ -2385,7 +2385,7 @@ async def _Post(ctx):
                 Main3 = view2.message = await MSL.send(embed=Post, view=view2)
                 await interaction.response.edit_message(view=self, embed=Post)
         @discord.ui.button(label='Selling', style=discord.ButtonStyle.green)
-        async def Selling(self, Selling: discord.ui.Button, interaction: discord.Interaction):
+        async def Selling(self, interaction: discord.Interaction, Selling: discord.ui.Button):
             TicketType = 1
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
