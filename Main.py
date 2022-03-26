@@ -2065,19 +2065,34 @@ async def on_message_delete(message):
 
 @Client_Bot.event
 async def on_member_update(before, after):
-    Channel = Client_Bot.get_channel(955563873312845924)
-    today = date.today()
-    now = datetime.now()
+    if before.nick != after.nick:
+        Channel = Client_Bot.get_channel(955563873312845924)
+        today = date.today()
+        now = datetime.now()
 
-    current_time = now.strftime("%H:%M:%S")
-    current_Date = today.strftime("%B %d %Y")
+        current_time = now.strftime("%H:%M:%S")
+        current_Date = today.strftime("%B %d %Y")
 
-    Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
-    Embed.add_field(name='Before: ', value=f'{before.nickname}', inline=False)
-    Embed.add_field(name='After: ', value=f'{after.nickname}', inline=False)
-    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-    await Channel.send(embed=Embed)
-    await Client_Bot.process_commands(before)
+        Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
+        Embed.add_field(name='Before: ', value=f'{before.nick}', inline=False)
+        Embed.add_field(name='After: ', value=f'{after.nick}', inline=False)
+        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+        await Channel.send(embed=Embed)
+        await Client_Bot.process_commands(before)
+    elif before.name != after.nick:
+        Channel = Client_Bot.get_channel(955563873312845924)
+        today = date.today()
+        now = datetime.now()
+
+        current_time = now.strftime("%H:%M:%S")
+        current_Date = today.strftime("%B %d %Y")
+
+        Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
+        Embed.add_field(name='Before: ', value=f'{before.name}', inline=False)
+        Embed.add_field(name='After: ', value=f'{after.name}', inline=False)
+        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+        await Channel.send(embed=Embed)
+        await Client_Bot.process_commands(before)
 
 
 
