@@ -2523,7 +2523,7 @@ async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
     if In_Group == True or ctx.author.guild_permissions.administrator:
         if Length <= 48:
             await Logging(ctx, ctx.message.content,ctx.author, Member, F"<@{Member.id}> have been muted/timeout for {Length} hour(s)", ctx.channel)
-            await Member.timeout(time_out_until=Length)
+            await Member.timeout(when=Length)
             await ctx.send('Muted the user')
         else:
             await MissingPermission(ctx, ctx.author)
