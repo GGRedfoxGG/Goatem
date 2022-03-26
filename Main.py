@@ -1692,9 +1692,9 @@ async def _Help(ctx):
 
 `,Undefean [User] [Reason]` 
             
-`,Mute [User] [Amount/Perm] [Reason]` (WIP)
+`,Mute [User] [Amount] [Reason]` 
 
-`,Unmute [User]` (WIP)
+`,Unmute [User] [Reason]` 
 
 `,Lock [Channel] [Time] [Reason]`
 
@@ -2025,8 +2025,16 @@ async def on_message_edit(before,after):
     current_Date = today.strftime("%B %d %Y")
 
     Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{before.author.id}>')
-    Embed.add_field(name='Before: ', value=f'{before.content}', inline=False)
-    Embed.add_field(name='After: ', value=f'{after.content}', inline=False)
+    Embed.add_field(name='Before: ', value=f'''
+```
+{before.content}
+```
+    ''', inline=False)
+    Embed.add_field(name='After: ', value=f'''
+```
+{before.content}
+```
+    ''', inline=False)
     Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
     Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     await Channel.send(embed=Embed)
@@ -2042,43 +2050,15 @@ async def on_message_delete(message):
     current_Date = today.strftime("%B %d %Y")
 
     Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{message.author.id}>')
-    Embed.add_field(name='Deleted message: ', value=f'{message.content}', inline=False)
+    Embed.add_field(name='Deleted message: ', value=f'''
+```
+{message.content}
+```
+    ''', inline=False)
     Embed.add_field(name='Channel: ', value=f'<#{message.channel.id}>', inline=False)
     Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     await Channel.send(embed=Embed)
     await Client_Bot.process_commands(message)
-
-@Client_Bot.event
-async def on_member_update(before, after):
-    Channel = Client_Bot.get_channel(955563873312845924)
-    today = date.today()
-    now = datetime.now()
-
-    current_time = now.strftime("%H:%M:%S")
-    current_Date = today.strftime("%B %d %Y")
-
-    Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
-    Embed.add_field(name='Before: ', value=f'{before.nickname}', inline=False)
-    Embed.add_field(name='After: ', value=f'{after.nickname}', inline=False)
-    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-    await Channel.send(embed=Embed)
-    await Client_Bot.process_commands(before)
-
-@Client_Bot.event
-async def on_member_update(before, after):
-    Channel = Client_Bot.get_channel(955563873312845924)
-    today = date.today()
-    now = datetime.now()
-
-    current_time = now.strftime("%H:%M:%S")
-    current_Date = today.strftime("%B %d %Y")
-
-    Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
-    Embed.add_field(name='Before: ', value=f'{before.status}', inline=False)
-    Embed.add_field(name='After: ', value=f'{after.status}', inline=False)
-    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-    await Channel.send(embed=Embed)
-    await Client_Bot.process_commands(before)
 
 @Client_Bot.event
 async def on_member_update(before, after):
@@ -2096,21 +2076,7 @@ async def on_member_update(before, after):
     await Channel.send(embed=Embed)
     await Client_Bot.process_commands(before)
 
-@Client_Bot.event
-async def on_member_update(before, after):
-    Channel = Client_Bot.get_channel(955563873312845924)
-    today = date.today()
-    now = datetime.now()
 
-    current_time = now.strftime("%H:%M:%S")
-    current_Date = today.strftime("%B %d %Y")
-
-    Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
-    Embed.add_field(name='Before: ', value=f'{before.name}', inline=False)
-    Embed.add_field(name='After: ', value=f'{after.name}', inline=False)
-    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-    await Channel.send(embed=Embed)
-    await Client_Bot.process_commands(before)
 
 @Client_Bot.command(aliases = ['Toggle'],  pass_context=True)
 async def _Toggle(ctx):
