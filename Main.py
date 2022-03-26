@@ -2015,7 +2015,7 @@ async def on_message(message):
     await Client_Bot.process_commands(message)
         
 @Client_Bot.event
-async def on_member_update(before,after):
+async def on_message_edit(before,after):
     Channel = Client_Bot.get_channel(955563873312845924)
     today = date.today()
     now = datetime.now()
@@ -2031,6 +2031,21 @@ async def on_member_update(before,after):
     await Channel.send(embed=Embed)
     await Client_Bot.process_commands(before)
 
+@Client_Bot.event
+async def on_message_delete(message):
+    Channel = Client_Bot.get_channel(955563873312845924)
+    today = date.today()
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d %Y")
+
+    Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{message.author.id}>')
+    Embed.add_field(name='Deleted message: ', value=f'{message.content}', inline=False)
+    Embed.add_field(name='Channel: ', value=f'<#{message.channel.id}>', inline=False)
+    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+    await Channel.send(embed=Embed)
+    await Client_Bot.process_commands(message)
 
 @Client_Bot.event
 async def on_member_update(before, after):
@@ -2041,7 +2056,7 @@ async def on_member_update(before, after):
     current_time = now.strftime("%H:%M:%S")
     current_Date = today.strftime("%B %d %Y")
 
-    Embed = discord.Embed(title="User Logs", description=f'<@{before.author.id}> was updated!')
+    Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
     Embed.add_field(name='Before: ', value=f'{before.nickname}', inline=False)
     Embed.add_field(name='After: ', value=f'{after.nickname}', inline=False)
     Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
@@ -2058,7 +2073,7 @@ async def on_member_update(before, after):
     current_time = now.strftime("%H:%M:%S")
     current_Date = today.strftime("%B %d %Y")
 
-    Embed = discord.Embed(title="User Logs", description=f'<@{before.author.id}> was updated!')
+    Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
     Embed.add_field(name='Before: ', value=f'{before.status}', inline=False)
     Embed.add_field(name='After: ', value=f'{after.status}', inline=False)
     Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
@@ -2075,7 +2090,7 @@ async def on_member_update(before, after):
     current_time = now.strftime("%H:%M:%S")
     current_Date = today.strftime("%B %d %Y")
 
-    Embed = discord.Embed(title="User Logs", description=f'<@{before.author.id}> was updated!')
+    Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
     Embed.add_field(name='Before: ', value=f'{before.roles}', inline=False)
     Embed.add_field(name='After: ', value=f'{after.roles}', inline=False)
     Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
@@ -2092,7 +2107,7 @@ async def on_member_update(before, after):
     current_time = now.strftime("%H:%M:%S")
     current_Date = today.strftime("%B %d %Y")
 
-    Embed = discord.Embed(title="User Logs", description=f'<@{before.author.id}> was updated!')
+    Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
     Embed.add_field(name='Before: ', value=f'{before.name}', inline=False)
     Embed.add_field(name='After: ', value=f'{after.name}', inline=False)
     Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
@@ -2752,7 +2767,7 @@ async def _Unmute(ctx, Member: discord.Member, *, Reason):
         await Logging(ctx, ctx.message.content,ctx.author, Member, F"<@{Member.id}> have been unmuted/untimeout!", ctx.channel)
         view = Button(timeout=15780000)
         Msg = view.message = await Channel.send(embed=Infraction, view=view)
-        await Member.timeout(discord.utils.utcnow() + timedelta(hours=None))
+        await Member.timeout(discord.utils.utcnow() + timedelta(hours=0))
         await ctx.send(embed=Embed)
     else:
         await MissingPermission(ctx, ctx.author)
