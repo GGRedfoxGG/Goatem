@@ -1117,9 +1117,9 @@ async def _Ticket(ctx):
             if claimed.label == 'Claim':
                 Today2 = date.today()
                 Now2 = datetime.now()
-                current_time = Now2.strftime("%H:%M:%S")
-                current_Date = Today2.strftime("%B %d %Y")
-                Time = f"{current_time, {current_Date}}"
+                current_time1 = Now2.strftime("%H:%M:%S")
+                current_Date1 = Today2.strftime("%B %d %Y")
+                Time = f"{current_time1}, {current_Date1}"
                 claimed.label = 'Unclaim'
                 claimed.style = discord.ButtonStyle.red
                 Claimed_Embed = discord.Embed(title=f"Ticket Claimed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
@@ -1189,7 +1189,8 @@ async def _Ticket(ctx):
                 await interaction.response.edit_message(embed=Final_Embed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
-            await interaction.user.send("Please reply to this text with your note!")
+            User = interaction.user
+            await User.send("Please reply to this text with your note!")
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
             if isinstance(Note.channel, discord.channel.TextChannel):
                 Cancelled = discord.Embed(title="**Ticket System**", description=f"Note cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
@@ -1201,9 +1202,9 @@ async def _Ticket(ctx):
             elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Note.id:
                 Today2 = date.today()
                 Now2 = datetime.now()
-                current_time = Now2.strftime("%H:%M:%S")
-                current_Date = Today2.strftime("%B %d %Y")
-                Time = f"{current_time, {current_Date}}"
+                current_time2 = Now2.strftime("%H:%M:%S")
+                current_Date2 = Today2.strftime("%B %d %Y")
+                Time = f"{current_time2}, {current_Date2}"
                 NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
                 NoteEdit.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 Text.append(Note.content)
@@ -1236,11 +1237,11 @@ async def _Ticket(ctx):
 
         @discord.ui.button(label='Close', style=discord.ButtonStyle.red)
         async def Close_Button(self, interaction: discord.Interaction, close: discord.ui.Button):  
-            Today2 = date.today()
-            Now2 = datetime.now()
-            current_time = Now2.strftime("%H:%M:%S")
-            current_Date = Today2.strftime("%B %d %Y")
-            Time = f"{current_time, {current_Date}}"
+            Today3 = date.today()
+            Now3 = datetime.now()
+            current_time3 = Now3.strftime("%H:%M:%S")
+            current_Date3 = Today3.strftime("%B %d %Y")
+            Time = f"{current_time3}, {current_Date3}"
             CurrentType = "Close"
             Closed_Embed = discord.Embed(title=f"Ticket Closed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe74c3c)
             Closed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
@@ -2106,7 +2107,8 @@ async def _Post(ctx):
                 await interaction.response.edit_message(embed=PostUnClaimed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, Edit: discord.ui.Button):   
-            await interaction.user.send("Please reply to this text with your note!")
+            User = interaction.user
+            await User.send("Please reply to this text with your note!")
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
             if isinstance(Note.channel, discord.channel.TextChannel):
                 
