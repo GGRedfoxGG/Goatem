@@ -2065,8 +2065,8 @@ async def on_message_delete(message):
 
 @Client_Bot.event
 async def on_member_update(before, after):
-    if before.nick != after.nick:
-        
+    if before.nick != after.nick and not before.bot:
+
         Channel = Client_Bot.get_channel(955563873312845924)
         today = date.today()
         now = datetime.now()
@@ -2080,7 +2080,7 @@ async def on_member_update(before, after):
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         await Channel.send(embed=Embed)
         await Client_Bot.process_commands(before)
-    elif before.name != after.nick:
+    elif before.name != after.nick and not before.bot:
         Channel = Client_Bot.get_channel(955563873312845924)
         today = date.today()
         now = datetime.now()
