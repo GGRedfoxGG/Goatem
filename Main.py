@@ -1115,9 +1115,14 @@ async def _Ticket(ctx):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.green)
         async def Claim_Button(self, interaction: discord.Interaction, claimed: discord.ui.Button):
             if claimed.label == 'Claim':
+                Today2 = date.today()
+                Now2 = datetime.now()
+                current_time = Now2.strftime("%H:%M:%S")
+                current_Date = Today2.strftime("%B %d %Y")
+                Time = f"{current_time, {current_Date}}"
                 claimed.label = 'Unclaim'
                 claimed.style = discord.ButtonStyle.red
-                Claimed_Embed = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
+                Claimed_Embed = discord.Embed(title=f"Ticket Claimed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
                 Claimed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 CurrentType = "Claim"
                 List = []
@@ -1144,7 +1149,7 @@ async def _Ticket(ctx):
                 Claimed_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
                 Claimed_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
                 Claimed_Embed.set_thumbnail(url=ctx.author.avatar.url)
-                Claimed_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
+                Claimed_Embed.set_footer(text=f'{Time}.', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Claimed_Embed,view=self)
             elif claimed.label == "Unclaim":
                 claimed.label = 'Claim'
@@ -1180,7 +1185,7 @@ async def _Ticket(ctx):
                 Final_Embed.add_field(name='Note: ', value=Text[-1], inline=False)
                 Final_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
                 Final_Embed.set_thumbnail(url=ctx.author.avatar.url)
-                Final_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)  
+                Final_Embed.set_footer(text=f'{Time}.', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Final_Embed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
@@ -1194,7 +1199,12 @@ async def _Ticket(ctx):
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
             elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Note.id:
-                NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
+                Today2 = date.today()
+                Now2 = datetime.now()
+                current_time = Now2.strftime("%H:%M:%S")
+                current_Date = Today2.strftime("%B %d %Y")
+                Time = f"{current_time, {current_Date}}"
+                NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
                 NoteEdit.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 Text.append(Note.content)
                 List = []
@@ -1220,14 +1230,19 @@ async def _Ticket(ctx):
                 NoteEdit.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
                 NoteEdit.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
                 NoteEdit.set_thumbnail(url=ctx.author.avatar.url)
-                NoteEdit.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
+                NoteEdit.set_footer(text=f'{Time}.', icon_url=ctx.author.avatar.url)
                 await interaction.user.send('Everything was saved successfully!')
                 await interaction.message.edit(embed=NoteEdit, view=self)
 
         @discord.ui.button(label='Close', style=discord.ButtonStyle.red)
         async def Close_Button(self, interaction: discord.Interaction, close: discord.ui.Button):  
+            Today2 = date.today()
+            Now2 = datetime.now()
+            current_time = Now2.strftime("%H:%M:%S")
+            current_Date = Today2.strftime("%B %d %Y")
+            Time = f"{current_time, {current_Date}}"
             CurrentType = "Close"
-            Closed_Embed = discord.Embed(title=f"Ticket Closed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe74c3c)
+            Closed_Embed = discord.Embed(title=f"Ticket Closed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe74c3c)
             Closed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
             NumberNew = 0
             List = []
@@ -1252,7 +1267,7 @@ async def _Ticket(ctx):
             Closed_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
             Closed_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
             Closed_Embed.set_thumbnail(url=ctx.author.avatar.url)
-            Closed_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            Closed_Embed.set_footer(text=f'{Time}.', icon_url=ctx.author.avatar.url)
             for child in view2.children:
                 child.disabled = True
             await interaction.response.edit_message(embed=Closed_Embed,view=self)
@@ -1294,7 +1309,6 @@ async def _Ticket(ctx):
             Final_Embed.add_field(name='Note: ', value=f'None', inline=False)
             Final_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
             Final_Embed.set_thumbnail(url=ctx.author.avatar.url)
-            Final_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)     
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
@@ -1338,7 +1352,6 @@ async def _Ticket(ctx):
             Final_Embed.add_field(name='Note: ', value=f'None', inline=False)
             Final_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
             Final_Embed.set_thumbnail(url=ctx.author.avatar.url)
-            Final_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)     
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
@@ -1382,7 +1395,6 @@ async def _Ticket(ctx):
             Final_Embed.add_field(name='Note: ', value=f'None', inline=False)
             Final_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
             Final_Embed.set_thumbnail(url=ctx.author.avatar.url)
-            Final_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)     
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
@@ -1425,8 +1437,7 @@ async def _Ticket(ctx):
             Final_Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
             Final_Embed.add_field(name='Note: ', value=f'None', inline=False)
             Final_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
-            Final_Embed.set_thumbnail(url=ctx.author.avatar.url)
-            Final_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)     
+            Final_Embed.set_thumbnail(url=ctx.author.avatar.url)  
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
