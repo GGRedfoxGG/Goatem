@@ -1122,7 +1122,7 @@ async def _Ticket(ctx):
                 Time = f"{current_time1}, {current_Date1}"
                 claimed.label = 'Unclaim'
                 claimed.style = discord.ButtonStyle.red
-                Claimed_Embed = discord.Embed(title=f"Ticket Claimed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
+                Claimed_Embed = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
                 Claimed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 CurrentType = "Claim"
                 List = []
@@ -1152,6 +1152,11 @@ async def _Ticket(ctx):
                 Claimed_Embed.set_footer(text=f'{Time}.', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Claimed_Embed,view=self)
             elif claimed.label == "Unclaim":
+                Today2 = date.today()
+                Now2 = datetime.now()
+                current_time1 = Now2.strftime("%H:%M:%S")
+                current_Date1 = Today2.strftime("%B %d %Y")
+                Time = f"{current_time1}, {current_Date1}"
                 claimed.label = 'Claim'
                 claimed.style = discord.ButtonStyle.green
                 Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket[-1]}', color=0x546e7a)
@@ -1189,8 +1194,8 @@ async def _Ticket(ctx):
                 await interaction.response.edit_message(embed=Final_Embed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
-            User = interaction.user
-            await User.send("Please reply to this text with your note!")
+            await interaction.user.send("Please reply to this text with your note!")
+            await interaction.response.edit(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
             if isinstance(Note.channel, discord.channel.TextChannel):
                 Cancelled = discord.Embed(title="**Ticket System**", description=f"Note cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
@@ -1199,13 +1204,13 @@ async def _Ticket(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
-            elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Note.id:
+            elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Msg.id:
                 Today2 = date.today()
                 Now2 = datetime.now()
                 current_time2 = Now2.strftime("%H:%M:%S")
                 current_Date2 = Today2.strftime("%B %d %Y")
                 Time = f"{current_time2}, {current_Date2}"
-                NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
+                NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
                 NoteEdit.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 Text.append(Note.content)
                 List = []
@@ -1243,7 +1248,7 @@ async def _Ticket(ctx):
             current_Date3 = Today3.strftime("%B %d %Y")
             Time = f"{current_time3}, {current_Date3}"
             CurrentType = "Close"
-            Closed_Embed = discord.Embed(title=f"Ticket Closed by {interaction.user} at {Time}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe74c3c)
+            Closed_Embed = discord.Embed(title=f"Ticket Closed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe74c3c)
             Closed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
             NumberNew = 0
             List = []
