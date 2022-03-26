@@ -1550,13 +1550,14 @@ async def _Rule(ctx):
 
 @Client_Bot.command(aliases = ['Help', 'Cmds', 'Commands'],  pass_context=True)
 async def _Help(ctx):
-    print('Cmds')
-    await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
     global Current_Page
     Current_Page = 1
+    print('Cmds')
+    await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
     class Button(discord.ui.View):
         @discord.ui.button(label='<', style=discord.ButtonStyle.green)
         async def Previous(self, interaction: discord.Interaction, Previous: discord.ui.Button):   
+            global Current_Page
             if Current_Page == 1 and Msg.id == interaction.message.id:
                 Current_Page = 5
                 Misc = discord.Embed(title="**Help System**", description=f"Page information: __**Misc**__", color=0x7289da)
@@ -1661,6 +1662,7 @@ async def _Help(ctx):
 
         @discord.ui.button(label='>', style=discord.ButtonStyle.green)
         async def Next(self, interaction: discord.Interaction, Next: discord.ui.Button):   
+            global Current_Page
             if Current_Page == 1 and Msg.id == interaction.message.id:
                 Current_Page = Current_Page + 1
                 Moderation = discord.Embed(title="**Help System**", description=f"Page information: __**Moderation**__", color=0x7289da)
