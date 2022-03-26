@@ -2467,8 +2467,8 @@ async def _Post(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
             elif isinstance(Report.channel, discord.channel.DMChannel):
-                TicketType = []
-                Text = []
+                TicketType = ['None']
+                Text = ['None']
                 Type = discord.Embed(title="Post Type", description='Please select the ticket type you want to make.', color=0x546e7a)
                 Type.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
                 Type.set_author(name=ctx.author, icon_url=ctx.author.avatar.url)
