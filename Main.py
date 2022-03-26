@@ -7,7 +7,7 @@ from platform import python_version
 from pydoc import cli
 from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
 from tokenize import group
-from discord import Embed, __version__ as discord_version
+from discord import Embed, Member, __version__ as discord_version
 from psutil import Process, virtual_memory
 import datetime
 from datetime import datetime, timedelta, date
@@ -1975,26 +1975,130 @@ async def on_message(message):
         view = Button(timeout=15780000)
         Msg = view.message = await Channel.send(f'**__Inactivity Notice:__** {message.content}', view=view)
         await message.delete()
+    elif message.content.startswith('```') and message.channel.id == 957030663758954496:
+        class Button(discord.ui.View):
+            @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
+            async def Approve_Button(self, interaction: discord.Interaction, approve: discord.ui.Button):
+                IsSenior = False
+                role1 = [
+                    discord.utils.get(message.guild.roles, id=956257698733781003), 
+                ]
+                for Main in role1:
+                    for roles in interaction.user.roles:
+                        if roles==Main:
+                            IsSenior = True
+                
+                if IsSenior == True:
+                    approve.label = f'Approved by {interaction.user}'
+                    approve.disabled = True
+                    approve.style = discord.ButtonStyle.gray
+                    await interaction.response.edit_message(view=self)
+                else:
+                    await interaction.response.send_message("You're not allowed to use this! If you think this is a mistake please contact the system developer!", ephemeral=True)
 
+
+            @discord.ui.button(label=f'Notice from {message.author}', style=discord.ButtonStyle.gray, disabled=True)
+            async def Author(self, Author: discord.ui.Button, interaction: discord.Interaction):
+                Author.disabled = True
+
+            def __init__(self, timeout):
+                super().__init__(timeout=timeout)
+                self.response = None 
+
+            async def on_timeout(self):
+                for child in self.children: 
+                    child.disabled = True
+                await self.message.edit(view=self)
+        view = Button(timeout=15780000)
+        Msg = view.message = await Channel.send(f'**__Scam Report:__** {message.content}', view=view)
+        await message.delete()
     await Client_Bot.process_commands(message)
         
 @Client_Bot.event
-async def on_message_edit(before, after):
-    if True == True:
-        Channel = Client.get_channel(955563873312845924)
-        today = date.today()
-        now = datetime.now()
+async def on_member_update(before,after):
+    Channel = Client_Bot.get_channel(955563873312845924)
+    today = date.today()
+    now = datetime.now()
 
-        current_time = now.strftime("%H:%M:%S")
-        current_Date = today.strftime("%B %d %Y")
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d %Y")
 
-        Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{before.author.id}>')
-        Embed.add_field(name='Before: ', value=f'{before.content}', inline=False)
-        Embed.add_field(name='After: ', value=f'{after.content}', inline=False)
-        Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
-        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-        await Channel.send(embed=Embed)
-    await Client.process_commands(before)
+    Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{before.author.id}>')
+    Embed.add_field(name='Before: ', value=f'{before.content}', inline=False)
+    Embed.add_field(name='After: ', value=f'{after.content}', inline=False)
+    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
+    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+    await Channel.send(embed=Embed)
+    await Client_Bot.process_commands(before)
+
+
+@Client_Bot.event
+async def on_member_update(before, after):
+    Channel = Client_Bot.get_channel(955563873312845924)
+    today = date.today()
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d %Y")
+
+    Embed = discord.Embed(title="User Logs", description=f'<@{before.author.id}> was updated!')
+    Embed.add_field(name='Before: ', value=f'{before.nickname}', inline=False)
+    Embed.add_field(name='After: ', value=f'{after.nickname}', inline=False)
+    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
+    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+    await Channel.send(embed=Embed)
+    await Client_Bot.process_commands(before)
+
+@Client_Bot.event
+async def on_member_update(before, after):
+    Channel = Client_Bot.get_channel(955563873312845924)
+    today = date.today()
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d %Y")
+
+    Embed = discord.Embed(title="User Logs", description=f'<@{before.author.id}> was updated!')
+    Embed.add_field(name='Before: ', value=f'{before.status}', inline=False)
+    Embed.add_field(name='After: ', value=f'{after.status}', inline=False)
+    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
+    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+    await Channel.send(embed=Embed)
+    await Client_Bot.process_commands(before)
+
+@Client_Bot.event
+async def on_member_update(before, after):
+    Channel = Client_Bot.get_channel(955563873312845924)
+    today = date.today()
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d %Y")
+
+    Embed = discord.Embed(title="User Logs", description=f'<@{before.author.id}> was updated!')
+    Embed.add_field(name='Before: ', value=f'{before.roles}', inline=False)
+    Embed.add_field(name='After: ', value=f'{after.roles}', inline=False)
+    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
+    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+    await Channel.send(embed=Embed)
+    await Client_Bot.process_commands(before)
+
+@Client_Bot.event
+async def on_member_update(before, after):
+    Channel = Client_Bot.get_channel(955563873312845924)
+    today = date.today()
+    now = datetime.now()
+
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d %Y")
+
+    Embed = discord.Embed(title="User Logs", description=f'<@{before.author.id}> was updated!')
+    Embed.add_field(name='Before: ', value=f'{before.name}', inline=False)
+    Embed.add_field(name='After: ', value=f'{after.name}', inline=False)
+    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
+    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+    await Channel.send(embed=Embed)
+    await Client_Bot.process_commands(before)
 
 @Client_Bot.command(aliases = ['Toggle'],  pass_context=True)
 async def _Toggle(ctx):
