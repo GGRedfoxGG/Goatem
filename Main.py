@@ -1095,9 +1095,6 @@ async def _Stats(ctx):
 
 @Client_Bot.command(aliases = ['Ticket', 'Report', 'Feedback', 'Suggestion', 'Suggest'])
 async def _Ticket(ctx):
-    
-    TypeTicket = "None" 
-    Text = None
     UserReport = Client_Bot.get_channel(955563961053483148)
     ScamReport = Client_Bot.get_channel(955563857236070432)
     StaffReport = Client_Bot.get_channel(955563978694721637)
@@ -1120,7 +1117,7 @@ async def _Ticket(ctx):
             if claimed.label == 'Claim':
                 claimed.label = 'Unclaim'
                 claimed.style = discord.ButtonStyle.red
-                Claimed_Embed = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket}', color=0xe67e22)
+                Claimed_Embed = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
                 Claimed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 CurrentType = "Claim"
                 List = []
@@ -1144,7 +1141,7 @@ async def _Ticket(ctx):
                     Claimed_Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
                 Claimed_Embed.add_field(name='Report: ', value=Report.content, inline=False)
                 Claimed_Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-                Claimed_Embed.add_field(name='Note: ', value=f'{Text}', inline=False)
+                Claimed_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
                 Claimed_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
                 Claimed_Embed.set_thumbnail(url=ctx.author.avatar.url)
                 Claimed_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -1152,7 +1149,7 @@ async def _Ticket(ctx):
             elif claimed.label == "Unclaim":
                 claimed.label = 'Claim'
                 claimed.style = discord.ButtonStyle.green
-                Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
+                Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket[-1]}', color=0x546e7a)
                 Final_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 List = []
                 NumberNew = 0
@@ -1180,7 +1177,7 @@ async def _Ticket(ctx):
 
                 Final_Embed.add_field(name='Report: ', value=Report.content, inline=False)
                 Final_Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-                Final_Embed.add_field(name='Note: ', value=Text, inline=False)
+                Final_Embed.add_field(name='Note: ', value=Text[-1], inline=False)
                 Final_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
                 Final_Embed.set_thumbnail(url=ctx.author.avatar.url)
                 Final_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)  
@@ -1188,7 +1185,6 @@ async def _Ticket(ctx):
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
             await interaction.user.send("Please reply to this text with your note!")
-            await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
             if isinstance(Note.channel, discord.channel.TextChannel):
                 Cancelled = discord.Embed(title="**Ticket System**", description=f"Note cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
@@ -1198,9 +1194,9 @@ async def _Ticket(ctx):
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
             elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Note.id:
-                NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket}', color=0xe67e22)
+                NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe67e22)
                 NoteEdit.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
-                Text = Note.content
+                Text.append(Note.content)
                 List = []
                 NumberNew = 0
                 for Attackment in Report.attachments:
@@ -1221,17 +1217,17 @@ async def _Ticket(ctx):
                     NoteEdit.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
                 NoteEdit.add_field(name='Report: ', value=Report.content, inline=False)
                 NoteEdit.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-                NoteEdit.add_field(name='Note: ', value=f'{Text}', inline=False)
+                NoteEdit.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
                 NoteEdit.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
                 NoteEdit.set_thumbnail(url=ctx.author.avatar.url)
                 NoteEdit.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                await interaction.message.edit(embed=NoteEdit, view=self)
                 await interaction.user.send('Everything was saved successfully!')
+                await interaction.message.edit(embed=NoteEdit, view=self)
 
         @discord.ui.button(label='Close', style=discord.ButtonStyle.red)
         async def Close_Button(self, interaction: discord.Interaction, close: discord.ui.Button):  
             CurrentType = "Close"
-            Closed_Embed = discord.Embed(title=f"Ticket Closed by {interaction.user}", description=f'Ticket Type: {TypeTicket}', color=0xe74c3c)
+            Closed_Embed = discord.Embed(title=f"Ticket Closed by {interaction.user}", description=f'Ticket Type: {TypeTicket[-1]}', color=0xe74c3c)
             Closed_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
             NumberNew = 0
             List = []
@@ -1253,7 +1249,7 @@ async def _Ticket(ctx):
                 Closed_Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             Closed_Embed.add_field(name='Report: ', value=Report.content, inline=False)
             Closed_Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-            Closed_Embed.add_field(name='Note: ', value=f'{Text}', inline=False)
+            Closed_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
             Closed_Embed.set_author(name=f'Ticket by {ctx.author}', icon_url=ctx.author.avatar.url)
             Closed_Embed.set_thumbnail(url=ctx.author.avatar.url)
             Closed_Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -1265,10 +1261,10 @@ async def _Ticket(ctx):
         @discord.ui.button(label='General', style=discord.ButtonStyle.green)
         async def General(self, interaction: discord.Interaction, general: discord.ui.Button):   
             Text = None
-            TypeTicket = "General"
+            TypeTicket.append("General")
             BigSize = False
             NumberNew = 0
-            Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
+            Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket[-1]}', color=0x546e7a)
             Final_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
             List = []
             for Attackment in Report.attachments:
@@ -1309,10 +1305,10 @@ async def _Ticket(ctx):
         @discord.ui.button(label='Scam Report', style=discord.ButtonStyle.green)
         async def Scam(self, interaction: discord.Interaction, scam: discord.ui.Button):      
             Text = None
-            TypeTicket = "Scam Report"
+            TypeTicket.append("Scam Report")
             BigSize = False
             NumberNew = 0
-            Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
+            Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket[-1]}', color=0x546e7a)
             Final_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
             List = []
             for Attackment in Report.attachments:
@@ -1353,10 +1349,10 @@ async def _Ticket(ctx):
         @discord.ui.button(label='User Report', style=discord.ButtonStyle.green)
         async def UserR(self, interaction: discord.Interaction, userr: discord.ui.Button):    
             Text = None
-            TypeTicket = "User Report"
+            TypeTicket.append("User Report")
             BigSize = False
             NumberNew = 0
-            Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
+            Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket[-1]}', color=0x546e7a)
             Final_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
             List = []
             for Attackment in Report.attachments:
@@ -1397,10 +1393,10 @@ async def _Ticket(ctx):
         @discord.ui.button(label='Staff Report', style=discord.ButtonStyle.red)
         async def Staff(self, interaction: discord.Interaction, staff: discord.ui.Button):     
             Text = None
-            TypeTicket = "Staff Report"
+            TypeTicket.append("Staff Report")
             BigSize = False
             NumberNew = 0
-            Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket}', color=0x546e7a)
+            Final_Embed = discord.Embed(title="Ticket System", description=f'Ticket Type: {TypeTicket[-1]}', color=0x546e7a)
             Final_Embed.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
             List = []
             for Attackment in Report.attachments:
@@ -1464,6 +1460,8 @@ async def _Ticket(ctx):
         Cancelled.set_thumbnail(url=ctx.author.avatar.url)
         await ctx.author.send(embed=Cancelled)
     elif isinstance(Report.channel, discord.channel.DMChannel):
+        TypeTicket = []
+        Text = ['None']
         await Logging(ctx, ctx.message.content,ctx.author, ctx.author, f"Report: {Report.content}", ctx.channel)
         Type = discord.Embed(title="Ticket Type", description='Please select the ticket type you want to make.', color=0x546e7a)
         Type.add_field(name='Please provide `Full Report`, `Evidence`,`User id`', value='Valid User Id: 565558626048016395/<@565558626048016395>', inline=False)
@@ -2098,7 +2096,6 @@ async def _Post(ctx):
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, Edit: discord.ui.Button):   
             await interaction.user.send("Please reply to this text with your note!")
-            await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
             if isinstance(Note.channel, discord.channel.TextChannel):
                 
@@ -2142,7 +2139,7 @@ async def _Post(ctx):
                 PostEdit.add_field(name='__**Note**__: ', value=f'{Text[-1]}', inline=False)
                 PostEdit.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
                 PostEdit.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
-                await interaction.response.edit_message(embed=PostEdit, view=self)
+                await interaction.response.edit_message(view=self, embed=PostEdit)
 
         @discord.ui.button(label='Deny', style=discord.ButtonStyle.red)
         async def Deny(self, interaction: discord.Interaction, Deny: discord.ui.Button):  
