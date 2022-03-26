@@ -354,7 +354,6 @@ async def _ServerInfo(ctx):
         Number3 = Number3 + 1
     Embed = discord.Embed(title="Server Information")
     Embed.add_field(name=f'Server is owned by: ', value=f'{ctx.guild.owner}/{ctx.guild.owner_id}/<@{ctx.guild.owner_id}>', inline=False)
-    Embed.add_field(name=f'The server region is: ', value=f'{ctx.guild.region}', inline=False)
     Embed.add_field(name=f'The server description: ', value=f'{ctx.guild.description}', inline=False)
     Embed.add_field(name=f'The server Creation Date: ', value=f'{ctx.guild.created_at.year}, {ctx.guild.created_at.month}, {ctx.guild.created_at.day} at {ctx.guild.created_at.hour}:{ctx.guild.created_at.minute}:{ctx.guild.created_at.second}', inline=False)
     Embed.add_field(name=f'The server default notifications: ', value=f'{ctx.guild.default_notifications}', inline=False)
@@ -1550,8 +1549,6 @@ async def _Rule(ctx):
 
 @Client_Bot.command(aliases = ['Help', 'Cmds', 'Commands'],  pass_context=True)
 async def _Help(ctx):
-    global Current_Page
-    Current_Page = 1
     print('Cmds')
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
     class Button(discord.ui.View):
