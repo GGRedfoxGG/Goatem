@@ -1723,6 +1723,7 @@ async def _Help(ctx):
 `,Help`
 
 `,Version`
+
             
             ''', inline=False)
                 Information.set_footer(text=f' Page 3/5', icon_url=ctx.author.avatar.url)
@@ -1752,6 +1753,8 @@ async def _Help(ctx):
 `,Toggle`
 
 `,Post`
+
+`,Createrole [Name]`
             
             ''', inline=False)
                 Misc.set_footer(text=f' Page 5/5', icon_url=ctx.author.avatar.url)
@@ -2049,7 +2052,7 @@ async def on_message_delete(message):
     current_time = now.strftime("%H:%M:%S")
     current_Date = today.strftime("%B %d %Y")
 
-    Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{message.author.id}>')
+    Embed = discord.Embed(title="Message Logs", description=f'Message were sent by <@{message.author.id}>')
     Embed.add_field(name='Deleted message: ', value=f'''
 ```
 {message.content}
@@ -2070,8 +2073,8 @@ async def on_member_update(before, after):
     current_Date = today.strftime("%B %d %Y")
 
     Embed = discord.Embed(title="User Logs", description=f'<@{before.id}> was updated!')
-    Embed.add_field(name='Before: ', value=f'{before.roles}', inline=False)
-    Embed.add_field(name='After: ', value=f'{after.roles}', inline=False)
+    Embed.add_field(name='Before: ', value=f'{before.nickname}', inline=False)
+    Embed.add_field(name='After: ', value=f'{after.nickname}', inline=False)
     Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     await Channel.send(embed=Embed)
     await Client_Bot.process_commands(before)
