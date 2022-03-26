@@ -1550,10 +1550,10 @@ async def _Rule(ctx):
 
 @Client_Bot.command(aliases = ['Help', 'Cmds', 'Commands'],  pass_context=True)
 async def _Help(ctx):
-    Current_Page = 1
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
 
     class Button(discord.ui.View):
+        Current_Page = 1
         @discord.ui.button(label='<', style=discord.ButtonStyle.green)
         async def Previous(self, interaction: discord.Interaction, Previous: discord.ui.Button):   
             if Current_Page == 1:
@@ -2020,48 +2020,50 @@ async def on_message(message):
         
 @Client_Bot.event
 async def on_message_edit(before,after):
-    Channel = Client_Bot.get_channel(955563873312845924)
-    today = date.today()
-    now = datetime.now()
+    if not before.author.bot:
+        Channel = Client_Bot.get_channel(955563873312845924)
+        today = date.today()
+        now = datetime.now()
 
-    current_time = now.strftime("%H:%M:%S")
-    current_Date = today.strftime("%B %d %Y")
+        current_time = now.strftime("%H:%M:%S")
+        current_Date = today.strftime("%B %d %Y")
 
-    Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{before.author.id}>')
-    Embed.add_field(name='Before: ', value=f'''
+        Embed = discord.Embed(title="Message Logs", description=f'Message were edited by <@{before.author.id}>')
+        Embed.add_field(name='Before: ', value=f'''
 ```
 {before.content}
 ```
-    ''', inline=False)
-    Embed.add_field(name='After: ', value=f'''
+        ''', inline=False)
+        Embed.add_field(name='After: ', value=f'''
 ```
 {before.content}
 ```
-    ''', inline=False)
-    Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
-    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-    await Channel.send(embed=Embed)
-    await Client_Bot.process_commands(before)
+        ''', inline=False)
+        Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
+        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+        await Channel.send(embed=Embed)
+        await Client_Bot.process_commands(before)
 
 @Client_Bot.event
 async def on_message_delete(message):
-    Channel = Client_Bot.get_channel(955563873312845924)
-    today = date.today()
-    now = datetime.now()
+    if not message.author.bot:
+        Channel = Client_Bot.get_channel(955563873312845924)
+        today = date.today()
+        now = datetime.now()
 
-    current_time = now.strftime("%H:%M:%S")
-    current_Date = today.strftime("%B %d %Y")
+        current_time = now.strftime("%H:%M:%S")
+        current_Date = today.strftime("%B %d %Y")
 
-    Embed = discord.Embed(title="Message Logs", description=f'Message were sent by <@{message.author.id}>')
-    Embed.add_field(name='Deleted message: ', value=f'''
+        Embed = discord.Embed(title="Message Logs", description=f'Message were sent by <@{message.author.id}>')
+        Embed.add_field(name='Deleted message: ', value=f'''
 ```
 {message.content}
 ```
-    ''', inline=False)
-    Embed.add_field(name='Channel: ', value=f'<#{message.channel.id}>', inline=False)
-    Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-    await Channel.send(embed=Embed)
-    await Client_Bot.process_commands(message)
+        ''', inline=False)
+        Embed.add_field(name='Channel: ', value=f'<#{message.channel.id}>', inline=False)
+        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+        await Channel.send(embed=Embed)
+        await Client_Bot.process_commands(message)
 
 @Client_Bot.event
 async def on_member_update(before, after):
