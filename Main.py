@@ -1197,7 +1197,7 @@ async def _Ticket(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
-            elif isinstance(Note.channel, discord.channel.DMChannel):
+            elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Note.id:
                 NoteEdit = discord.Embed(title=f"Ticket Claimed by {interaction.user}", description=f'Ticket Type: {TypeTicket}', color=0xe67e22)
                 NoteEdit.add_field(name='Ticket Code: ', value=f'#{Number}/{Code}', inline=False)
                 Text = Note.content
@@ -2012,7 +2012,6 @@ async def _Toggle(ctx):
 
 @Client_Bot.command(aliases = ['Post', 'Advertise'])
 async def _Post(ctx):
-    TicketType = 'None'
     Today = date.today()
     Now = datetime.now()
     current_time = Now.strftime("%H:%M:%S")
@@ -2022,7 +2021,6 @@ async def _Post(ctx):
     hiringable = Client_Bot.get_channel(955544519921762354)
     Ad = Client_Bot.get_channel(955544601207398482)
     MSL = Client_Bot.get_channel(955601587248721940)
-    Text = 'None'
 
 
     class EditButtons(discord.ui.View):
@@ -2111,7 +2109,7 @@ async def _Post(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
-            elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message == Note.message:
+            elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Note.id:
                 await interaction.user.send('Everything was saved successfully!')
                 BigSize = False
                 PostEdit = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}", color=0xe67e22)
@@ -2388,7 +2386,7 @@ async def _Post(ctx):
                 await interaction.response.edit_message(view=self, embed=Post)
         @discord.ui.button(label='Selling', style=discord.ButtonStyle.green)
         async def Selling(self, Selling: discord.ui.Button, interaction: discord.Interaction):
-            TicketType = 'Selling'
+            TicketType = 1
             BigSize = False
             Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
             List = []
@@ -2469,6 +2467,8 @@ async def _Post(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
             elif isinstance(Report.channel, discord.channel.DMChannel):
+                TicketType = 'None'
+                Text = 'None'
                 Type = discord.Embed(title="Post Type", description='Please select the ticket type you want to make.', color=0x546e7a)
                 Type.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
                 Type.set_author(name=ctx.author, icon_url=ctx.author.avatar.url)
