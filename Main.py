@@ -2112,8 +2112,7 @@ async def _Post(ctx):
                 await interaction.response.edit_message(embed=PostUnClaimed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, Edit: discord.ui.Button):   
-            User = interaction.user
-            await User.send("Please reply to this text with your note!")
+            await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
             if isinstance(Note.channel, discord.channel.TextChannel):
                 
@@ -2123,9 +2122,8 @@ async def _Post(ctx):
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
-            elif isinstance(Note.channel, discord.channel.DMChannel) and interaction.message.id == Note.id:
+            elif isinstance(Note.channel, discord.channel.DMChannel):
                 Text.append(Note.content)
-                await interaction.user.send('Everything was saved successfully!')
                 BigSize = False
                 PostEdit = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}", color=0xe67e22)
                 PostEdit.add_field(name='__**Claimed by**__: ', value=f'{interaction.user}', inline=False)
@@ -2157,6 +2155,7 @@ async def _Post(ctx):
                 PostEdit.add_field(name='__**Note**__: ', value=f'{Text[-1]}', inline=False)
                 PostEdit.set_footer(text=f'Posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
                 PostEdit.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
+                await interaction.user.send('Everything was saved successfully!')
                 await interaction.response.edit_message(view=self, embed=PostEdit)
 
         @discord.ui.button(label='Deny', style=discord.ButtonStyle.red)
