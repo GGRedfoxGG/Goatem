@@ -2806,7 +2806,10 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
                 await interaction.response.edit_message(view=self, embed=Verify2) 
             else:
                 await ctx.send("There's a problem with the verification system, please contact the system developer!")
-
+        @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
+        async def Revoke(self, interaction: discord.Interaction, Revoke: discord.ui.Button):  
+            for child in view.children: 
+                child.disabled = True
 
 
 
