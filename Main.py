@@ -2799,7 +2799,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
                 Verify2.set_thumbnail(url=user_thumbnail2
                 .image_url)
                 await Channel2.send(embed=Verify2)
-                await ctx.author.send(f'[{RobloxUser2.name}](https://www.roblox.com/users/{RobloxUser2.id}/profile) was verified as <@{Discord_User.id}>')
+                await ctx.send(f'{RobloxUser2.name} with ID of {RobloxUser2.id} was verified as <@{Discord_User.id}>')
                 await Discord_User.add_roles(role)
                 for child in view.children: 
                     child.disabled = True
