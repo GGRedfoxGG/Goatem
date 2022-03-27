@@ -1650,6 +1650,8 @@ async def _Help(ctx):
 `,Lock [Channel] [Time] [Reason]`
 
 `,Alert [Channel Location] [Message ID]`
+
+`,Forceverify [Discord User] [Roblox ID] [Reason]`
             
             ''', inline=False)
                 Moderation.set_footer(text=f' Page 2/5', icon_url=ctx.author.avatar.url)
@@ -1701,6 +1703,8 @@ async def _Help(ctx):
 `,Lock [Channel] [Time] [Reason]`
 
 `,Alert [Channel Location] [Message ID]`
+
+`,Forceverify [Discord User] [Roblox ID] [Reason]`
             
             ''', inline=False)
                 Moderation.set_footer(text=f' Page 2/5', icon_url=ctx.author.avatar.url)
@@ -2773,6 +2777,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
         @discord.ui.button(label='Confirm', style=discord.ButtonStyle.green)
         async def Confirm(self, interaction: discord.Interaction, confirm: discord.ui.Button):  
             if interaction.user == ctx.author:
+                await Logging(ctx, ctx.message.content,ctx.author, Discord_User, f"[{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) was verified as <@{Discord_User.id}> with moderation reason: {Reason}", ctx.channel)
                 query3 = f"select userid, robloxid from verified where userid = {Discord_User.id}"
                 Cursor.execute(query3)
                 row3 = Cursor.fetchall()
@@ -2796,7 +2801,11 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
                     Verify2.add_field(name='**Name: **', value=f'`{RobloxUser2.name}`', inline=False)
                     Verify2.add_field(name='**Display Name: **', value=f'`{RobloxUser2.display_name}`', inline=False)
                     Verify2.add_field(name='**ID: **', value=f'[{RobloxUser2.id}](https://www.roblox.com/users/{RobloxUser2.id}/profile)', inline=False)
-                    Verify2.add_field(name='**Description: **', value=f'`{RobloxUser2.description}`', inline=False)
+                    Verify2.add_field(name='**Description: **', value=f'''
+```
+{RobloxUser2.description}
+```
+                    ''', inline=False)
                     Verify2.add_field(name='**Created at: **', value=f'`{RobloxUser2.created.year}/{RobloxUser2.created.month}/{RobloxUser2.created.day} at {RobloxUser2.created.hour}:{RobloxUser2.created.minute}:{RobloxUser2.created.second}`', inline=False)
                     Verify2.set_author(name=f'{Discord_User} ({Discord_User.id})', icon_url=Discord_User.avatar.url)
                     user_thumbnail2 = user_thumbnails[0]
@@ -2843,14 +2852,17 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
         Verify.add_field(name='**Name: **', value=f'`{RobloxUser.name}`', inline=False)
         Verify.add_field(name='**Display Name: **', value=f'`{RobloxUser.display_name}`', inline=False)
         Verify.add_field(name='**ID: **', value=f'[{RobloxUser.id}](https://www.roblox.com/users/{RobloxUser.id}/profile)', inline=False)
-        Verify.add_field(name='**Description: **', value=f'`{RobloxUser.description}`', inline=False)
+        Verify.add_field(name='**Description: **', value=f'''
+```
+{RobloxUser.description}
+```
+                    ''', inline=False)
         Verify.add_field(name='**Created at: **', value=f'`{RobloxUser.created.year}/{RobloxUser.created.month}/{RobloxUser.created.day} at {RobloxUser.created.hour}:{RobloxUser.created.minute}:{RobloxUser.created.second}`', inline=False)
         Verify.set_author(name=f'{Discord_User} ({Discord_User.id})', icon_url=Discord_User.avatar.url)
         user_thumbnail2 = user_thumbnails1[0]
         Verify.set_thumbnail(url=user_thumbnail2
         .image_url)
         view = Button(timeout=120)
-        await Logging(ctx, ctx.message.content,ctx.author, Discord_User, f"[{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) was verified as <@{Discord_User.id}> with moderation reason: {Reason}", ctx.channel)
         Msg = view.message = await ctx.send(embed=Verify, view=view)
         
 
