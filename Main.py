@@ -2772,49 +2772,53 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
     class Button(discord.ui.View):
         @discord.ui.button(label='Confirm', style=discord.ButtonStyle.green)
         async def Confirm(self, interaction: discord.Interaction, confirm: discord.ui.Button):  
-            query3 = f"select userid, robloxid from verified where userid = {Discord_User.id}"
-            Cursor.execute(query3)
-            row3 = Cursor.fetchall()
-            record1 = None
-            for record1 in row3: 
-                pass
-            RobloxUser2 = await client.get_user(User)
-            user_thumbnails = await client.thumbnails.get_user_avatar_thumbnails(
-                users=[RobloxUser2],
-                type=AvatarThumbnailType.headshot,
-                size=(420, 420)
-            )
+            
+            if interaction.user == ctx.author:
+                query3 = f"select userid, robloxid from verified where userid = {Discord_User.id}"
+                Cursor.execute(query3)
+                row3 = Cursor.fetchall()
+                record1 = None
+                for record1 in row3: 
+                    pass
+                RobloxUser2 = await client.get_user(User)
+                user_thumbnails = await client.thumbnails.get_user_avatar_thumbnails(
+                    users=[RobloxUser2],
+                    type=AvatarThumbnailType.headshot,
+                    size=(420, 420)
+                )
 
-            role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, id = 956248927617831022)
+                role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, id = 956248927617831022)
 
-            if record1 == None:
-
-                Channel2 = Client_Bot.get_channel(957573073090019409)
-                Cursor.execute(f"insert into verified (userid, robloxid) values ({Discord_User.id}, {RobloxUser2.id})")
-                Database.commit()
-                Verify2 = discord.Embed(title="**Verification System**", description=f'<@{Discord_User.id}>/{Discord_User.id} verified as:')
-                Verify2.add_field(name='**Name: **', value=f'`{RobloxUser2.name}`', inline=False)
-                Verify2.add_field(name='**Display Name: **', value=f'`{RobloxUser2.display_name}`', inline=False)
-                Verify2.add_field(name='**ID: **', value=f'[{RobloxUser2.id}](https://www.roblox.com/users/{RobloxUser2.id}/profile)', inline=False)
-                Verify2.add_field(name='**Description: **', value=f'`{RobloxUser2.description}`', inline=False)
-                Verify2.add_field(name='**Created at: **', value=f'`{RobloxUser2.created.year}/{RobloxUser2.created.month}/{RobloxUser2.created.day} at {RobloxUser2.created.hour}:{RobloxUser2.created.minute}:{RobloxUser2.created.second}`', inline=False)
-                Verify2.set_author(name=f'{Discord_User} ({Discord_User.id})', icon_url=Discord_User.avatar.url)
-                user_thumbnail2 = user_thumbnails[0]
-                Verify2.set_thumbnail(url=user_thumbnail2
-                .image_url)
-                await Channel2.send(embed=Verify2)
-                await ctx.send(f'{RobloxUser2.name} with ID of {RobloxUser2.id} was verified as <@{Discord_User.id}>')
-                await Discord_User.add_roles(role)
-                for child in view.children: 
-                    child.disabled = True
-                await interaction.response.edit_message(view=self, embed=Verify2) 
+                if record1 == None:
+                    Channel2 = Client_Bot.get_channel(957573073090019409)
+                    Cursor.execute(f"insert into verified (userid, robloxid) values ({Discord_User.id}, {RobloxUser2.id})")
+                    Database.commit()
+                    Verify2 = discord.Embed(title="**Verification System**", description=f'<@{Discord_User.id}>/{Discord_User.id} verified as:')
+                    Verify2.add_field(name='**Name: **', value=f'`{RobloxUser2.name}`', inline=False)
+                    Verify2.add_field(name='**Display Name: **', value=f'`{RobloxUser2.display_name}`', inline=False)
+                    Verify2.add_field(name='**ID: **', value=f'[{RobloxUser2.id}](https://www.roblox.com/users/{RobloxUser2.id}/profile)', inline=False)
+                    Verify2.add_field(name='**Description: **', value=f'`{RobloxUser2.description}`', inline=False)
+                    Verify2.add_field(name='**Created at: **', value=f'`{RobloxUser2.created.year}/{RobloxUser2.created.month}/{RobloxUser2.created.day} at {RobloxUser2.created.hour}:{RobloxUser2.created.minute}:{RobloxUser2.created.second}`', inline=False)
+                    Verify2.set_author(name=f'{Discord_User} ({Discord_User.id})', icon_url=Discord_User.avatar.url)
+                    user_thumbnail2 = user_thumbnails[0]
+                    Verify2.set_thumbnail(url=user_thumbnail2
+                    .image_url)
+                    await Channel2.send(embed=Verify2)
+                    await ctx.send(f'{RobloxUser2.name} with ID of {RobloxUser2.id} was verified as <@{Discord_User.id}>')
+                    await Discord_User.add_roles(role)
+                    for child in Button.children: 
+                        child.disabled = True
+                    await interaction.response.edit_message(view=self, embed=Verify2) 
             else:
-                await ctx.send("There's a problem with the verification system, please contact the system developer!")
+                await interaction.response.send_message("There's a problem with the verification system, please contact the system developer!",view=self, ephemeral=True)
         @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
         async def Revoke(self, interaction: discord.Interaction, Revoke: discord.ui.Button):  
-            for child in view.children: 
-                child.disabled = True
-            await interaction.response.edit_message(view=self)
+            if interaction.user == ctx.author:
+                for child in Button.children: 
+                    child.disabled = True
+                await interaction.response.edit_message(view=self)
+            else:
+                await interaction.response.send_message("There's a problem with the verification system, please contact the system developer!",view=self, ephemeral=True)
 
 
 
