@@ -2806,7 +2806,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
                     await Channel2.send(embed=Verify2)
                     await ctx.send(f'{RobloxUser2.name} with ID of {RobloxUser2.id} was verified as <@{Discord_User.id}>')
                     await Discord_User.add_roles(role)
-                    for child in Button.children: 
+                    for child in view.children: 
                         child.disabled = True
                     await interaction.response.edit_message(view=self, embed=Verify2) 
             else:
@@ -2814,11 +2814,11 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
         @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
         async def Revoke(self, interaction: discord.Interaction, Revoke: discord.ui.Button):  
             if interaction.user == ctx.author:
-                for child in Button.children: 
+                for child in view.children: 
                     child.disabled = True
                 await interaction.response.edit_message(view=self)
             else:
-                await interaction.response.send_message("There's a problem with the verification system, please contact the system developer!",view=self, ephemeral=True)
+              await interaction.response.send_message("There's a problem with the verification system, please contact the system developer!",view=self, ephemeral=True)  
 
 
 
