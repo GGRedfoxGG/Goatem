@@ -551,10 +551,10 @@ Created at: {User.created_at.year}, {User.created_at.month}, {User.created_at.da
     else:
         RobloxUser2 = await client.get_user(record1[1])
         Main.add_field(name='Roblox: ', value=f'''
-Roblox Id: {RobloxUser2.id}
+Roblox Id: [{RobloxUser2.id}](https://www.roblox.com/users/{RobloxUser2.id}/profile)
 Roblox Name: {RobloxUser2.name}
 Display Name: {RobloxUser2.display_name}
-Created at: {RobloxUser2.created.year}
+Created at: {RobloxUser2.created.day}/{RobloxUser2.created.month}/{RobloxUser2.created.year}
     ''', inline=True)
     Main.set_author(name=f'{User.id}', icon_url=MemberTag.avatar.url)
     Main.set_thumbnail(url=MemberTag.avatar.url)
@@ -1833,9 +1833,9 @@ async def _Verify(ctx):
                 if Number == y[1]:
                     if Description == y[0]:
                         if record1 == None:
-                            role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, id =947936695918133338)
+                            role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, id = 956248927617831022)
 
-                            Channel2 = Client_Bot.get_channel(952976163444228198)
+                            Channel2 = Client_Bot.get_channel(957573073090019409)
                             user_thumbnails2 = await client.thumbnails.get_user_avatar_thumbnails(
                                 users=[Robloxuser],
                                 type=AvatarThumbnailType.headshot,
@@ -1848,7 +1848,7 @@ async def _Verify(ctx):
                             Verify2 = discord.Embed(title="**Verification System**", description=f'<@{ctx.author.id}>/{ctx.author.id} verified as:')
                             Verify2.add_field(name='**Name: **', value=f'`{RobloxUser2.name}`', inline=False)
                             Verify2.add_field(name='**Display Name: **', value=f'`{RobloxUser2.display_name}`', inline=False)
-                            Verify2.add_field(name='**ID: **', value=f'`{RobloxUser2.id}`', inline=False)
+                            Verify2.add_field(name='**ID: **', value=f'`[{RobloxUser2.id}](https://www.roblox.com/users/{RobloxUser2.id}/profile)`', inline=False)
                             Verify2.add_field(name='**Code used: **', value=f'`{RobloxUser2.description}`', inline=False)
                             Verify2.add_field(name='**Created at: **', value=f'`{RobloxUser2.created.year}/{RobloxUser2.created.month}/{RobloxUser2.created.day} at {RobloxUser2.created.hour}:{RobloxUser2.created.minute}:{RobloxUser2.created.second}`', inline=False)
                             Verify2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
@@ -2083,7 +2083,6 @@ async def on_member_update(before, after):
         Embed.add_field(name='After: ', value=f'{after.nick}', inline=False)
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         await Channel.send(embed=Embed)
-        await Client_Bot.process_commands(before)
     elif before.name != after.nick and not before.bot:
         Channel = Client_Bot.get_channel(955563873312845924)
         today = date.today()
@@ -2097,7 +2096,6 @@ async def on_member_update(before, after):
         Embed.add_field(name='After: ', value=f'{after.name}', inline=False)
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         await Channel.send(embed=Embed)
-        await Client_Bot.process_commands(before)
 
 
 
