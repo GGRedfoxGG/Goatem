@@ -2777,7 +2777,6 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
         @discord.ui.button(label='Confirm', style=discord.ButtonStyle.green)
         async def Confirm(self, interaction: discord.Interaction, confirm: discord.ui.Button):  
             if interaction.user == ctx.author:
-                await Logging(ctx, ctx.message.content,ctx.author, Discord_User, f"[{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) was verified as <@{Discord_User.id}> with moderation reason: {Reason}", ctx.channel)
                 query3 = f"select userid, robloxid from verified where userid = {Discord_User.id}"
                 Cursor.execute(query3)
                 row3 = Cursor.fetchall()
@@ -2794,6 +2793,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
                 role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, id = 956248927617831022)
 
                 if record1 == None:
+                    await Logging(ctx, ctx.message.content,ctx.author, Discord_User, f"[{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) was verified as <@{Discord_User.id}> with moderation reason: {Reason}", ctx.channel)
                     Channel2 = Client_Bot.get_channel(957573073090019409)
                     Cursor.execute(f"insert into verified (userid, robloxid) values ({Discord_User.id}, {RobloxUser2.id})")
                     Database.commit()
