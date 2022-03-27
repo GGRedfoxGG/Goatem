@@ -2801,7 +2801,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
                 await Channel2.send(embed=Verify2)
                 await ctx.author.send(f'[{RobloxUser2.name}](https://www.roblox.com/users/{RobloxUser2.id}/profile) was verified as <@{Discord_User.id}>')
                 await Discord_User.add_roles(role)
-                for child in self.children: 
+                for child in view.children: 
                     child.disabled = True
                 await interaction.response.edit_message(view=self, embed=Verify2) 
             else:
@@ -2810,7 +2810,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
         async def Revoke(self, interaction: discord.Interaction, Revoke: discord.ui.Button):  
             for child in view.children: 
                 child.disabled = True
-
+            await interaction.response.edit_message(view=self)
 
 
 
