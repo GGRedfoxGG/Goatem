@@ -1868,7 +1868,11 @@ async def _Verify(ctx):
                 child.disabled = True
             await interaction.response.edit_message(view=self, embed=Verify) 
 
-
+        @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
+        async def Revoke(self, interaction: discord.Interaction, Revoke: discord.ui.Button):  
+            for child in view.children: 
+                child.disabled = True
+            await interaction.response.edit_message(view=self)
         def __init__(self, timeout):
             super().__init__(timeout=timeout)
             self.response = None 
@@ -2841,7 +2845,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
         Verify.set_thumbnail(url=user_thumbnail2
         .image_url)
         view = Button(timeout=120)
-        await Logging(ctx, ctx.message.content,ctx.author, Discord_User, f"[{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) was verified as <@{Discord_User.id}>", ctx.channel)
+        await Logging(ctx, ctx.message.content,ctx.author, Discord_User, f"[{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) was verified as <@{Discord_User.id}> with moderation reason: {Reason}", ctx.channel)
         Msg = view.message = await ctx.send(embed=Verify, view=view)
         
 
