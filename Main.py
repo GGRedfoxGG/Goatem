@@ -2772,7 +2772,6 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
     class Button(discord.ui.View):
         @discord.ui.button(label='Confirm', style=discord.ButtonStyle.green)
         async def Confirm(self, interaction: discord.Interaction, confirm: discord.ui.Button):  
-            
             if interaction.user == ctx.author:
                 query3 = f"select userid, robloxid from verified where userid = {Discord_User.id}"
                 Cursor.execute(query3)
@@ -2809,6 +2808,8 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
                     for child in view.children: 
                         child.disabled = True
                     await interaction.response.edit_message(view=self, embed=Verify2) 
+                else:
+                    await interaction.response.send_message("There's a problem with the verification system, please contact the system developer!",view=self, ephemeral=True)
             else:
                 await interaction.response.send_message("There's a problem with the verification system, please contact the system developer!",view=self, ephemeral=True)
         @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
