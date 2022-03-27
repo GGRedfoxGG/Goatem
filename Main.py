@@ -1848,7 +1848,7 @@ async def _Verify(ctx):
                             Verify2 = discord.Embed(title="**Verification System**", description=f'<@{ctx.author.id}>/{ctx.author.id} verified as:')
                             Verify2.add_field(name='**Name: **', value=f'`{RobloxUser2.name}`', inline=False)
                             Verify2.add_field(name='**Display Name: **', value=f'`{RobloxUser2.display_name}`', inline=False)
-                            Verify2.add_field(name='**ID: **', value=f'`[{RobloxUser2.id}](https://www.roblox.com/users/{RobloxUser2.id}/profile)`', inline=False)
+                            Verify2.add_field(name='**ID: **', value=f'[{RobloxUser2.id}](https://www.roblox.com/users/{RobloxUser2.id}/profile)', inline=False)
                             Verify2.add_field(name='**Code used: **', value=f'`{RobloxUser2.description}`', inline=False)
                             Verify2.add_field(name='**Created at: **', value=f'`{RobloxUser2.created.year}/{RobloxUser2.created.month}/{RobloxUser2.created.day} at {RobloxUser2.created.hour}:{RobloxUser2.created.minute}:{RobloxUser2.created.second}`', inline=False)
                             Verify2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
@@ -1896,7 +1896,7 @@ async def _Verify(ctx):
 
         Cursor.execute(query)
         row = Cursor.fetchall()
-        WORDS = ("nPpzDYV41", "gNFnjdng", "fJMNVkmfKGk", "gJMXxkGkx", "fjXngKSK", "Gnskqow")
+        WORDS = ("nPpzDYV41", "gNFnjdng", "fJMNVkmfKGk", "gJMXxkGkx", "fjXngKSK", "Gnskqow", "GjkKSVkDg", "FcXmrSfGkv", "FvKXkwifNGeg", "Gjscnkhof", "Gj4ijgdsimx", "gmkcxgoKMVMK", "FthINGSTo", "Gmxgcxerv")
         word = random.choice(WORDS)
         jumble = ""
         while word:
