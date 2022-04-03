@@ -158,6 +158,49 @@ Account Ping: <@{Member.id}>
     Join.set_author(name=f'{Member} ({Member.id}', icon_url=Member.avatar.url)
     Join.set_footer(text=f'Joined at {Time}')
 
+    Year_Of_Creation = Member.created_at.year
+    Day_Of_Creation = Member.created_at.day
+    FinalYear = datetime.now().year - Year_Of_Creation
+    FinalDay = datetime.now().day - Day_Of_Creation
+
+
+    class Button(discord.ui.View):
+        @discord.ui.button(label='User Information', style=discord.ButtonStyle.grey)
+        async def Info(self, Info: discord.ui.Button, interaction: discord.Interaction):
+            UserInfo = discord.Embed(title='User Information')
+            UserInfo.add_field(name="**User: **", value=f"<@{Member.id}>/`{Member.id}`", inline=False)
+            UserInfo.add_field(name="**Created at: **", value=f"{Member.created_at.day}/{Member.created_at.month}/{Member.created_at.year}")
+            UserInfo.add_field(name="**Joined at: **", value=f"{Member.joined_at.day}/{Member.joined_at.month}/{Member.joined_at.year}")
+            UserInfo.add_field(name="**discriminator: **", value=f"#{Member.discriminator}", inline = True)
+            UserInfo.add_field(name="**Display Name: **", value=f"{Member.display_name}", inline = True)
+            UserInfo.set_thumbnail(url=Member.avatar.url)
+            await interaction.response.send_message(embed=UserInfo, ephemeral=True)
+
+
+        def __init__(self, timeout):
+            super().__init__(timeout=timeout)
+            self.response = None 
+
+        async def on_timeout(self):
+            for child in self.children: 
+                child.disabled = True
+            await self.message.edit(view=self) 
+    if FinalYear < 0 and FinalDay < 5:
+        if datetime.now().day < Day_Of_Creation: 
+            FinalDay2 = Day_Of_Creation - datetime.now().day
+            Embed = discord.Embed(title='Suspicious Logs', description=f"A new user joined the server within **{FinalYear} year(s) and {FinalDay2} day(s)** after account creation!")
+            Embed.add_field(name="**User: **", value=f"<@{Member.id}>/`{Member.id}`")
+            Embed.add_field(name="**Verified: **", value=f"No")
+            Embed.set_thumbnail(url=Member.avatar.url)
+            view = Button(timeout=15780000)
+            view.message = await Channel.send(embed=Embed, view=view)
+        else:
+            Embed = discord.Embed(title='Suspicious Logs', description=f"A new user joined the server within **{FinalYear} year(s), and {FinalDay} day(s)** after account creation!")
+            Embed.add_field(name="**User: **", value=f"<@{Member.id}>/`{Member.id}`")
+            Embed.add_field(name="**Verified: **", value=f"No")
+            Embed.set_thumbnail(url=Member.avatar.url)
+            view = Button(timeout=15780000)
+            view.message = await Channel.send(embed=Embed, view=view)
     await Channel.send(embed=Join)
 
 async def RoleChecker(ctx, User):
@@ -1568,7 +1611,9 @@ async def _Help(ctx):
                 Fun = discord.Embed(title="**Help System**", description=f"Page information: __**Fun**__", color=0x7289da)
                 Fun.set_thumbnail(url=ctx.author.avatar.url)
                 Fun.add_field(name='Fun: ', value='''
-`Rps`         
+`Rps`  
+
+`,Giveaway [Duration in hours]`
             ''', inline=False)
                 Fun.set_footer(text=f' Page 4/5', icon_url=ctx.author.avatar.url)
                 Fun.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
@@ -1726,7 +1771,9 @@ async def _Help(ctx):
                 Fun = discord.Embed(title="**Help System**", description=f"Page information: __**Fun**__", color=0x7289da)
                 Fun.set_thumbnail(url=ctx.author.avatar.url)
                 Fun.add_field(name='Fun: ', value='''
-`,Rps`       
+`,Rps`   
+
+`,Giveaway [Duration in hours]`
             ''', inline=False)
                 Fun.set_footer(text=f' Page 4/5', icon_url=ctx.author.avatar.url)
                 Fun.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
@@ -2310,8 +2357,8 @@ async def _Post(ctx):
             if BigSize == False:
                 for child in view2.children:
                     child.disabled = True
-                await ctx.author.send(embed=DeniedPost)
                 await interaction.response.edit_message(view=self, embed=DeniedPost)
+                await ctx.author.send(embed=DeniedPost)
 
         @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
         async def Approve(self, interaction: discord.Interaction, Approve: discord.ui.Button):  
