@@ -2943,7 +2943,7 @@ Winner: <@{Fetched.id}>
     Giveaway = discord.Embed(title="**Giveaway System**", description="Please reply with this message with the prize!")
     Giveaway.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
     await ctx.send(embed=Giveaway)
-    Report = await Client.wait_for('message', check=lambda message: message.author == ctx.author)
+    Report = await Client_Bot.wait_for('message', check=lambda message: message.author == ctx.author)
     
     if ctx.author.guild_permissions.administrator or In_Group == True:
         if Report.channel.id == ctx.channel.id:
