@@ -2,7 +2,7 @@ from cProfile import label
 from code import interact
 from dis import dis
 from logging import fatal
-from pickle import TRUE
+from pickle import NONE, TRUE
 from platform import python_version
 from pydoc import cli
 from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
@@ -148,9 +148,8 @@ async def on_member_join(Member):
     Join.add_field(name="Account information: ", value=
 f'''
 
-
 Account ID: `{Member.id}`
-Created at: {Member.created_at.month}, {Member.created_at.year} 
+Created at: {Member.created_at.day}/{Member.created_at.month}/{Member.created_at.year} 
 Account Name: {Member}
 Account Ping: <@{Member.id}>
 
@@ -174,7 +173,6 @@ async def RoleChecker(ctx, User):
                     if role == Main:
                         return True
             
-
 async def MissingPermission(ctx, Author):
     Embed = discord.Embed(title="Missing Permissions", description='You should contact a system developer if you think this is a mistake', color=0xe67e22)
     Embed.add_field(name='You are not authorised to use this command on this user', value='Permission 400', inline=False)
@@ -239,7 +237,6 @@ async def _announce(ctx, Channel: discord.TextChannel, Title, *,Annoncement):
         view.message = await ctx.send('Preview!',embed=Accepted, view=view)
     else:
         await MissingPermission(ctx, ctx.author) 
-
 
 @Client_Bot.command(aliases = ['Nick', 'Nickname', 'Name'], pass_context=True)
 async def _Nick(ctx, Member: Union[discord.Member,discord.Object],*,Nick):
@@ -409,7 +406,6 @@ async def _Deafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason):
     else:
         await MissingPermission(ctx, ctx.author) 
 
-
 @Client_Bot.command(aliases = ['Undeaf', 'UnVoiceDeafen', 'UnDeafen'], pass_context=True)
 async def _Undeafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason):
     today = date.today()
@@ -438,8 +434,6 @@ async def _Undeafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason)
         await Member.edit(mute = False)
     else:
         await MissingPermission(ctx, ctx.author) 
-
-
 
 @Client_Bot.command(aliases = ['Alert', 'ModReq'], pass_context=True)
 async def _Alert(ctx, Channel_Location: discord.TextChannel,Message_Id:int): 
@@ -559,7 +553,6 @@ Created at: {RobloxUser2.created.day}/{RobloxUser2.created.month}/{RobloxUser2.c
     Main.set_author(name=f'{User.id}', icon_url=MemberTag.avatar.url)
     Main.set_thumbnail(url=MemberTag.avatar.url)
     await ctx.channel.send(embed=Main)
-
 
 @Client_Bot.command(aliases = ['Case'], pass_context=True)
 async def _Case(ctx, Code):
@@ -923,7 +916,6 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
     else:
         await MissingPermission(ctx, ctx.author)
 
-
 @Client_Bot.command(aliases = ['Purge', 'ClerChat', 'PurgeChat'],  pass_context=True)
 async def _Purge(ctx, Amount: int):
     await RoleChecker(ctx, ctx.author)
@@ -955,7 +947,6 @@ async def _Purge(ctx, Amount: int):
             await ctx.channel.send(embed=Embed,delete_after=10)
     else:
         await MissingPermission(ctx, ctx.author)
-
 
 @Client_Bot.command(aliases = ['Slowmode', 'Cooldown', 'Slow', 'Slowmodechat'],  pass_context=True)
 async def _Slowmode(ctx, Amount: int):
@@ -1088,9 +1079,6 @@ async def _Stats(ctx):
     StatsE.add_field(name='**Discord Version: **', value=f'{discord_version}', inline=False)
     StatsE.add_field(name='**Members: **', value=f'{ctx.guild.member_count:,}', inline=False)
     await message.edit(embed=StatsE)
-
-
-
 
 @Client_Bot.command(aliases = ['Ticket', 'Report', 'Feedback', 'Suggestion', 'Suggest'])
 async def _Ticket(ctx):
@@ -1489,7 +1477,6 @@ async def _Ticket(ctx):
         view = Tickets(timeout=30)
         Msg = view.message = await ctx.author.send(embed=Type, view=view)
 
-
 @Client_Bot.command(aliases = ['CreateRole'])
 async def _CreateRole(ctx,*,Name):
     await Logging(ctx, ctx.message.content,ctx.author, ctx.guild, f"Role name {Name}", ctx.channel)
@@ -1545,7 +1532,6 @@ async def _Rule(ctx):
 ''', inline=False)
     await ctx.author.send(embed=Main)
     await ctx.author.send(embed=Main2)
-
 
 @Client_Bot.command(aliases = ['Help', 'Cmds', 'Commands'],  pass_context=True)
 async def _Help(ctx):
@@ -1802,14 +1788,17 @@ async def _RPS(ctx):
         await ctx.send('Scissors')
 
 @Client_Bot.command(aliases = ['RandomNumber', 'Random'],  pass_context=True)
-async def _RandomNumber(ctx, First_Number: int, Second_Number:int):
-    if First_Number >= Second_Number:
+async def _RandomNumber(ctx, First_Number: int = None, Second_Number:int = None):
+    if First_Number == None and Second_Number == None:
+        Number = random.randint(First_Number,Second_Number)
+        await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F'Random number: {Number}', ctx.channel)
+        await ctx.send(Number)
+    elif First_Number >= Second_Number:
         await ctx.send('First number should be less than the second number, e.g: 1 to 6')
     else:
         Number = random.randint(First_Number,Second_Number)
         await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F'Random number: {Number}', ctx.channel)
         await ctx.send(Number)
-
 
 @Client_Bot.command(aliases = ['Verify'],  pass_context=True)
 async def _Verify(ctx):
@@ -2105,8 +2094,6 @@ async def on_member_update(before, after):
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         await Channel.send(embed=Embed)
 
-
-
 @Client_Bot.command(aliases = ['Toggle'],  pass_context=True)
 async def _Toggle(ctx):
     class List(discord.ui.Select):
@@ -2150,8 +2137,6 @@ async def _Toggle(ctx):
     Toggle = discord.Embed(title="Select your preferred toggle:", description='`None selected`')
     view = ListView()
     Msg = view.message = await ctx.send(embed=Toggle, view=view)
-
-
 
 @Client_Bot.command(aliases = ['Post', 'Advertise'])
 async def _Post(ctx):
@@ -2575,9 +2560,9 @@ async def _Post(ctx):
     Report = await Client_Bot.wait_for('message', check=lambda message: message.author == ctx.author)
 
     if isinstance(Report.channel, discord.channel.TextChannel):
-        Cancelled = discord.Embed(title="**Ticket System**", description=f"Ticket cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
+        Cancelled = discord.Embed(title="**Post System**", description=f"Post cancelled, please recreate your post and reply in Direct Messages", color=0xe74c3c)
         Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-        Cancelled.set_footer(text=f'Ticket by {ctx.author}.', icon_url=ctx.author.avatar.url)
+        Cancelled.set_footer(text=f'Post by {ctx.author}.', icon_url=ctx.author.avatar.url)
         Cancelled.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
         Cancelled.set_thumbnail(url=ctx.author.avatar.url)
         await ctx.author.send(embed=Cancelled)
@@ -2589,9 +2574,9 @@ async def _Post(ctx):
         await ctx.author.send(embed=Container)
         Report2 = await Client_Bot.wait_for('message', check=lambda message: message.author == ctx.author)
         if isinstance(Report.channel, discord.channel.TextChannel):
-            Cancelled = discord.Embed(title="**Ticket System**", description=f"Ticket cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
+            Cancelled = discord.Embed(title="**Post System**", description=f"Post cancelled, please recreate your post and reply in Direct Messages", color=0xe74c3c)
             Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-            Cancelled.set_footer(text=f'Ticket by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            Cancelled.set_footer(text=f'Post by {ctx.author}.', icon_url=ctx.author.avatar.url)
             Cancelled.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             Cancelled.set_thumbnail(url=ctx.author.avatar.url)
             await ctx.author.send(embed=Cancelled)
@@ -2603,9 +2588,9 @@ async def _Post(ctx):
             await ctx.author.send(embed=Payment)
             Report3 = await Client_Bot.wait_for('message', check=lambda message: message.author == ctx.author)
             if isinstance(Report.channel, discord.channel.TextChannel):
-                Cancelled = discord.Embed(title="**Ticket System**", description=f"Ticket cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
+                Cancelled = discord.Embed(title="**Post System**", description=f"Post cancelled, please recreate your post and reply in Direct Messages", color=0xe74c3c)
                 Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-                Cancelled.set_footer(text=f'Ticket by {ctx.author}.', icon_url=ctx.author.avatar.url)
+                Cancelled.set_footer(text=f'Post by {ctx.author}.', icon_url=ctx.author.avatar.url)
                 Cancelled.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
                 await ctx.author.send(embed=Cancelled)
@@ -2620,8 +2605,6 @@ async def _Post(ctx):
                 view = Button(timeout=120)
                 view2 = EditButtons(timeout=15780000)
                 Msg = view.message = await ctx.author.send(embed=Type, view=view)
-
-
 
 @Client_Bot.command(aliases= ['Mute', 'Timeout'])
 async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
@@ -2694,8 +2677,6 @@ async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
             await MissingPermission(ctx, ctx.author)
     else:
         await MissingPermission(ctx, ctx.author)
-        
-
 
 @Client_Bot.command(aliases= ['Unmute', 'Untimeout'])
 async def _Unmute(ctx, Member: discord.Member, *, Reason):
@@ -2764,7 +2745,6 @@ async def _Unmute(ctx, Member: discord.Member, *, Reason):
     else:
         await MissingPermission(ctx, ctx.author)
 
-
 @Client_Bot.command(aliases = ['Forceverify', 'Fverify'],  pass_context=True)
 async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
     Today = date.today()
@@ -2772,7 +2752,9 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
     current_time = Now.strftime("%H:%M:%S")
     current_Date = Today.strftime("%B %d %Y")
     Time = f"{current_Date} {current_time}"
-
+    await RoleChecker(ctx, ctx.author)
+    result_from_errorrank = await RoleChecker(ctx, ctx.author)
+    In_Group = result_from_errorrank
     class Button(discord.ui.View):
         @discord.ui.button(label='Confirm', style=discord.ButtonStyle.green)
         async def Confirm(self, interaction: discord.Interaction, confirm: discord.ui.Button):  
@@ -2841,7 +2823,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
                 child.disabled = True
             await self.message.edit(view=self) 
 
-    if ctx.author.guild_permissions.administrator:
+    if ctx.author.guild_permissions.administrator or In_Group == True:
         RobloxUser = await client.get_user(User)
         user_thumbnails1 = await client.thumbnails.get_user_avatar_thumbnails(
             users=[RobloxUser],
@@ -2865,12 +2847,128 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
         view = Button(timeout=120)
         Msg = view.message = await ctx.send(embed=Verify, view=view)
         
+@Client_Bot.command(aliases = ['Giveaway', 'Giveaways'],  pass_context=True)
+async def _Giveaway(ctx, Duration_In_Hours:int):
+    Today = date.today()
+    Now = datetime.now()
+    current_time = Now.strftime("%H:%M:%S")
+    current_Date = Today.strftime("%B %d %Y")
+    Time = f"{current_Date} {current_time}"
+    await RoleChecker(ctx, ctx.author)
+    result_from_errorrank = await RoleChecker(ctx, ctx.author)
+    In_Group = result_from_errorrank
+    class Button(discord.ui.View):
+        @discord.ui.button(label='Create', style=discord.ButtonStyle.green)
+        async def Create(self, Create: discord.ui.Button, interaction: discord.Interaction):
+            for child in self.children: 
+                child.disabled = True
+            Time = (Duration_In_Hours * 3600)
+            Giveaway3 = discord.Embed(title=f"**{Report.content}**", description=f"""
+Host: <@{ctx.author.id}>
+Duration: {Duration_In_Hours} hour(s)
+Winner: `N/A`
+            """)
+            Giveaway3.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
+            await interaction.response.edit_message(view=view2, embed=Giveaway3)
+            await interaction.message.add_reaction("🎉")
+            await asyncio.sleep(Time)
+            List = []
+            New = await ctx.channel.fetch_message(interaction.message.id)
+            for Reaction in New.reactions:
+                async for user in Reaction.users():
+                    List.append(user.id)
+            print(Time)
+            User1 = random.choice(List)
+            Fetched = await Client_Bot.fetch_user(User1)
+            
+            Giveaway4 = discord.Embed(title=f"**{Report.content}**", description=f"""
+Host: <@{ctx.author.id}>
+Duration: {Duration_In_Hours} hour(s)
+Winner: <@{Fetched.id}>
+            """)
+            Giveaway4.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
+            await interaction.message.edit(embed=Giveaway4, view=view2)
+        @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
+        async def Revoke(self, reroll: discord.ui.Button, interaction: discord.Interaction):  
+            Revoked = discord.Embed(title=f"**{Report.content}**", description=f"""
+Host: <@{ctx.author.id}>
+Duration: {Duration_In_Hours} hour(s)
+Winner: `N/A`
+            """, color=0xe74c3c)
+            Revoked.set_author(name=f'Giveaway post was revoked', icon_url=ctx.author.avatar.url) 
+            for child in view.children:
+                child.disabled = True
+            await interaction.response.edit_message(view=self, embed=Revoked)
 
+
+        def __init__(self, timeout):
+            super().__init__(timeout=timeout)
+            self.response = None 
+
+        async def on_timeout(self):
+            for child in self.children: 
+                child.disabled = True
+            await self.message.edit(view=self)   
+
+
+    class ReRoll(discord.ui.View):
+        @discord.ui.button(label='Reroll', style=discord.ButtonStyle.grey)
+        async def reroll(self, reroll: discord.ui.Button, interaction: discord.Interaction):
+            List = []
+            New = await ctx.channel.fetch_message(interaction.message.id)
+            for Reaction in New.reactions:
+                async for user in Reaction.users():
+                    List.append(user.id)
+            print(List)
+            User1 = random.choice(List)
+            Fetched = await Client_Bot.fetch_user(User1)
+            Rerolled = discord.Embed(title=f"**{Report.content}**", description=f"""
+Host: <@{ctx.author.id}>
+Duration: {Duration_In_Hours} hour(s)
+Winner: <@{Fetched.id}>
+            """)
+            Rerolled.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
+            await interaction.response.edit_message(view=view2, embed=Rerolled)
+
+
+        def __init__(self, timeout):
+            super().__init__(timeout=timeout)
+            self.response = None 
+
+        async def on_timeout(self):
+            for child in self.children: 
+                child.disabled = True
+            await self.message.edit(view=self)   
+
+    Giveaway = discord.Embed(title="**Giveaway System**", description="Please reply with this message with the prize!")
+    Giveaway.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+    await ctx.send(embed=Giveaway)
+    Report = await Client.wait_for('message', check=lambda message: message.author == ctx.author)
+    
+    if ctx.author.guild_permissions.administrator or In_Group == True:
+        if Report.channel.id == ctx.channel.id:
+            Giveaway2 = discord.Embed(title=f"**{Report.content}**", description=f"""
+Host: <@{ctx.author.id}>
+Duration: {Duration_In_Hours} hour(s)
+Winner: N/A
+            """)
+            Giveaway2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
+            view = Button(timeout=15780000)
+            view2 = ReRoll(timeout=15780000)
+            Msg = view.message = await ctx.send(embed=Giveaway2, view=view)
+        else:
+            Cancelled = discord.Embed(title="**Giveaway System**", description=f"Giveaway cancelled, please recreate your giveaway and reply in Direct Messages", color=0xe74c3c)
+            Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+            await ctx.author.send(embed=Cancelled)
+    else:
+        await MissingPermission(ctx, ctx.author)
 
 
 Client_Bot.run('OTU1NTY1MjU3MDY0MDYyOTg4.Yjjhfg.WsH4dAEs4Vn-EKR9XHjPuiv5Q-0') 
 
 
+
+    
 #s = """User Id(s): 4505093
 #Roblox User Id(s): 54930583
 #Ban Length: 12w
