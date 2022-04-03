@@ -2859,7 +2859,7 @@ async def _Giveaway(ctx, Duration_In_Hours:int):
     In_Group = result_from_errorrank
     class Button(discord.ui.View):
         @discord.ui.button(label='Create', style=discord.ButtonStyle.green)
-        async def Create(self, Create: discord.ui.Button, interaction: discord.Interaction):
+        async def Create(self, interaction: discord.Interaction,Create: discord.ui.Button):
             for child in self.children: 
                 child.disabled = True
             Time = (Duration_In_Hours * 3600)
@@ -2889,7 +2889,7 @@ Winner: <@{Fetched.id}>
             Giveaway4.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
             await interaction.message.edit(embed=Giveaway4, view=view2)
         @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
-        async def Revoke(self, reroll: discord.ui.Button, interaction: discord.Interaction):  
+        async def Revoke(self, interaction: discord.Interaction, reroll: discord.ui.Button):  
             Revoked = discord.Embed(title=f"**{Report.content}**", description=f"""
 Host: <@{ctx.author.id}>
 Duration: {Duration_In_Hours} hour(s)
@@ -2913,7 +2913,7 @@ Winner: `N/A`
 
     class ReRoll(discord.ui.View):
         @discord.ui.button(label='Reroll', style=discord.ButtonStyle.grey)
-        async def reroll(self, reroll: discord.ui.Button, interaction: discord.Interaction):
+        async def reroll(self, interaction: discord.Interaction,reroll: discord.ui.Button):
             List = []
             New = await ctx.channel.fetch_message(interaction.message.id)
             for Reaction in New.reactions:
