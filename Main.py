@@ -83,20 +83,8 @@ class database:
 
 class Bot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=commands.when_mentioned_or(','))
+        super().__init__(command_prefix=commands.Bot(command_prefix=',',case_insensitive=True,intents=discord.Intents.all()))
 
-    async def on_ready(self):
-        await Client_Bot.change_presence(activity=discord.Activity(type = discord.ActivityType.listening, name = "The Hidden Staff"))
-        guild = Client_Bot.get_guild(791288635470643200)
-        for black in Blacklisted:
-            User = await Client_Bot.fetch_user(black)
-            print(User)
-            await guild.ban(User)
-        for Member in guild.members:
-            Cursor.execute("INSERT INTO Users (UserID, Time) VALUES (?, ?)", (Member.id, "N/A"))
-            Database.commit()
-        print(f'Logged in as {self.user} (ID: {self.user.id})')
-        print('------------------------------')
 
 
 @Client_Bot.event
