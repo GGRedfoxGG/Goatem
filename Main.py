@@ -3183,8 +3183,8 @@ Winner: N/A
         await MissingPermission(ctx, ctx.author)
 
 
-@Client_Bot.command(aliases=['Suggest', 'Create Suggestion'])
-async def _Suggestion(ctx, *, Suggestion):
+@Client_Bot.command()
+async def _Suggest(ctx, *, Suggestion):
     Channel = Client_Bot.get_channel(962455861882662942)
     class Button(discord.ui.View):
         @discord.ui.button(label='Upvote', style=discord.ButtonStyle.green)
