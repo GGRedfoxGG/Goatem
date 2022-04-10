@@ -110,26 +110,6 @@ async def on_ready():
     print(f'Logged in')
     print('------------------------------')
 
-@Client_Bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.errors.CommandNotFound):
-        await ctx.send(f'{ctx.message.content} is an invalid command.')
-        pass
-    else:
-        today = date.today()
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        current_Date = today.strftime("%B %d, %Y")
-        Channel = Client_Bot.get_channel(955594490645717082)
-        Embed = discord.Embed(title="Error Was Found", description='If you think this is a mistake please contact the system developer.', color=0xe67e22)
-        Embed.set_author(name='Error Logs', icon_url=ctx.author.avatar.url)
-        Embed.add_field(name="Error Message:", value=f'__**{error}**__', inline=False)
-        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-        Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
-        await ctx.channel.send(embed=Embed)
-        await Channel.send(embed=Embed)
-        pass
-
 
 
 bot = Bot()
@@ -3269,6 +3249,7 @@ async def _Suggest(ctx, *, Suggestion):
     """)
     Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
     view = Button(timeout=172800)
+    await ctx.send('Thank you for your suggestion, it was posted successfully!')
     view.message = await Channel.send(embed=Embed, view=view)
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a suggestion for: {Suggestion}", ctx.channel)
 
@@ -3359,6 +3340,7 @@ async def _Polls(ctx, *, Poll):
         """)
         Embed.set_author(name=f"Poll by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
         view = Button(timeout=172800)
+        await ctx.send('Poll have been sent successfully!')
         view.message = await Channel.send(embed=Embed, view=view)
         await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a a poll: {Poll} ", ctx.channel)
     else:
@@ -3369,7 +3351,7 @@ async def _Setup(ctx):
     if ctx.author.guild_permissions.administrator:
         class Button(discord.ui.View):
             @discord.ui.button(label='Roles setup', style=discord.ButtonStyle.grey)
-            async def Roles_Setup(self, roles_setup: discord.ui.Button, interaction: discord.Interaction):
+            async def Roles_Setup(self, interaction: discord.Interaction, roles_setup: discord.ui.Button):
                 today = date.today()
                 now = datetime.now()
                 current_time = now.strftime("%H:%M:%S")
@@ -3423,7 +3405,8 @@ All these role have been created from **[{Group.name}]**(https://www.roblox.com/
 
 @Client_Bot.command(aliases=['Getroles', 'Getrole'])
 async def _Getroles(ctx):
-    Cursor.execute(f"select userid, robloxid from verified where userid = {ctx.author.id}")
+    q = f"select userid, robloxid from verified where userid = {ctx.author.id}"
+    Cursor.execute(q)
     Row = Cursor.fetchall()
     record = None
     for record in Row:
