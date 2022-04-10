@@ -83,7 +83,7 @@ class database:
 
 class Bot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=commands.Bot(command_prefix=',',case_insensitive=True,intents=discord.Intents.all()))
+        super().__init__(commands.Bot(command_prefix=',',case_insensitive=True,intents=discord.Intents.all()))
 
     async def on_ready(self):
         guild = Client_Bot.get_guild(791288635470643200)
@@ -662,7 +662,7 @@ Created at: {RobloxUser2.created.day}/{RobloxUser2.created.month}/{RobloxUser2.c
     Main.set_thumbnail(url=MemberTag.avatar.url)
     await ctx.channel.send(embed=Main)
 
-@Client_Bot.command(aliases = ['Case'], pass_context=True)
+@Client_Bot.command(aliases = ['Case', 'Infraction view'], pass_context=True)
 async def _Case(ctx, Code):
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Code Case reviewd: {Code}", ctx.channel)
     Today = date.today()
@@ -795,7 +795,7 @@ async def _Unban(ctx, Member: Union[discord.Member,discord.Object],*,Reason):
     else:
         await MissingPermission(ctx, ctx.author)
 
-@Client_Bot.command(aliases = ['Clearwarnings'],  pass_context=True)
+@Client_Bot.command(aliases = ['Clearwarnings', 'Clear Warnings'],  pass_context=True)
 async def _ClearWarnings(ctx, Member: discord.Member, *, Reason):
     
     Selected_Code = "select userid from warning_logs"
@@ -939,7 +939,7 @@ async def _Ban(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
     else:
         await MissingPermission(ctx, ctx.author)
 
-@Client_Bot.command(aliases = ['Inf', 'Infractions', 'Warnings', 'Warnlist', 'i'],  pass_context=True)
+@Client_Bot.command(aliases = ['Inf', 'Infractions', 'Warnings', 'Warnlist', 'i', 'Infraction check'],  pass_context=True)
 async def _Infraction(ctx, Member: Union[discord.Member,discord.Object]):
     await RoleChecker(ctx, ctx.author)
     result_from_errorrank = await RoleChecker(ctx, ctx.author)
@@ -1090,7 +1090,7 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
     else:
         await MissingPermission(ctx, ctx.author)
 
-@Client_Bot.command(aliases = ['Purge', 'ClerChat', 'PurgeChat'],  pass_context=True)
+@Client_Bot.command(aliases = ['Purge', 'ClerChat', 'PurgeChat', 'Purge chat'],  pass_context=True)
 async def _Purge(ctx, Amount: int):
     await RoleChecker(ctx, ctx.author)
     result_from_errorrank = await RoleChecker(ctx, ctx.author)
@@ -1756,6 +1756,10 @@ async def _Help(ctx):
 
 `,Post`
 
+`,Suggest [Suggestion]`
+
+`,Poll [Suggest]
+
 `,Createrole [Name]`
             ''', inline=False)
                 Misc.set_footer(text=f' Page 5/5', icon_url=ctx.author.avatar.url)
@@ -1788,6 +1792,8 @@ async def _Help(ctx):
 `,User [User]`
 
 `,Rules`
+
+`,Setup`
 
 `,Help`
 
@@ -1912,6 +1918,8 @@ async def _Help(ctx):
 
 `,Rules`
 
+`,Setup`
+
 `,Help`
 
 `,Version`
@@ -1947,6 +1955,10 @@ async def _Help(ctx):
 `,Toggle`
 
 `,Post`
+
+`,Suggest [Suggestion]`
+
+`,Poll [Suggest]
 
 `,Createrole [Name]`
             
@@ -2947,7 +2959,7 @@ async def _Unmute(ctx, Member: discord.Member, *, Reason):
     else:
         await MissingPermission(ctx, ctx.author)
 
-@Client_Bot.command(aliases = ['Forceverify', 'Fverify'],  pass_context=True)
+@Client_Bot.command(aliases = ['Forceverify', 'Fverify', 'Force Verify'],  pass_context=True)
 async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
     Today = date.today()
     Now = datetime.now()
@@ -3032,6 +3044,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
             type=AvatarThumbnailType.headshot,
             size=(420, 420)
         )
+        await Logging(ctx, ctx.message.content,ctx.author, Member, F"Was forced verified for {Reason} with [{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile)", ctx.channel)
         Verify = discord.Embed(title="**Verification System**", description=f'<@{Discord_User.id}>/{Discord_User.id} verified as:')
         Verify.add_field(name='**Name: **', value=f'`{RobloxUser.name}`', inline=False)
         Verify.add_field(name='**Display Name: **', value=f'`{RobloxUser.display_name}`', inline=False)
@@ -3048,8 +3061,10 @@ async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
         .image_url)
         view = Button(timeout=120)
         Msg = view.message = await ctx.send(embed=Verify, view=view)
+    else:
+        await MissingPermission(ctx, ctx.author)
         
-@Client_Bot.command(aliases = ['Giveaway', 'Giveaways'],  pass_context=True)
+@Client_Bot.command(aliases = ['Giveaway', 'Giveaways', 'Create Giveaway'],  pass_context=True)
 async def _Giveaway(ctx, Duration_In_Hours:int):
     Today = date.today()
     Now = datetime.now()
@@ -3073,7 +3088,9 @@ Winner: `N/A`
             Giveaway3.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
             await interaction.response.edit_message(view=view2, embed=Giveaway3)
             await interaction.message.add_reaction("🎉")
+            await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a giveaway for {Duration_In_Hours}h with prize {Report.content}", ctx.channel)
             await asyncio.sleep(Time)
+
             List = []
             New = await ctx.channel.fetch_message(interaction.message.id)
             for Reaction in New.reactions:
@@ -3164,6 +3181,327 @@ Winner: N/A
             await ctx.author.send(embed=Cancelled)
     else:
         await MissingPermission(ctx, ctx.author)
+
+
+@Client_Bot.command(aliases=['Suggestion', 'Suggest', 'Create Suggestion'])
+async def _Suggestion(ctx, *, Suggestion):
+    Channel = Client_Bot.get_channel(962455861882662942)
+    class Button(discord.ui.View):
+        @discord.ui.button(label='Upvote', style=discord.ButtonStyle.green)
+        async def Approve(self, interaction: discord.Interaction,Yes: discord.ui.Button):  
+            Interacted_Before = False
+            for User in UserList:
+                if User == interaction.user.id:
+                    Interacted_Before = True
+            
+            if Interacted_Before == True:
+                await interaction.response.send_message('You already voted for this post', ephemeral=True)
+            else:
+                UserList.append(interaction.user.id)
+                Said_Yes.append(interaction.user.id)
+                Number1 = 0
+                Number = 0
+                for SaidYes in Said_Yes:
+                    Number1 = Number1 + 1
+                for SaidNo in Said_No:
+                    Number = Number + 1
+                Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}")
+                Embed2.add_field(name="**Results: **", value=f"""
+<:Upvote:962457364009742416> **Upvotes:** `{Number1}`
+<:Downvote:962457339837947985> **Downvotes:** `{Number}`
+<:Total:962457306853953548> **Total Votes:** `{Number + Number1}`
+                
+                """)
+                Embed2.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+                await interaction.message.edit(embed=Embed2, view=view)
+                await interaction.response.send_message('Your vote have been added to the post, thank you!', ephemeral=True)
+
+        @discord.ui.button(label='Downvote', style=discord.ButtonStyle.red)
+        async def Deny(self, interaction: discord.Interaction, No: discord.ui.Button):  
+            Interacted_Before = False
+            for User in UserList:
+                if User == interaction.user.id:
+                    Interacted_Before = True
+            
+            if Interacted_Before == True:
+                await interaction.response.send_message('You already voted for this post', ephemeral=True)
+            else:
+                UserList.append(interaction.user.id)
+                Said_No.append(interaction.user.id)
+                Number1 = 0
+                Number = 0
+                for SaidYes in Said_Yes:
+                    Number1 = Number1 + 1
+                for SaidNo in Said_No:
+                    Number = Number + 1
+                Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}")
+                Embed2.add_field(name="**Results: **", value=f"""
+<:Upvote:962457364009742416> **Upvotes:** `{Number1}`
+<:Downvote:962457339837947985> **Downvotes:** `{Number}`
+<:Total:962457306853953548> **Total Votes:** `{Number + Number1}`
+                
+                """)
+                Embed2.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+                await interaction.message.edit(embed=Embed2, view=view)
+                await interaction.response.send_message('Your vote have been added to the post, thank you!', ephemeral=True)
+        def __init__(self, timeout):
+            super().__init__(timeout=timeout)
+            self.response = None 
+
+        async def on_timeout(self):
+            for child in self.children: 
+                child.disabled = True
+            await self.message.edit(view=self) 
+    UserList = []
+    Said_Yes = []
+    Said_No = []
+    Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}")
+    Embed.add_field(name="**Results: **", value=f"""
+
+<:Upvote:962457364009742416> **Upvotes:** `None`
+<:Downvote:962457339837947985> **Downvotes:** `None`
+<:Total:962457306853953548> **Total Votes:** `None`
+                
+    """)
+    Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+    view = Button(timeout=172800)
+    view.message = await Channel.send(embed=Embed, view=view)
+    await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a suggestion for: {Suggestion}", ctx.channel)
+
+
+@Client_Bot.command(aliases=['Polls', 'PostPoll', 'Create Poll'])
+async def _Polls(ctx, *, Poll):
+    await RoleChecker(ctx, ctx.author)
+    result_from_errorrank = await RoleChecker(ctx, ctx.author)
+    In_Group = result_from_errorrank
+
+    if ctx.author.guild_permissions.administrator or In_Group == True:
+        Channel = Client_Bot.get_channel(962458635756265512)
+        class Button(discord.ui.View):
+            @discord.ui.button(label='Upvote', style=discord.ButtonStyle.green)
+            async def Approve(self, interaction: discord.Interaction,Yes: discord.ui.Button):  
+                Interacted_Before = False
+                for User in UserList:
+                    if User == interaction.user.id:
+                        Interacted_Before = True
+                
+                if Interacted_Before == True:
+                    await interaction.response.send_message('You already voted for this post', ephemeral=True)
+                else:
+                    UserList.append(interaction.user.id)
+                    Said_Yes.append(interaction.user.id)
+                    Number1 = 0
+                    Number = 0
+                    for SaidYes in Said_Yes:
+                        Number1 = Number1 + 1
+                    for SaidNo in Said_No:
+                        Number = Number + 1
+                    Embed2 = discord.Embed(title='Polls', description=f"{Poll}")
+                    Embed2.add_field(name="**Results: **", value=f"""
+    <:Upvote:962457364009742416> **Upvotes:** `{Number1}`
+    <:Downvote:962457339837947985> **Downvotes:** `{Number}`
+    <:Total:962457306853953548> **Total Votes:** `{Number + Number1}`
+                    
+                    """)
+                    Embed2.set_author(name=f"Poll by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+                    await interaction.message.edit(embed=Embed2, view=view)
+                    await interaction.response.send_message('Your poll have been added to the post, thank you!', ephemeral=True)
+
+            @discord.ui.button(label='Downvote', style=discord.ButtonStyle.red)
+            async def Deny(self, interaction: discord.Interaction, No: discord.ui.Button):  
+                Interacted_Before = False
+                for User in UserList:
+                    if User == interaction.user.id:
+                        Interacted_Before = True
+                
+                if Interacted_Before == True:
+                    await interaction.response.send_message('You already voted for this post', ephemeral=True)
+                else:
+                    UserList.append(interaction.user.id)
+                    Said_No.append(interaction.user.id)
+                    Number1 = 0
+                    Number = 0
+                    for SaidYes in Said_Yes:
+                        Number1 = Number1 + 1
+                    for SaidNo in Said_No:
+                        Number = Number + 1
+                    Embed2 = discord.Embed(title='Polls', description=f"{Poll}")
+                    Embed2.add_field(name="**Results: **", value=f"""
+    <:Upvote:962457364009742416> **Upvotes:** `{Number1}`
+    <:Downvote:962457339837947985> **Downvotes:** `{Number}`
+    <:Total:962457306853953548> **Total Votes:** `{Number + Number1}`
+                    
+                    """)
+                    Embed2.set_author(name=f"Poll by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+                    await interaction.message.edit(embed=Embed2, view=view)
+                    await interaction.response.send_message('Your poll have been added to the post, thank you!', ephemeral=True)
+            def __init__(self, timeout):
+                super().__init__(timeout=timeout)
+                self.response = None 
+
+            async def on_timeout(self):
+                for child in self.children: 
+                    child.disabled = True
+                await self.message.edit(view=self) 
+        UserList = []
+        Said_Yes = []
+        Said_No = []
+        Embed = discord.Embed(title='Poll', description=f"{Poll}")
+        Embed.add_field(name="**Results: **", value=f"""
+
+    <:Upvote:962457364009742416> **Upvotes:** `None`
+    <:Downvote:962457339837947985> **Downvotes:** `None`
+    <:Total:962457306853953548> **Total Votes:** `None`
+                    
+        """)
+        Embed.set_author(name=f"Poll by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+        view = Button(timeout=172800)
+        view.message = await Channel.send(embed=Embed, view=view)
+        await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a a poll: {Poll} ", ctx.channel)
+    else:
+        await MissingPermission(ctx, ctx.author)
+
+
+@Client_Bot.command(aliases=['Setup'])
+async def _Setup(ctx):
+    if ctx.author.guild_permissions.administrator:
+        class Button(discord.ui.View):
+            @discord.ui.button(label='Roles setup', style=discord.ButtonStyle.grey)
+            async def Roles_Setup(self, roles_setup: discord.ui.Button, interaction: discord.Interaction):
+                today = date.today()
+                now = datetime.now()
+                current_time = now.strftime("%H:%M:%S")
+                current_Date = today.strftime("%B %d, %Y")
+                roles_setup.disabled = True
+                roles_setup.label = f"Roles setup: {interaction.user}"
+                Setup_Menu2 = discord.Embed(title='Roblox rank setup', description=f'Please reply to this message with the Roblox group ID!')
+                Setup_Menu2.set_author(name=f"{ctx.author} ({ctx.author.id})")
+                await interaction.response.edit_message(embed=Setup_Menu2, view=view)
+                Report = await Client_Bot.wait_for('message', check=lambda message: message.author == ctx.author)
+                if Report.content:
+                    Group = await client.get_group(group_id=Report.content)
+                    thumbnails = await client.thumbnails.get_group_icons(
+                        groups=[Group.id],
+                        image_format=roblox.ThumbnailFormat.png,
+                        size=(420, 420),
+                        is_circular=False
+                    )
+                    Setup_Menu4 = discord.Embed(title='Roblox rank setup', description=f'Please wait while the bot fetch all roles from [{Group.name}](https://www.roblox.com/groups/{Group.id}/Elite-Developers)!')
+                    Setup_Menu4.set_thumbnail(url=thumbnails[0].image_url)
+                    Setup_Menu4.set_author(name=f"{ctx.author} ({ctx.author.id})")
+                    await interaction.message.edit(embed=Setup_Menu4)
+                    GroupRoles = await Group.get_roles()
+                    List = []
+                    for roles in GroupRoles:
+                        await ctx.guild.create_role(name=roles.name)
+                        List.append(roles.name)
+                    Setup_Menu3 = discord.Embed(title='Roblox rank setup', description=f'''
+Roles created: 
+```
+{List}
+```
+All these role have been created from **[{Group.name}]**(https://www.roblox.com/groups/{Group.id}/Elite-Developers) with Group ID: **{Group.id}**
+                    ''')
+                    Setup_Menu3.set_thumbnail(url=thumbnails[0].image_url)
+                    Setup_Menu3.set_author(name=f"{ctx.author} ({ctx.author.id})")
+                    await interaction.message.edit(embed=Setup_Menu3)
+            def __init__(self, timeout):
+                super().__init__(timeout=timeout)
+                self.response = None 
+
+            async def on_timeout(self):
+                for child in self.children: 
+                    child.disabled = True
+                await self.message.edit(view=self) 
+
+        Setup_Menu = discord.Embed(title='Roblox rank setup', description='This will create roles from a Roblox group to the discord server and finish setting up normal background settings for the Roblox verification system.')
+        Setup_Menu.set_author(name=f"{ctx.author} ({ctx.author.id})")
+        view = Button(timeout=15780000)
+        Msg = view.message = await ctx.send(embed=Setup_Menu, view=view)    
+
+@Client_Bot.command(aliases=['Getroles', 'Getrole'])
+async def _Getroles(ctx):
+
+    Cursor.execute(f"select userid, robloxid from verified where userid = {ctx.author.id}")
+    Row = Cursor.fetchall()
+    record = None
+    for record in Row:
+        pass
+    today = date.today()
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    current_Date = today.strftime("%B %d, %Y")
+
+
+    if record == None:
+        Cancelled = discord.Embed(title="**Verification system**", description=f"Get roles was cancelled, please verify yourself using `,Verify` before using this comamnd!", color=0xe74c3c)
+        Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
+        Cancelled.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+        await ctx.author.send(embed=Cancelled)
+    else:
+        class Button(discord.ui.View):
+            @discord.ui.button(label='Get roles', style=discord.ButtonStyle.grey)
+            async def Info(self, Info: discord.ui.Button, interaction: discord.Interaction):
+                Group2 = await client.get_group(group_id=5994518)
+                Embed_Roles2 = discord.Embed(title=f"**Verification system**", description=f"Fetching roles from [{Group2.name}](https://www.roblox.com/groups/{Group2.id}/Elite-Developers)!", color=0x3498db)
+                Embed_Roles2.set_thumbnail(url=user_thumbnails[0].image_url)
+                Embed_Roles2.set_footer(text=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+                await interaction.response.edit_message(embed=Embed_Roles2, view=view)
+                Name2 = await Group2.get_member_by_username(username=RobloxUser.name)
+                Groups2 = await Name2.get_group_roles()
+                GroupRole2 = None
+                Has_Role = False
+                for roles2 in Groups2:
+                    if roles2.group.id == 5994518:
+                        role2 = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = roles2.name)
+                        GroupRole2 = role2.id
+                for roles3 in ctx.author.roles:
+                    if roles3.id == GroupRole2:
+                        Has_Role = True
+                    else:
+                        Has_Role = False
+                
+                if Has_Role == True:
+                    await interaction.response.send_message('You already have the role!', ephemeral=True)
+                else:
+                    await interaction.response.send_message(f"You've been assigned {role2} from [{Group2.name}](https://www.roblox.com/groups/{Group2.id}/Elite-Developers)!", ephemeral=True)
+                    await ctx.author.add_roles(role2)  
+
+
+            def __init__(self, timeout):
+                super().__init__(timeout=timeout)
+                self.response = None 
+
+            async def on_timeout(self):
+                for child in self.children: 
+                    child.disabled = True
+                await self.message.edit(view=self) 
+        RobloxUser = await client.get_user(record)
+        user_thumbnails = await client.thumbnails.get_user_avatar_thumbnails(
+            users=[RobloxUser],
+            type=AvatarThumbnailType.headshot,
+            size=(420, 420)
+        )
+        Group = await client.get_group(group_id=5994518)
+        Name = await Group.get_member_by_username(username=RobloxUser.name)
+        Groups = await Name.get_group_roles()
+        GroupRole = None
+        for roles in Groups:
+            if roles.group.id == 5994518:
+                role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = roles.name)
+                GroupRole = roles.name
+        await ctx.author.add_roles(role)
+        Embed_Roles = discord.Embed(title=f"**Verification system**", description=f"Your roles have been update to [{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) from [{Group.name}](https://www.roblox.com/groups/{Group.id}/Elite-Developers)!", color=0x3498db)
+        Embed_Roles.add_field(name='Roles Added: ', value=f'''
+```
+{GroupRole}
+```     
+        ''')
+        Embed_Roles.set_thumbnail(url=user_thumbnails[0].image_url)
+        Embed_Roles.set_footer(text=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+        view = Button(120)
+        view.message = await ctx.send(embed=Embed_Roles, view=view)
+        
 
 
 Client_Bot.run('OTU1NTY1MjU3MDY0MDYyOTg4.Yjjhfg.WsH4dAEs4Vn-EKR9XHjPuiv5Q-0') 
