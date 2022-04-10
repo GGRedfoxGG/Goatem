@@ -83,7 +83,7 @@ class database:
 
 class Bot(commands.Bot):
     def __init__(self):
-        super().__init__(commands.Bot(command_prefix=',',case_insensitive=True,intents=discord.Intents.all()))
+        super().__init__(intents=discord.Intents.all())
 
     async def on_ready(self):
         guild = Client_Bot.get_guild(791288635470643200)
