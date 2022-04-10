@@ -3446,10 +3446,6 @@ async def _Getroles(ctx):
             @discord.ui.button(label='Get roles', style=discord.ButtonStyle.grey)
             async def Get_Roles(self, interaction: discord.Interaction, Rolesbutton: discord.ui.Button):
                 Group2 = await client.get_group(group_id=5994518)
-                Embed_Roles2 = discord.Embed(title=f"**Verification system**", description=f"Fetching roles from [{Group2.name}](https://www.roblox.com/groups/{Group2.id}/Elite-Developers)!", color=0x3498db)
-                Embed_Roles2.set_thumbnail(url=user_thumbnails[0].image_url)
-                Embed_Roles2.set_footer(text=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-                await interaction.response.edit_message(embed=Embed_Roles2, view=view)
                 Name2 = await Group2.get_member_by_username(username=RobloxUser.name)
                 Groups2 = await Name2.get_group_roles()
                 GroupRole2 = None
@@ -3501,7 +3497,7 @@ async def _Getroles(ctx):
                 Has_Role1 = True
             else:
                 Has_Role1 = False
-        if Has_Role1 == True:
+        if Has_Role1 == False:
             await ctx.author.add_roles(role)
             Embed_Roles = discord.Embed(title=f"**Verification system**", description=f"Your roles have been update to [{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) from [{Group.name}](https://www.roblox.com/groups/{Group.id}/Elite-Developers)!", color=0x3498db)
             Embed_Roles.add_field(name='Roles Added: ', value=f'''
@@ -3513,7 +3509,7 @@ async def _Getroles(ctx):
             Embed_Roles.set_footer(text=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             view = Button(120)
             view.message = await ctx.send(embed=Embed_Roles, view=view)
-        elif Has_Role1 == False:
+        elif Has_Role1 == True:
             await ctx.send("You already have the role, if you think this is a mistake please contact a system develope!")
         
 
