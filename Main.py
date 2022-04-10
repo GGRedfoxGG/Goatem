@@ -1277,7 +1277,7 @@ async def _Stats(ctx):
     StatsE.add_field(name='**Members: **', value=f'{ctx.guild.member_count:,}', inline=False)
     await message.edit(embed=StatsE)
 
-@Client_Bot.command(aliases = ['Ticket', 'Report', 'Feedback', 'Suggestion', 'Suggest'])
+@Client_Bot.command(aliases = ['Ticket', 'Report'])
 async def _Ticket(ctx):
     UserReport = Client_Bot.get_channel(955563961053483148)
     ScamReport = Client_Bot.get_channel(955563857236070432)
@@ -1795,6 +1795,8 @@ async def _Help(ctx):
 
 `,Setup`
 
+`,Getroles`
+
 `,Help`
 
 `,Version`
@@ -1919,6 +1921,8 @@ async def _Help(ctx):
 `,Rules`
 
 `,Setup`
+
+`,Getroles`
 
 `,Help`
 
@@ -3183,7 +3187,7 @@ Winner: N/A
         await MissingPermission(ctx, ctx.author)
 
 
-@Client_Bot.command()
+@Client_Bot.command(aliases = ['Suggest', 'Suggestion'])
 async def _Suggest(ctx, *, Suggestion):
     Channel = Client_Bot.get_channel(962455861882662942)
     class Button(discord.ui.View):
@@ -3267,7 +3271,6 @@ async def _Suggest(ctx, *, Suggestion):
     view = Button(timeout=172800)
     view.message = await Channel.send(embed=Embed, view=view)
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a suggestion for: {Suggestion}", ctx.channel)
-
 
 @Client_Bot.command(aliases=['Polls', 'PostPoll', 'Create Poll'])
 async def _Polls(ctx, *, Poll):
@@ -3361,7 +3364,6 @@ async def _Polls(ctx, *, Poll):
     else:
         await MissingPermission(ctx, ctx.author)
 
-
 @Client_Bot.command(aliases=['Setup'])
 async def _Setup(ctx):
     if ctx.author.guild_permissions.administrator:
@@ -3421,7 +3423,6 @@ All these role have been created from **[{Group.name}]**(https://www.roblox.com/
 
 @Client_Bot.command(aliases=['Getroles', 'Getrole'])
 async def _Getroles(ctx):
-
     Cursor.execute(f"select userid, robloxid from verified where userid = {ctx.author.id}")
     Row = Cursor.fetchall()
     record = None
