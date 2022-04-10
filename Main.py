@@ -3487,17 +3487,15 @@ async def _Getroles(ctx):
         Name = await Group.get_member_by_username(username=RobloxUser.name)
         Groups = await Name.get_group_roles()
         GroupRole = None
-        for roles in Groups:
-            if roles.group.id == 5994518:
-                role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = roles.name)
-                GroupRole = roles.name
         Has_Role1 = False
         for roles4 in ctx.author.roles:
             if roles4.id == GroupRole:
                 Has_Role1 = True
-            else:
-                Has_Role1 = False
         if Has_Role1 == False:
+            for roles in Groups:
+                if roles.group.id == 5994518:
+                    role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = roles.name)
+                    GroupRole = roles.name
             await ctx.author.add_roles(role)
             Embed_Roles = discord.Embed(title=f"**Verification system**", description=f"Your roles have been update to [{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) from [{Group.name}](https://www.roblox.com/groups/{Group.id}/Elite-Developers)!", color=0x3498db)
             Embed_Roles.add_field(name='Roles Added: ', value=f'''
@@ -3514,7 +3512,7 @@ async def _Getroles(ctx):
         
 
 
-Client_Bot.run('OTU1NTY1MjU3MDY0MDYyOTg4.Yjjhfg.WsH4dAEs4Vn-EKR9XHjPuiv5Q-0') 
+Client_Bot.run('OTU1NTY1MjU3MDY0MDYyOTg4.Yjjhfg.aVr1X9sG0MlRTCK7O2KrT0ps41E') 
 
 
 
