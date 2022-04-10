@@ -3424,7 +3424,7 @@ All these role have been created from **[{Group.name}]**(https://www.roblox.com/
 
 @Client_Bot.command(aliases=['Getroles', 'Getrole'])
 async def _Getroles(ctx):
-    q = f"select userid, robloxid from verified where userid = {ctx.author.id}"
+    q = f"select robloxid from verified where userid = {ctx.author.id}"
     Cursor.execute(q)
     Row = Cursor.fetchall()
     record = None
