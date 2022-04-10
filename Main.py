@@ -1757,7 +1757,7 @@ async def _Help(ctx):
 
 `,Suggest [Suggestion]`
 
-`,Poll [Suggest]
+`,Poll [Suggest]`
 
 `,Createrole [Name]`
             ''', inline=False)
@@ -1961,7 +1961,7 @@ async def _Help(ctx):
 
 `,Suggest [Suggestion]`
 
-`,Poll [Suggest]
+`,Poll [Suggest]`
 
 `,Createrole [Name]`
             
