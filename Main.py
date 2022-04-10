@@ -651,10 +651,20 @@ Created at: {User.created_at.year}, {User.created_at.month}, {User.created_at.da
     ''', inline=True)
     else:
         RobloxUser2 = await client.get_user(record1[1])
+        Group = await client.get_group(group_id=5994518)
+        Name = await Group.get_member_by_username(username=RobloxUser2.name)
+        Groups = await Name.get_group_roles()
+        GroupRole = None
+        Rank = None
+        for roles in Groups:
+            if roles.group.id == 5994518:
+                GroupRole = roles.name
+                Rank = roles.rank
         Main.add_field(name='Roblox: ', value=f'''
 Roblox Id: [{RobloxUser2.id}](https://www.roblox.com/users/{RobloxUser2.id}/profile)
 Roblox Name: {RobloxUser2.name}
 Display Name: {RobloxUser2.display_name}
+Group rank: {GroupRole} ({Rank})
 Created at: {RobloxUser2.created.day}/{RobloxUser2.created.month}/{RobloxUser2.created.year}
     ''', inline=True)
     Main.set_author(name=f'{User.id}', icon_url=MemberTag.avatar.url)
@@ -835,7 +845,7 @@ async def _ClearWarnings(ctx, Member: discord.Member, *, Reason):
 
 @Client_Bot.command(aliases = ['Version'],  pass_context=True)
 async def _Version(ctx):
-    await ctx.channel.send(f"The bot is version 1.6.0 ")
+    await ctx.channel.send(f"The bot is version 1.9.2 ")
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
 
 @Client_Bot.command(aliases = ['Ban'],  pass_context=True)
