@@ -3444,7 +3444,7 @@ async def _Getroles(ctx):
     else:
         class Button(discord.ui.View):
             @discord.ui.button(label='Get roles', style=discord.ButtonStyle.grey)
-            async def Info(self, Info: discord.ui.Button, interaction: discord.Interaction):
+            async def Get_Roles(self, interaction: discord.Interaction, Rolesbutton: discord.ui.Button):
                 Group2 = await client.get_group(group_id=5994518)
                 Embed_Roles2 = discord.Embed(title=f"**Verification system**", description=f"Fetching roles from [{Group2.name}](https://www.roblox.com/groups/{Group2.id}/Elite-Developers)!", color=0x3498db)
                 Embed_Roles2.set_thumbnail(url=user_thumbnails[0].image_url)
@@ -3464,11 +3464,13 @@ async def _Getroles(ctx):
                     else:
                         Has_Role = False
                 
-                if Has_Role == True:
+                if Has_Role == True and interaction.user.id == ctx.author.id:
                     await interaction.response.send_message('You already have the role!', ephemeral=True)
-                else:
+                elif Has_Role == False and interaction.user.id == ctx.author.id:
                     await interaction.response.send_message(f"You've been assigned {role2} from [{Group2.name}](https://www.roblox.com/groups/{Group2.id}/Elite-Developers)!", ephemeral=True)
                     await ctx.author.add_roles(role2)  
+                else:
+                    await interaction.response.send_message(f"There was a mistake please contact the system developer!", ephemeral=True)
 
 
             def __init__(self, timeout):
