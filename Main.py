@@ -83,7 +83,7 @@ class database:
 
 class Bot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=',',intents=discord.Intents.all())
+        super().__init__(command_prefix=',',intents=discord.Intents.all(), )
 
     async def on_ready(self):
         guild = Client_Bot.get_guild(791288635470643200)
@@ -3183,7 +3183,7 @@ Winner: N/A
         await MissingPermission(ctx, ctx.author)
 
 
-@Client_Bot.command(aliases=['Suggestion', 'Suggest', 'Create Suggestion'])
+@Client_Bot.command(aliases=['Suggest', 'Create Suggestion'])
 async def _Suggestion(ctx, *, Suggestion):
     Channel = Client_Bot.get_channel(962455861882662942)
     class Button(discord.ui.View):
