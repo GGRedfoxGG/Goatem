@@ -3399,7 +3399,7 @@ async def _Setup(ctx):
                         size=(420, 420),
                         is_circular=False
                     )
-                    Setup_Menu4 = discord.Embed(title='Roblox rank setup', description=f'Please wait while the bot fetch all roles from [{Group.name}](https://www.roblox.com/groups/{Group.id}/Elite-Developers)!')
+                    Setup_Menu4 = discord.Embed(title='Roblox rank setup', description=f'Please wait while the bot fetch all roles from [{Group.name}](https://www.roblox.com/groups/{Group.id}/)!')
                     Setup_Menu4.set_thumbnail(url=thumbnails[0].image_url)
                     Setup_Menu4.set_author(name=f"{ctx.author} ({ctx.author.id})")
                     await interaction.message.edit(embed=Setup_Menu4)
@@ -3500,10 +3500,9 @@ async def _Getroles(ctx):
         for roles in Groups:
             if roles.group.id == 5994518:
                 GroupRole = roles.name
-                print(GroupRole)
                 group_role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = GroupRole) 
-                print(group_role)
-        await ctx.author.add_roles(group_role.id)
+
+        await ctx.author.add_roles(group_role)
         Embed_Roles = discord.Embed(title=f"**Verification system**", description=f"Your roles have been update to [{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) from [{Group.name}](https://www.roblox.com/groups/{Group.id}/Elite-Developers)!", color=0x3498db)
         Embed_Roles.add_field(name='Roles Added: ', value=f'''
 ```
