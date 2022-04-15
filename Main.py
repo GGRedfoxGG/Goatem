@@ -3497,28 +3497,21 @@ async def _Getroles(ctx):
         Name = await Group.get_member_by_username(username=RobloxUser.name)
         Groups = await Name.get_group_roles()
         GroupRole = None
-        Has_Role1 = False
-        for roles4 in ctx.author.roles:
-            if roles4.id == GroupRole:
-                Has_Role1 = True
-        if Has_Role1 == False:
-            for roles in Groups:
-                if roles.group.id == 5994518:
-                    role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = roles.name)
-                    GroupRole = roles.name
-            await ctx.author.add_roles(role)
-            Embed_Roles = discord.Embed(title=f"**Verification system**", description=f"Your roles have been update to [{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) from [{Group.name}](https://www.roblox.com/groups/{Group.id}/Elite-Developers)!", color=0x3498db)
-            Embed_Roles.add_field(name='Roles Added: ', value=f'''
+        for roles in Groups:
+            if roles.group.id == 5994518:
+                role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = roles.name)
+                GroupRole = roles.name
+        await ctx.author.add_roles(role)
+        Embed_Roles = discord.Embed(title=f"**Verification system**", description=f"Your roles have been update to [{RobloxUser.name}](https://www.roblox.com/users/{RobloxUser.id}/profile) from [{Group.name}](https://www.roblox.com/groups/{Group.id}/Elite-Developers)!", color=0x3498db)
+        Embed_Roles.add_field(name='Roles Added: ', value=f'''
 ```
 {GroupRole}
 ```     
-            ''')
-            Embed_Roles.set_thumbnail(url=user_thumbnails[0].image_url)
-            Embed_Roles.set_footer(text=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-            view = Button(120)
-            view.message = await ctx.send(embed=Embed_Roles, view=view)
-        elif Has_Role1 == True:
-            await ctx.send("You already have the role, if you think this is a mistake please contact a system develope!")
+        ''')
+        Embed_Roles.set_thumbnail(url=user_thumbnails[0].image_url)
+        Embed_Roles.set_footer(text=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+        view = Button(120)
+        view.message = await ctx.send(embed=Embed_Roles, view=view)
         
 
 
