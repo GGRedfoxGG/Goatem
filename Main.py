@@ -110,25 +110,7 @@ async def on_ready():
     print(f'Logged in')
     print('------------------------------')
 
-@Client_Bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.errors.CommandNotFound):
-        await ctx.send(f'{ctx.message.content} is an invalid command.')
-        pass
-    else:
-        today = date.today()
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        current_Date = today.strftime("%B %d, %Y")
-        Channel = Client_Bot.get_channel(955594490645717082)
-        Embed = discord.Embed(title="Error Was Found", description='If you think this is a mistake please contact the system developer.', color=0xe67e22)
-        Embed.set_author(name='Error Logs', icon_url=ctx.author.avatar.url)
-        Embed.add_field(name="Error Message:", value=f'__**{error}**__', inline=False)
-        Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
-        Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
-        await ctx.channel.send(embed=Embed)
-        await Channel.send(embed=Embed)
-        pass
+
 
 
 bot = Bot()
