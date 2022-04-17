@@ -1678,9 +1678,9 @@ async def _Ticket(ctx):
         Type.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         Type.set_author(name=ctx.author, icon_url=ctx.author.avatar.url)
         Type.set_thumbnail(url=ctx.author.avatar.url)
-        Type.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
+        Type.set_footer(text=f'You have 2 minutes to pick an option.', icon_url=ctx.author.avatar.url)
         view2 = Button(timeout=15780000)
-        view = Tickets(timeout=30)
+        view = Tickets(timeout=120)
         Msg = view.message = await ctx.author.send(embed=Type, view=view)
 
 @Client_Bot.command(aliases = ['CreateRole'])
@@ -2380,47 +2380,49 @@ async def _Post(ctx):
     class ConfirmationButton(discord.ui.View):
         @discord.ui.button(label='Confirm', style=discord.ButtonStyle.green)
         async def Confirm(self, interaction: discord.Interaction, confirm: discord.ui.Button):  
-            if TicketType[-1] == "Hiring":
-                BigSize = False
-                Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
-                List = []
-                NumberNew = 0 
-                for Attackment in Report2.attachments:
-                    if Report2.attachments:
-                        print(Attackment.url)
-                        NumberNew = NumberNew + 1
-                        List.append(Attackment.url)
+            BigSize = False
+            Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
+            List = []
+            NumberNew = 0 
+            for Attackment in Report2.attachments:
+                if Report2.attachments:
+                    NumberNew = NumberNew + 1
+                    List.append(Attackment.url)
 
-                if NumberNew == 0:
-                    Post.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
-                elif NumberNew == 1:
-                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
-                elif NumberNew == 2:
-                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
-                elif NumberNew == 3:
-                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
-                elif NumberNew == 4: 
-                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
-                elif NumberNew == 5:
-                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
-                else:
-                    await interaction.response.send_message('Too many Files')
-                    BigSize = True
-                Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
-                Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
-                Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-                Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                Post.set_author(name=f'Hiring Post', icon_url=ctx.author.avatar.url)
-                if BigSize == False:
-                    for child in view3.children:
-                        child.disabled = True
-                    Main3 = view3.message = await MSL.send(embed=Post, view=view2)
-                    await interaction.response.edit_message(view=self, embed=Post)   
+            if NumberNew == 0:
+                Post.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+            else:
+                await interaction.response.send_message('Too many Files')
+                BigSize = True
+            Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
+            Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
+            Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
+            Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            Post.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
+            if BigSize == False:
+                for child in view3.children:
+                    child.disabled = True
+                Main3 = view3.message = await MSL.send(embed=Post, view=view2)
+                await interaction.message.edit(view=self)
+                await interaction.response.send_message('Post was posted successfully!', ephemeral=True)   
+
+
         @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
         async def Revoke(self, interaction: discord.Interaction, Revoke: discord.ui.Button):  
             for child in view3.children:
                 child.disabled = True
-            await interaction.response.send_message('Post revoked!', view=view3)
+            await interaction.message.edit(view=self)
+            await interaction.response.send_message('Post revoked!', ephemeral=True)
 
 
     class EditButtons(discord.ui.View):
@@ -2672,7 +2674,7 @@ async def _Post(ctx):
     class Button(discord.ui.View):
         @discord.ui.button(label='Hiring', style=discord.ButtonStyle.green)
         async def Hiring(self, interaction: discord.Interaction, Hiring: discord.ui.Button):
-            TicketType.append('Hireable')
+            TicketType.append('Hiring')
             BigSize = False
             Finalation = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
             List = []
@@ -2710,116 +2712,110 @@ async def _Post(ctx):
         async def Hireable(self, interaction: discord.Interaction, Hireable: discord.ui.Button):
             TicketType.append('Hireable')
             BigSize = False
-            Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
+            Finalation = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
             List = []
             NumberNew = 0 
             for Attackment in Report2.attachments:
                 if Report2.attachments:
-                    print(Attackment.url)
                     NumberNew = NumberNew + 1
                     List.append(Attackment.url)
 
             if NumberNew == 0:
-                Post.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
             elif NumberNew == 1:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
             elif NumberNew == 2:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
             elif NumberNew == 3:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
             elif NumberNew == 4: 
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
             elif NumberNew == 5:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             else:
                 await interaction.response.send_message('Too many Files')
                 BigSize = True
-            Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
-            Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
-            Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-            Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Post.set_author(name=f'Hireable Post', icon_url=ctx.author.avatar.url)
+            Finalation.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
+            Finalation.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
+            Finalation.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
+            Finalation.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            Finalation.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
-                Main3 = view2.message = await MSL.send(embed=Post, view=view2)
-                await interaction.response.edit_message(view=self, embed=Post)
+                await interaction.response.edit_message(view=view3, embed=Finalation)   
         @discord.ui.button(label='Advertise', style=discord.ButtonStyle.green)
         async def Advertise(self, interaction: discord.Interaction, Advertisement: discord.ui.Button):
             TicketType.append('Advertisement')
             BigSize = False
-            Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
+            Finalation = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
             List = []
             NumberNew = 0 
             for Attackment in Report2.attachments:
                 if Report2.attachments:
-                    print(Attackment.url)
                     NumberNew = NumberNew + 1
                     List.append(Attackment.url)
 
             if NumberNew == 0:
-                Post.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
             elif NumberNew == 1:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
             elif NumberNew == 2:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
             elif NumberNew == 3:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
             elif NumberNew == 4: 
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
             elif NumberNew == 5:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             else:
                 await interaction.response.send_message('Too many Files')
                 BigSize = True
-            Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
-            Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
-            Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-            Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Post.set_author(name=f'Advertisement', icon_url=ctx.author.avatar.url)
+            Finalation.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
+            Finalation.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
+            Finalation.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
+            Finalation.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            Finalation.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
-                Main3 = view2.message = await MSL.send(embed=Post, view=view2)
-                await interaction.response.edit_message(view=self, embed=Post)
+                await interaction.response.edit_message(view=view3, embed=Finalation)
         @discord.ui.button(label='Selling', style=discord.ButtonStyle.green)
         async def Selling(self, interaction: discord.Interaction, Selling: discord.ui.Button):
             TicketType.append('Selling')
             BigSize = False
-            Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
+            Finalation = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
             List = []
             NumberNew = 0 
             for Attackment in Report2.attachments:
                 if Report2.attachments:
-                    print(Attackment.url)
                     NumberNew = NumberNew + 1
                     List.append(Attackment.url)
 
             if NumberNew == 0:
-                Post.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
             elif NumberNew == 1:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
             elif NumberNew == 2:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
             elif NumberNew == 3:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
             elif NumberNew == 4: 
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
             elif NumberNew == 5:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+                Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             else:
                 await interaction.response.send_message('Too many Files')
                 BigSize = True
-            Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
-            Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
-            Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-            Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Post.set_author(name=f'Selling Post', icon_url=ctx.author.avatar.url)
+            Finalation.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
+            Finalation.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
+            Finalation.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
+            Finalation.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            Finalation.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
             if BigSize == False:
                 for child in view.children:
                     child.disabled = True
-                Main3 = view2.message = await MSL.send(embed=Post, view=view2)
-                await interaction.response.edit_message(view=self, embed=Post)
+                await interaction.response.edit_message(view=view3, embed=Finalation)
 
     await ctx.send('Further information will be handled in DMs')
     Main = discord.Embed(title="**Post System**", description=f"Please reply with your post title.", color=0xe67e22)
@@ -2871,7 +2867,7 @@ async def _Post(ctx):
                 Type.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
                 Type.set_author(name=ctx.author, icon_url=ctx.author.avatar.url)
                 Type.set_thumbnail(url=ctx.author.avatar.url)
-                Type.set_footer(text=f'You have **2 minutes** to pick an option', icon_url=ctx.author.avatar.url)
+                Type.set_footer(text=f'You have 2 minutes to pick an option', icon_url=ctx.author.avatar.url)
                 view = Button(timeout=120)
                 view2 = EditButtons(timeout=15780000)
                 view3 = ConfirmationButton(timeout=120)
