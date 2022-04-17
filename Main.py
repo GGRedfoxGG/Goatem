@@ -2377,6 +2377,51 @@ async def _Post(ctx):
     Ad = Client_Bot.get_channel(955544601207398482)
     MSL = Client_Bot.get_channel(955601587248721940)
 
+    class ConfirmationButton(discord.ui.View):
+        @discord.ui.button(label='Confirm', style=discord.ButtonStyle.green)
+        async def Confirm(self, interaction: discord.Interaction, confirm: discord.ui.Button):  
+            if TicketType[-1] == "Hiring":
+                BigSize = False
+                Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
+                List = []
+                NumberNew = 0 
+                for Attackment in Report2.attachments:
+                    if Report2.attachments:
+                        print(Attackment.url)
+                        NumberNew = NumberNew + 1
+                        List.append(Attackment.url)
+
+                if NumberNew == 0:
+                    Post.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
+                elif NumberNew == 1:
+                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
+                elif NumberNew == 2:
+                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+                elif NumberNew == 3:
+                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+                elif NumberNew == 4: 
+                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+                elif NumberNew == 5:
+                    Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+                else:
+                    await interaction.response.send_message('Too many Files')
+                    BigSize = True
+                Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
+                Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
+                Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
+                Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
+                Post.set_author(name=f'Hiring Post', icon_url=ctx.author.avatar.url)
+                if BigSize == False:
+                    for child in view3.children:
+                        child.disabled = True
+                    Main3 = view3.message = await MSL.send(embed=Post, view=view2)
+                    await interaction.response.edit_message(view=self, embed=Post)   
+        @discord.ui.button(label='Revoke', style=discord.ButtonStyle.red)
+        async def Revoke(self, interaction: discord.Interaction, Revoke: discord.ui.Button):  
+            for child in view3.children:
+                child.disabled = True
+            await interaction.response.send_message('Post revoked!', view=view3)
+
 
     class EditButtons(discord.ui.View):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.blurple)
@@ -2627,42 +2672,40 @@ async def _Post(ctx):
     class Button(discord.ui.View):
         @discord.ui.button(label='Hiring', style=discord.ButtonStyle.green)
         async def Hiring(self, interaction: discord.Interaction, Hiring: discord.ui.Button):
-            TicketType.append('Hiring')
-            BigSize = False
-            Post = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
-            List = []
-            NumberNew = 0 
-            for Attackment in Report2.attachments:
-                if Report2.attachments:
-                    print(Attackment.url)
-                    NumberNew = NumberNew + 1
-                    List.append(Attackment.url)
+                BigSize = False
+                Finalation = discord.Embed(title=f"{Report.content}", description=f"{Report2.content}")
+                List = []
+                NumberNew = 0 
+                for Attackment in Report2.attachments:
+                    if Report2.attachments:
+                        print(Attackment.url)
+                        NumberNew = NumberNew + 1
+                        List.append(Attackment.url)
 
-            if NumberNew == 0:
-                Post.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
-            elif NumberNew == 1:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
-            elif NumberNew == 2:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
-            elif NumberNew == 3:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
-            elif NumberNew == 4: 
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
-            elif NumberNew == 5:
-                Post.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
-            else:
-                await interaction.response.send_message('Too many Files')
-                BigSize = True
-            Post.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
-            Post.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
-            Post.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
-            Post.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
-            Post.set_author(name=f'Hiring Post', icon_url=ctx.author.avatar.url)
-            if BigSize == False:
-                for child in view.children:
-                    child.disabled = True
-                Main3 = view2.message = await MSL.send(embed=Post, view=view2)
-                await interaction.response.edit_message(view=self, embed=Post)   
+                if NumberNew == 0:
+                    Finalation.add_field(name='**__Files/Pictures__**: ', value='None', inline=False)
+                elif NumberNew == 1:
+                    Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]})', inline=False)
+                elif NumberNew == 2:
+                    Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+                elif NumberNew == 3:
+                    Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+                elif NumberNew == 4: 
+                    Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+                elif NumberNew == 5:
+                    Finalation.add_field(name='**__Files/Pictures__**: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+                else:
+                    await interaction.response.send_message('Too many Files')
+                    BigSize = True
+                Finalation.add_field(name='__**Payment**__: ', value=f'{Report3.content}', inline=False)
+                Finalation.add_field(name='__**Information**__: ', value=f'User: <@{ctx.author.id}> created at {ctx.author.created_at.year}', inline=False)
+                Finalation.add_field(name='__**Date**__: ', value=f'{current_time}, {current_Date}', inline=False)
+                Finalation.set_footer(text=f'posted by {ctx.author}.', icon_url=ctx.author.avatar.url)
+                Finalation.set_author(name=f'{TicketType[-1]} Post', icon_url=ctx.author.avatar.url)
+                if BigSize == False:
+                    for child in view.children:
+                        child.disabled = True
+                    await interaction.response.edit_message(view=view3, embed=Finalation)   
         @discord.ui.button(label='Hireable', style=discord.ButtonStyle.green)
         async def Hireable(self, interaction: discord.Interaction, Hireable: discord.ui.Button):
             TicketType.append('Hireable')
@@ -2824,13 +2867,14 @@ async def _Post(ctx):
             elif isinstance(Report.channel, discord.channel.DMChannel):
                 TicketType = []
                 Text = ['None']
-                Type = discord.Embed(title="Post Type", description='Please select the ticket type you want to make.', color=0x546e7a)
+                Type = discord.Embed(title="Post Type", description='Please select the post type you want to make.', color=0x546e7a)
                 Type.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
                 Type.set_author(name=ctx.author, icon_url=ctx.author.avatar.url)
                 Type.set_thumbnail(url=ctx.author.avatar.url)
-                Type.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
+                Type.set_footer(text=f'You have **2 minutes** to pick an option', icon_url=ctx.author.avatar.url)
                 view = Button(timeout=120)
                 view2 = EditButtons(timeout=15780000)
+                view3 = ConfirmationButton(timeout=120)
                 Msg = view.message = await ctx.author.send(embed=Type, view=view)
 
 @Client_Bot.command(aliases= ['Mute', 'Timeout'])
