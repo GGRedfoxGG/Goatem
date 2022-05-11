@@ -2637,7 +2637,7 @@ Winner: N/A
 
 @Client_Bot.command(aliases = ['Suggest', 'Suggestion'])
 async def _Suggest(ctx, *, Suggestion):
-    Channel = Client_Bot.get_channel(962455861882662942)
+    Channel = Client_Bot.get_channel(974066321698459658)
     class Button(discord.ui.View):
         @discord.ui.button(label='Upvote', style=discord.ButtonStyle.green)
         async def Approve(self, interaction: discord.Interaction,Yes: discord.ui.Button):  
@@ -2728,7 +2728,7 @@ async def _Polls(ctx, *, Poll):
     In_Group = result_from_errorrank
 
     if ctx.author.guild_permissions.administrator or In_Group == True:
-        Channel = Client_Bot.get_channel(962458635756265512)
+        Channel = Client_Bot.get_channel(932710114874519633)
         class Button(discord.ui.View):
             @discord.ui.button(label='Upvote', style=discord.ButtonStyle.green)
             async def Approve(self, interaction: discord.Interaction,Yes: discord.ui.Button):  
