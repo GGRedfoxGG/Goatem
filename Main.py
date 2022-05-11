@@ -2659,9 +2659,10 @@ async def _Suggest(ctx, *, Suggestion):
                     Number = Number + 1
                 Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}")
                 Embed2.add_field(name="**Results: **", value=f"""
-<:Upvote:962457364009742416> **Upvotes:** `{Number1}`
-<:Downvote:962457339837947985> **Downvotes:** `{Number}`
-<:Total:962457306853953548> **Total Votes:** `{Number + Number1}`
+
+<:upvote:974070425086754876> **Upvotes:** `{Number1}`
+<:downvote:974070395936317471> **Downvotes:** `{Number}`
+<:total:974070360372817920> **Total Votes:** `{Number + Number1}`
                 
                 """)
                 Embed2.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
@@ -2688,9 +2689,10 @@ async def _Suggest(ctx, *, Suggestion):
                     Number = Number + 1
                 Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}")
                 Embed2.add_field(name="**Results: **", value=f"""
-<:Upvote:962457364009742416> **Upvotes:** `{Number1}`
-<:Downvote:962457339837947985> **Downvotes:** `{Number}`
-<:Total:962457306853953548> **Total Votes:** `{Number + Number1}`
+    
+<:upvote:974070425086754876> **Upvotes:** `{Number1}`
+<:downvote:974070395936317471> **Downvotes:** `{Number}`
+<:total:974070360372817920> **Total Votes:** `{Number + Number1}`
                 
                 """)
                 Embed2.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
@@ -2710,9 +2712,9 @@ async def _Suggest(ctx, *, Suggestion):
     Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}")
     Embed.add_field(name="**Results: **", value=f"""
 
-<:Upvote:962457364009742416> **Upvotes:** `None`
-<:Downvote:962457339837947985> **Downvotes:** `None`
-<:Total:962457306853953548> **Total Votes:** `None`
+<:upvote:974070425086754876> **Upvotes:** `None`
+<:downvote:974070395936317471> **Downvotes:** `None`
+<:total:974070360372817920> **Total Votes:** `None`
                 
     """)
     Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
@@ -2750,9 +2752,9 @@ async def _Polls(ctx, *, Poll):
                         Number = Number + 1
                     Embed2 = discord.Embed(title='Polls', description=f"{Poll}")
                     Embed2.add_field(name="**Results: **", value=f"""
-    <:Upvote:962457364009742416> **Upvotes:** `{Number1}`
-    <:Downvote:962457339837947985> **Downvotes:** `{Number}`
-    <:Total:962457306853953548> **Total Votes:** `{Number + Number1}`
+<:upvote:974070425086754876> **Upvotes:** `{Number1}`
+<:downvote:974070395936317471> **Downvotes:** `{Number}`
+<:total:974070360372817920> **Total Votes:** `{Number + Number1}`
                     
                     """)
                     Embed2.set_author(name=f"Poll by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
@@ -2779,9 +2781,9 @@ async def _Polls(ctx, *, Poll):
                         Number = Number + 1
                     Embed2 = discord.Embed(title='Polls', description=f"{Poll}")
                     Embed2.add_field(name="**Results: **", value=f"""
-    <:Upvote:962457364009742416> **Upvotes:** `{Number1}`
-    <:Downvote:962457339837947985> **Downvotes:** `{Number}`
-    <:Total:962457306853953548> **Total Votes:** `{Number + Number1}`
+<:upvote:974070425086754876> **Upvotes:** `{Number1}`
+<:downvote:974070395936317471> **Downvotes:** `{Number}`
+<:total:974070360372817920> **Total Votes:** `{Number + Number1}`
                     
                     """)
                     Embed2.set_author(name=f"Poll by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
@@ -2801,9 +2803,9 @@ async def _Polls(ctx, *, Poll):
         Embed = discord.Embed(title='Poll', description=f"{Poll}")
         Embed.add_field(name="**Results: **", value=f"""
 
-    <:Upvote:962457364009742416> **Upvotes:** `None`
-    <:Downvote:962457339837947985> **Downvotes:** `None`
-    <:Total:962457306853953548> **Total Votes:** `None`
+<:upvote:974070425086754876> **Upvotes:** `None`
+<:downvote:974070395936317471> **Downvotes:** `None`
+<:total:974070360372817920> **Total Votes:** `None`
                     
         """)
         Embed.set_author(name=f"Poll by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
