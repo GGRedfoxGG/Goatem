@@ -2678,7 +2678,7 @@ async def _Suggest(ctx, *, Suggestion):
                     Number1 = Number1 + 1
                 for SaidNo in Said_No:
                     Number = Number + 1
-                Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}")
+                Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
                 Embed2.add_field(name="**Results: **", value=f"""
 
 <:upvote:974070425086754876> **Upvotes:** `{Number1}`
@@ -2708,7 +2708,7 @@ async def _Suggest(ctx, *, Suggestion):
                     Number1 = Number1 + 1
                 for SaidNo in Said_No:
                     Number = Number + 1
-                Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}")
+                Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
                 Embed2.add_field(name="**Results: **", value=f"""
     
 <:upvote:974070425086754876> **Upvotes:** `{Number1}`
