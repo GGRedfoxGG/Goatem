@@ -2733,17 +2733,15 @@ async def _Suggest(ctx, *, Suggestion):
     UserList = []
     Said_Yes = []
     Said_No = []
-    BigFile = True
+    BigFile = False
     if In_Group == True:
-
+        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
         List = []
         NumberNew = 0
         for Attachment in ctx.message.attachments:
             if ctx.message.attachments:
                 NumberNew = NumberNew + 1
                 List.append(Attachment.url)
-
-        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
         if NumberNew == 0:
             Embed.add_field(name='Files: ', value='None', inline=False)
         elif NumberNew == 1:
@@ -2756,7 +2754,7 @@ async def _Suggest(ctx, *, Suggestion):
             Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
         elif NumberNew == 5:
             Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
-        else:
+        elif NumberNew >= 6:
             BigFile = True
         Embed.add_field(name="**Results: **", value=f"""
 
@@ -2770,18 +2768,16 @@ async def _Suggest(ctx, *, Suggestion):
             view = Button(timeout=172800)
             await ctx.send('Thank you for your suggestion, it was posted successfully!')
             view.message = await Channel.send(embed=Embed, view=view)
-            await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a suggestion for: {Suggestion}", ctx.channel)
-        else:
+        elif BigFile == True:
             await ctx.send('Too many Pictures/Files!')
     else:
+        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(0, 0, 0).value)
         List = []
         NumberNew = 0
         for Attachment in ctx.message.attachments:
             if ctx.message.attachments:
                 NumberNew = NumberNew + 1
                 List.append(Attachment.url)
-
-        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(0, 0, 0).value)
         if NumberNew == 0:
             Embed.add_field(name='Files: ', value='None', inline=False)
         elif NumberNew == 1:
@@ -2794,7 +2790,7 @@ async def _Suggest(ctx, *, Suggestion):
             Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
         elif NumberNew == 5:
             Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
-        else:
+        elif NumberNew >= 6:
             BigFile = True
         Embed.add_field(name="**Results: **", value=f"""
 
@@ -2808,8 +2804,7 @@ async def _Suggest(ctx, *, Suggestion):
             view = Button(timeout=172800)
             await ctx.send('Thank you for your suggestion, it was posted successfully!')
             view.message = await Channel.send(embed=Embed, view=view)
-            await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a suggestion for: {Suggestion}", ctx.channel)
-        else:
+        elif BigFile == True:
             await ctx.send('Too many Pictures/Files!')
 
 @Client_Bot.command(aliases=['Polls', 'PostPoll', 'Create Poll'])
