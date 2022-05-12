@@ -101,7 +101,7 @@ class Bot(commands.Bot):
 @Client_Bot.event
 async def on_ready():
     
-    await Client_Bot.change_presence(activity=discord.Activity(type = discord.ActivityType.listening, name = "To The Goat"))
+    await Client_Bot.change_presence(activity=discord.Activity(type = discord.ActivityType.listening, name = " The Goat"))
     guild = Client_Bot.get_guild(791288635470643200)
     for black in Blacklisted:
         User = await Client_Bot.fetch_user(black)
@@ -216,7 +216,24 @@ async def RoleChecker(ctx, User):
                 for role in member.roles or member.id =="565558626048016395":
                     if role == Main:
                         return True
-            
+
+async def RoleChecker2(ctx, User):
+
+
+    role1 = [
+        discord.utils.get(ctx.guild.roles, id=974044272485621843), 
+        discord.utils.get(ctx.guild.roles, id=965964148926189599), 
+        discord.utils.get(ctx.guild.roles, id=966168171507761224), 
+        discord.utils.get(ctx.guild.roles, id=932707272151425132), 
+        discord.utils.get(ctx.guild.roles, id=932707272214347823), 
+    ]
+    for Main in role1:
+        for member in ctx.guild.members:
+            if User == member:
+                for role in member.roles or member.id =="565558626048016395":
+                    if role == Main:
+                        return True
+
 async def MissingPermission(ctx, Author):
     Embed = discord.Embed(title="Missing Permissions", description='You should contact a system developer if you think this is a mistake', color=0xe67e22)
     Embed.add_field(name='You are not authorised to use this command on this user', value='Permission 400', inline=False)
@@ -555,7 +572,7 @@ async def _Alert(ctx, Channel_Location: discord.TextChannel,Message_Id:int):
     current_time = now.strftime("%H:%M:%S")
     current_Date = today.strftime("%B %d %Y")
     msg = await Channel_Location.fetch_message(Message_Id)
-    Channel = Client_Bot.get_channel(944618366289735731)
+    Channel = Client_Bot.get_channel(974375459825549342)
     Message = discord.Embed(title="Moderation Alert", description='All active moderators, please handle the situation.', color=0x546e7a)
     Message.add_field(name='Message ID: ', value=f'`{Message_Id}`', inline=False)
     Message.add_field(name='Who wrote the message? ', value=f'`{msg.author}/`<@{msg.author.id}>', inline=False)
@@ -568,8 +585,8 @@ async def _Alert(ctx, Channel_Location: discord.TextChannel,Message_Id:int):
 {msg.content}
 ```
     ''', inline=False)
-    await Channel.send("All active <@&909151953097981979>, please handle this situation", embed=Message)
-    await ctx.send('Moderation request is on-going')
+    await Channel.send("All active <@&966168175324561409>, please handle this situation", embed=Message)
+    await ctx.send('Alerted!')
 
 @Client_Bot.command(aliases = ['Lock', 'LockChannel'], pass_context=True)
 async def _Lock(ctx, Channel: discord.TextChannel, Amount: int, *,Reason):
@@ -847,7 +864,7 @@ async def _ClearWarnings(ctx, Member: discord.Member, *, Reason):
 
 @Client_Bot.command(aliases = ['Version'],  pass_context=True)
 async def _Version(ctx):
-    await ctx.channel.send(f"The bot is version 1.9.2 ")
+    await ctx.channel.send(f"Goat 1.9.3 ")
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
 
 @Client_Bot.command(aliases = ['Ban'],  pass_context=True)
@@ -1656,7 +1673,7 @@ async def _Ticket(ctx):
             for child in self.children: 
                 child.disabled = True
             await self.message.edit(view=self) 
-    await ctx.send('Further information will be handled in DMs')
+    await ctx.send('Further information will be handled in your DMs')
     Main = discord.Embed(title="**Ticket System**", description=f"Please reply with your ticket. Please provide **images/videos** to support your ticket.", color=0xe67e22)
     Main.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     Main.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -1665,7 +1682,7 @@ async def _Ticket(ctx):
     Report = await Client_Bot.wait_for('message', check=lambda message: message.author == ctx.author)
 
     if isinstance(Report.channel, discord.channel.TextChannel):
-        Cancelled = discord.Embed(title="**Ticket System**", description=f"Ticket cancelled, please recreate your ticket and reply in Direct Messages", color=0xe74c3c)
+        Cancelled = discord.Embed(title="**Ticket System**", description=f"Ticket command was cancelled, Re-run the command and follow the intructions.", color=0xe74c3c)
         Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         Cancelled.set_footer(text=f'Ticket by {ctx.author}.', icon_url=ctx.author.avatar.url)
         Cancelled.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
@@ -1699,14 +1716,15 @@ async def _CreateRole(ctx,*,Name):
             
 @Client_Bot.command(aliases = ['Help', 'Cmds', 'Commands'],  pass_context=True)
 async def _Help(ctx):
-    global Current_Page
-    Current_Page = 1
-    print('Cmds')
+    class current_page(object):
+        CurrentPage = 1
+        def __init__(self, name):
+            self.name = name
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
     class Button(discord.ui.View):
         @discord.ui.button(label='<', style=discord.ButtonStyle.green)
         async def Previous(self, interaction: discord.Interaction, Previous: discord.ui.Button):   
-            global Current_Page
+            Current_Page = current_page.CurrentPage
             if Current_Page == 1 and Msg.id == interaction.message.id:
                 Current_Page = 5
                 Misc = discord.Embed(title="**Help System**", description=f"Page information: __**Misc**__", color=0x7289da)
@@ -1818,7 +1836,7 @@ async def _Help(ctx):
 
         @discord.ui.button(label='>', style=discord.ButtonStyle.green)
         async def Next(self, interaction: discord.Interaction, Next: discord.ui.Button):   
-            global Current_Page
+            Current_Page = current_page.CurrentPage
             if Current_Page == 1 and Msg.id == interaction.message.id:
                 Current_Page = Current_Page + 1
                 Moderation = discord.Embed(title="**Help System**", description=f"Page information: __**Moderation**__", color=0x7289da)
@@ -2234,7 +2252,10 @@ async def _Toggle(ctx):
     class List(discord.ui.Select):
         def __init__(self):
             Options = [
-                discord.SelectOption(label='Secret Easter egg', description='Toggle The Inactivity Period role'),
+                discord.SelectOption(label='New Sith Order', description='Toggle New Sith Order role!'),
+                discord.SelectOption(label='Lightsaber Arena', description='Toggle Lightsaber Arena role!'),
+                discord.SelectOption(label='Bannermen', description='Toggle Bannermen role!'),
+                discord.SelectOption(label='Age of Vikings', description='Toggle Age of Vikings role!'),
             ]
 
             super().__init__(placeholder='Toggle a role...', min_values=1, max_values=1, options=Options)
@@ -2413,7 +2434,7 @@ async def _Unmute(ctx, Member: discord.Member, *, Reason):
         await MissingPermission(ctx, ctx.author)
 
 @Client_Bot.command(aliases = ['Forceverify', 'Fverify', 'Force Verify'],  pass_context=True)
-async def _Forceverify(ctx, Discord_User: discord.Member,User: int, *, Reason):
+async def _Forceverify(ctx, Discord_User: discord.Member,Roblox_ID: int, *, Reason):
     Today = date.today()
     Now = datetime.now()
     current_time = Now.strftime("%H:%M:%S")
@@ -2637,6 +2658,9 @@ Winner: N/A
 
 @Client_Bot.command(aliases = ['Suggest', 'Suggestion'])
 async def _Suggest(ctx, *, Suggestion):
+    await RoleChecker2(ctx, ctx.author)
+    result_from_errorrank = await RoleChecker(ctx, ctx.author)
+    In_Group = result_from_errorrank
     Channel = Client_Bot.get_channel(974066321698459658)
     class Button(discord.ui.View):
         @discord.ui.button(label='Upvote', style=discord.ButtonStyle.green)
@@ -2709,19 +2733,84 @@ async def _Suggest(ctx, *, Suggestion):
     UserList = []
     Said_Yes = []
     Said_No = []
-    Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}")
-    Embed.add_field(name="**Results: **", value=f"""
+    BigFile = True
+    if In_Group == True:
+
+        List = []
+        NumberNew = 0
+        for Attachment in ctx.message.attachments:
+            if ctx.message.attachments:
+                NumberNew = NumberNew + 1
+                List.append(Attachment.url)
+
+        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
+        if NumberNew == 0:
+            Embed.add_field(name='Files: ', value='None', inline=False)
+        elif NumberNew == 1:
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+        elif NumberNew == 2:
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+        elif NumberNew == 3:
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+        elif NumberNew == 4: 
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+        elif NumberNew == 5:
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+        else:
+            BigFile = True
+        Embed.add_field(name="**Results: **", value=f"""
 
 <:upvote:974070425086754876> **Upvotes:** `None`
 <:downvote:974070395936317471> **Downvotes:** `None`
 <:total:974070360372817920> **Total Votes:** `None`
-                
-    """)
-    Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
-    view = Button(timeout=172800)
-    await ctx.send('Thank you for your suggestion, it was posted successfully!')
-    view.message = await Channel.send(embed=Embed, view=view)
-    await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a suggestion for: {Suggestion}", ctx.channel)
+                    
+        """)
+        Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+        if BigFile == False:
+            view = Button(timeout=172800)
+            await ctx.send('Thank you for your suggestion, it was posted successfully!')
+            view.message = await Channel.send(embed=Embed, view=view)
+            await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a suggestion for: {Suggestion}", ctx.channel)
+        else:
+            await ctx.send('Too many Pictures/Files!')
+    else:
+        List = []
+        NumberNew = 0
+        for Attachment in ctx.message.attachments:
+            if ctx.message.attachments:
+                NumberNew = NumberNew + 1
+                List.append(Attachment.url)
+
+        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(0, 0, 0).value)
+        if NumberNew == 0:
+            Embed.add_field(name='Files: ', value='None', inline=False)
+        elif NumberNew == 1:
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+        elif NumberNew == 2:
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+        elif NumberNew == 3:
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+        elif NumberNew == 4: 
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+        elif NumberNew == 5:
+            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+        else:
+            BigFile = True
+        Embed.add_field(name="**Results: **", value=f"""
+
+<:upvote:974070425086754876> **Upvotes:** `None`
+<:downvote:974070395936317471> **Downvotes:** `None`
+<:total:974070360372817920> **Total Votes:** `None`
+                    
+        """)
+        Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+        if BigFile == False:
+            view = Button(timeout=172800)
+            await ctx.send('Thank you for your suggestion, it was posted successfully!')
+            view.message = await Channel.send(embed=Embed, view=view)
+            await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Created a suggestion for: {Suggestion}", ctx.channel)
+        else:
+            await ctx.send('Too many Pictures/Files!')
 
 @Client_Bot.command(aliases=['Polls', 'PostPoll', 'Create Poll'])
 async def _Polls(ctx, *, Poll):
