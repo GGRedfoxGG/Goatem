@@ -670,13 +670,13 @@ Created at: {User.created_at.year}, {User.created_at.month}, {User.created_at.da
     ''', inline=True)
     else:
         RobloxUser2 = await client.get_user(record1[1])
-        Group = await client.get_group(group_id=5994518)
+        Group = await client.get_group(group_id=7736585)
         Name = await Group.get_member_by_username(username=RobloxUser2.name)
         Groups = await Name.get_group_roles()
         GroupRole = None
         Rank = None
         for roles in Groups:
-            if roles.group.id == 5994518:
+            if roles.group.id == 7736585:
                 GroupRole = roles.name
                 Rank = roles.rank
         Main.add_field(name='Roblox: ', value=f'''
@@ -2928,13 +2928,13 @@ async def _Getroles(ctx):
         class Button(discord.ui.View):
             @discord.ui.button(label='Get roles', style=discord.ButtonStyle.grey)
             async def Get_Roles(self, interaction: discord.Interaction, Rolesbutton: discord.ui.Button):
-                Group2 = await client.get_group(group_id=5994518)
+                Group2 = await client.get_group(group_id=7736585)
                 Name2 = await Group2.get_member_by_username(username=RobloxUser.name)
                 Groups2 = await Name2.get_group_roles()
                 GroupRole2 = None
                 Has_Role = False
                 for roles2 in Groups2:
-                    if roles2.group.id == 5994518:
+                    if roles2.group.id == 7736585:
                         role2 = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = roles2.name)
                         GroupRole2 = role2.id
                 for roles3 in ctx.author.roles:
@@ -2966,12 +2966,12 @@ async def _Getroles(ctx):
             type=AvatarThumbnailType.headshot,
             size=(420, 420)
         )
-        Group = await client.get_group(group_id=5994518)
+        Group = await client.get_group(group_id=7736585)
         Name = await Group.get_member_by_username(username=RobloxUser.name)
         Groups = await Name.get_group_roles()
         GroupRole = None
         for roles in Groups:
-            if roles.group.id == 5994518:
+            if roles.group.id == 7736585:
                 GroupRole = roles.name
                 group_role = discord.utils.get(Client_Bot.get_guild(ctx.guild.id).roles, name = GroupRole) 
 
