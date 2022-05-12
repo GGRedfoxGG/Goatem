@@ -2065,7 +2065,7 @@ async def _Verify(ctx):
             for child in self.children: 
                 child.disabled = True
             await self.message.edit(view=self) 
-    await ctx.send('Further information will be handled in DMs')
+    await ctx.send('Further information will be handled in your DMs')
     Main = discord.Embed(title="**Verification System**", description=f"Please reply to this message with your Roblox ID", color=0xe67e22)
     Main.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     Main.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -2074,7 +2074,7 @@ async def _Verify(ctx):
     Report = await Client_Bot.wait_for('message', check=lambda message: message.author == ctx.author)
 
     if isinstance(Report.channel, discord.channel.TextChannel):
-        Cancelled = discord.Embed(title="**Verification System**", description=f"Verification cancelled, please verify and reply in Direct Messages", color=0xe74c3c)
+        Cancelled = discord.Embed(title="**Verification System**", description=f"Verification command was cancelled. Re-run the command and follow the instructions!", color=0xe74c3c)
         Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         Cancelled.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
         Cancelled.set_thumbnail(url=ctx.author.avatar.url)
@@ -2453,7 +2453,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,Roblox_ID: int, *, Reas
                 record1 = None
                 for record1 in row3: 
                     pass
-                RobloxUser2 = await client.get_user(User)
+                RobloxUser2 = await client.get_user(Roblox_ID)
                 user_thumbnails = await client.thumbnails.get_user_avatar_thumbnails(
                     users=[RobloxUser2],
                     type=AvatarThumbnailType.headshot,
@@ -2512,7 +2512,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,Roblox_ID: int, *, Reas
             await self.message.edit(view=self) 
 
     if ctx.author.guild_permissions.administrator or In_Group == True:
-        RobloxUser = await client.get_user(User)
+        RobloxUser = await client.get_user(Roblox_ID)
         user_thumbnails1 = await client.thumbnails.get_user_avatar_thumbnails(
             users=[RobloxUser],
             type=AvatarThumbnailType.headshot,
