@@ -2638,9 +2638,11 @@ Winner: <@{Fetched.id}>
     if ctx.author.guild_permissions.administrator or In_Group == True:
         if Report.channel.id == ctx.channel.id:
             Time = (Duration_In_Hours * 3600)
-            Time2 = f'{time.time()+Time} Time'
-            for i in Time.splitlines():
+            Time3 = f'{time.time()+Time} Time'
+            Time2 = None
+            for i in Time3.splitlines():
                 print(i.split('.')[0])
+                Time2 = i.split('.')[0]
             Giveaway2 = discord.Embed(title=f"**{Report.content}**", description=f"""
 Host: <@{ctx.author.id}>
 Duration: {Duration_In_Hours} hour(s)
