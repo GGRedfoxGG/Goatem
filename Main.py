@@ -2551,10 +2551,9 @@ async def _Giveaway(ctx, Duration_In_Hours:int):
         async def Create(self, interaction: discord.Interaction,Create: discord.ui.Button):
             for child in self.children: 
                 child.disabled = True
-            Time = (Duration_In_Hours * 3600)
             Giveaway3 = discord.Embed(title=f"**{Report.content}**", description=f"""
 Host: <@{ctx.author.id}>
-Duration: {Duration_In_Hours} hour(s)
+Duration: <t:{Time2}:R> 
 Winner: `N/A`
             """)
             Giveaway3.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
@@ -2574,7 +2573,7 @@ Winner: `N/A`
             
             Giveaway4 = discord.Embed(title=f"**{Report.content}**", description=f"""
 Host: <@{ctx.author.id}>
-Duration: {Duration_In_Hours} hour(s)
+Duration: <t:{Time2}:R> 
 Winner: <@{Fetched.id}>
             """)
             Giveaway4.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
@@ -2615,7 +2614,7 @@ Winner: `N/A`
             Fetched = await Client_Bot.fetch_user(User1)
             Rerolled = discord.Embed(title=f"**{Report.content}**", description=f"""
 Host: <@{ctx.author.id}>
-Duration: {Duration_In_Hours} hour(s)
+Duration: <t:{Time2}:R> 
 Winner: <@{Fetched.id}>
             """)
             Rerolled.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url) 
@@ -2638,6 +2637,10 @@ Winner: <@{Fetched.id}>
     
     if ctx.author.guild_permissions.administrator or In_Group == True:
         if Report.channel.id == ctx.channel.id:
+            Time = (Duration_In_Hours * 3600)
+            Time2 = f'{time.time()+Time} Time'
+            for i in Time.splitlines():
+                print(i.split('.')[0])
             Giveaway2 = discord.Embed(title=f"**{Report.content}**", description=f"""
 Host: <@{ctx.author.id}>
 Duration: {Duration_In_Hours} hour(s)
