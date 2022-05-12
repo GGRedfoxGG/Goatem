@@ -2658,9 +2658,6 @@ Winner: N/A
 
 @Client_Bot.command(aliases = ['Suggest', 'Suggestion'])
 async def _Suggest(ctx, *, Suggestion):
-    await RoleChecker2(ctx, ctx.author)
-    result_from_errorrank = await RoleChecker(ctx, ctx.author)
-    In_Group = result_from_errorrank
     Channel = Client_Bot.get_channel(974066321698459658)
     class Button(discord.ui.View):
         @discord.ui.button(label='Upvote', style=discord.ButtonStyle.green)
@@ -2734,78 +2731,41 @@ async def _Suggest(ctx, *, Suggestion):
     Said_Yes = []
     Said_No = []
     BigFile = False
-    if In_Group == True:
-        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
-        List = []
-        NumberNew = 0
-        for Attachment in ctx.message.attachments:
-            if ctx.message.attachments:
-                NumberNew = NumberNew + 1
-                List.append(Attachment.url)
-        if NumberNew == 0:
-            Embed.add_field(name='Files: ', value='None', inline=False)
-        elif NumberNew == 1:
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
-        elif NumberNew == 2:
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
-        elif NumberNew == 3:
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
-        elif NumberNew == 4: 
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
-        elif NumberNew == 5:
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
-        elif NumberNew >= 6:
-            BigFile = True
-        Embed.add_field(name="**Results: **", value=f"""
+    Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
+    List = []
+    NumberNew = 0
+    for Attachment in ctx.message.attachments:
+        if ctx.message.attachments:
+            NumberNew = NumberNew + 1
+            List.append(Attachment.url)
+    if NumberNew == 0:
+        Embed.add_field(name='Files: ', value='None', inline=False)
+    elif NumberNew == 1:
+        Embed.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+    elif NumberNew == 2:
+        Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+    elif NumberNew == 3:
+        Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+    elif NumberNew == 4: 
+        Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+    elif NumberNew == 5:
+        Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+    elif NumberNew >= 6:
+        BigFile = True
+    Embed.add_field(name="**Results: **", value=f"""
 
 <:upvote:974070425086754876> **Upvotes:** `None`
 <:downvote:974070395936317471> **Downvotes:** `None`
 <:total:974070360372817920> **Total Votes:** `None`
                     
         """)
-        Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
-        if BigFile == False:
-            view = Button(timeout=172800)
-            await ctx.send('Thank you for your suggestion, it was posted successfully!')
-            view.message = await Channel.send(embed=Embed, view=view)
-        elif BigFile == True:
-            await ctx.send('Too many Pictures/Files!')
-    else:
-        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(0, 0, 0).value)
-        List = []
-        NumberNew = 0
-        for Attachment in ctx.message.attachments:
-            if ctx.message.attachments:
-                NumberNew = NumberNew + 1
-                List.append(Attachment.url)
-        if NumberNew == 0:
-            Embed.add_field(name='Files: ', value='None', inline=False)
-        elif NumberNew == 1:
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
-        elif NumberNew == 2:
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
-        elif NumberNew == 3:
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
-        elif NumberNew == 4: 
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
-        elif NumberNew == 5:
-            Embed.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
-        elif NumberNew >= 6:
-            BigFile = True
-        Embed.add_field(name="**Results: **", value=f"""
-
-<:upvote:974070425086754876> **Upvotes:** `None`
-<:downvote:974070395936317471> **Downvotes:** `None`
-<:total:974070360372817920> **Total Votes:** `None`
-                    
-        """)
-        Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
-        if BigFile == False:
-            view = Button(timeout=172800)
-            await ctx.send('Thank you for your suggestion, it was posted successfully!')
-            view.message = await Channel.send(embed=Embed, view=view)
-        elif BigFile == True:
-            await ctx.send('Too many Pictures/Files!')
+    Embed.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
+    if BigFile == False:
+        view = Button(timeout=172800)
+        await ctx.send('Thank you for your suggestion, it was posted successfully!')
+        view.message = await Channel.send(embed=Embed, view=view)
+    elif BigFile == True:
+        await ctx.send('Too many Pictures/Files!')
 
 @Client_Bot.command(aliases=['Polls', 'PostPoll', 'Create Poll'])
 async def _Polls(ctx, *, Poll):
