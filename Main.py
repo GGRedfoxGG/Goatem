@@ -1724,9 +1724,8 @@ async def _Help(ctx):
     class Button(discord.ui.View):
         @discord.ui.button(label='<', style=discord.ButtonStyle.green)
         async def Previous(self, interaction: discord.Interaction, Previous: discord.ui.Button):   
-            Current_Page = current_page.CurrentPage
-            if Current_Page == 1 and Msg.id == interaction.message.id:
-                Current_Page = 5
+            if current_page.CurrentPage == 1 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = 5
                 Misc = discord.Embed(title="**Help System**", description=f"Page information: __**Misc**__", color=0x7289da)
                 Misc.set_thumbnail(url=ctx.author.avatar.url)
                 Misc.add_field(name='Misc: ', value='''
@@ -1748,8 +1747,8 @@ async def _Help(ctx):
                 Misc.set_footer(text=f' Page 5/5', icon_url=ctx.author.avatar.url)
                 Misc.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Misc,view=self)
-            elif Current_Page == 5 and Msg.id == interaction.message.id:
-                Current_Page = 4
+            elif current_page.CurrentPage == 5 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = 4
                 Fun = discord.Embed(title="**Help System**", description=f"Page information: __**Fun**__", color=0x7289da)
                 Fun.set_thumbnail(url=ctx.author.avatar.url)
                 Fun.add_field(name='Fun: ', value='''
@@ -1760,8 +1759,8 @@ async def _Help(ctx):
                 Fun.set_footer(text=f' Page 4/5', icon_url=ctx.author.avatar.url)
                 Fun.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Fun,view=self)
-            elif Current_Page == 4 and Msg.id == interaction.message.id:
-                Current_Page = 3
+            elif current_page.CurrentPage == 4 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = 3
                 Information = discord.Embed(title="**Help System**", description=f"Page information: __**Information**__", color=0x7289da)
                 Information.set_thumbnail(url=ctx.author.avatar.url)
                 Information.add_field(name='Information: ', value='''
@@ -1784,8 +1783,8 @@ async def _Help(ctx):
                 Information.set_footer(text=f' Page 3/5', icon_url=ctx.author.avatar.url)
                 Information.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Information,view=self)
-            elif Current_Page == 3 and Msg.id == interaction.message.id:
-                Current_Page = 2
+            elif current_page.CurrentPage == 3 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = 2
                 Moderation = discord.Embed(title="**Help System**", description=f"Page information: __**Moderation**__", color=0x7289da)
                 Moderation.set_thumbnail(url=ctx.author.avatar.url)
                 Moderation.add_field(name='Moderation: ', value='''
@@ -1830,15 +1829,14 @@ async def _Help(ctx):
                 Moderation.set_footer(text=f' Page 2/5', icon_url=ctx.author.avatar.url)
                 Moderation.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Moderation,view=self)
-            elif Current_Page == 2 and Msg.id == interaction.message.id:
-                Current_Page = 1
+            elif current_page.CurrentPage == 2 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = 1
                 await interaction.response.edit_message(embed=Home,view=self)
 
         @discord.ui.button(label='>', style=discord.ButtonStyle.green)
         async def Next(self, interaction: discord.Interaction, Next: discord.ui.Button):   
-            Current_Page = current_page.CurrentPage
-            if Current_Page == 1 and Msg.id == interaction.message.id:
-                Current_Page = Current_Page + 1
+            if current_page.CurrentPage == 1 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = current_page.CurrentPage +1 
                 Moderation = discord.Embed(title="**Help System**", description=f"Page information: __**Moderation**__", color=0x7289da)
                 Moderation.set_thumbnail(url=ctx.author.avatar.url)
                 Moderation.add_field(name='Moderation: ', value='''
@@ -1883,8 +1881,8 @@ async def _Help(ctx):
                 Moderation.set_footer(text=f' Page 2/5', icon_url=ctx.author.avatar.url)
                 Moderation.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Moderation,view=self)
-            elif Current_Page == 2 and Msg.id == interaction.message.id:
-                Current_Page = Current_Page + 1
+            elif current_page.CurrentPage == 2 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = current_page.CurrentPage +1 
                 Information = discord.Embed(title="**Help System**", description=f"Page information: __**Information**__", color=0x7289da)
                 Information.set_thumbnail(url=ctx.author.avatar.url)
                 Information.add_field(name='Information: ', value='''
@@ -1908,8 +1906,8 @@ async def _Help(ctx):
                 Information.set_footer(text=f' Page 3/5', icon_url=ctx.author.avatar.url)
                 Information.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Information,view=self)
-            elif Current_Page == 3 and Msg.id == interaction.message.id:
-                Current_Page = Current_Page + 1
+            elif current_page.CurrentPage == 3 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = current_page.CurrentPage +1 
                 Fun = discord.Embed(title="**Help System**", description=f"Page information: __**Fun**__", color=0x7289da)
                 Fun.set_thumbnail(url=ctx.author.avatar.url)
                 Fun.add_field(name='Fun: ', value='''
@@ -1920,8 +1918,8 @@ async def _Help(ctx):
                 Fun.set_footer(text=f' Page 4/5', icon_url=ctx.author.avatar.url)
                 Fun.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Fun,view=self)
-            elif Current_Page == 4 and Msg.id == interaction.message.id:
-                Current_Page = Current_Page + 1
+            elif current_page.CurrentPage == 4 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = current_page.CurrentPage +1 
                 Misc = discord.Embed(title="**Help System**", description=f"Page information: __**Misc**__", color=0x7289da)
                 Misc.set_thumbnail(url=ctx.author.avatar.url)
                 Misc.add_field(name='Misc: ', value='''
@@ -1943,8 +1941,8 @@ async def _Help(ctx):
                 Misc.set_footer(text=f' Page 5/5', icon_url=ctx.author.avatar.url)
                 Misc.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
                 await interaction.response.edit_message(embed=Misc,view=self)
-            elif Current_Page == 5 and Msg.id == interaction.message.id:
-                Current_Page = 1
+            elif current_page.CurrentPage == 5 and Msg.id == interaction.message.id:
+                current_page.CurrentPage = 1
                 await interaction.response.edit_message(embed=Home,view=self)
 
 
