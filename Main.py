@@ -2682,7 +2682,25 @@ async def _Suggest(ctx, *, Suggestion):
                 for SaidNo in Said_No:
                     Number = Number + 1
                 Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
-                Embed2.add_field(name="**Results: **", value=f"""
+                List2 = []
+                NumberNew2 = 0
+                for Attachment in ctx.message.attachments:
+                    if ctx.message.attachments:
+                        NumberNew2 = NumberNew2 + 1
+                        List2.append(Attachment.url)
+                if NumberNew2 == 0:
+                    Embed.add_field(name='Files: ', value='None', inline=False)
+                elif NumberNew2 == 1:
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]})', inline=False)
+                elif NumberNew2 == 2:
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]})', inline=False)
+                elif NumberNew2 == 3:
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]})', inline=False)
+                elif NumberNew2 == 4: 
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]})', inline=False)
+                elif NumberNew2 == 5:
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]}) / [File]({List2[4]})', inline=False)
+                Embed.add_field(name="**Results: **", value=f"""
 
 <:upvote:974070425086754876> **Upvotes:** `{Number1}`
 <:downvote:974070395936317471> **Downvotes:** `{Number}`
@@ -2712,7 +2730,25 @@ async def _Suggest(ctx, *, Suggestion):
                 for SaidNo in Said_No:
                     Number = Number + 1
                 Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
-                Embed2.add_field(name="**Results: **", value=f"""
+                List2 = []
+                NumberNew2 = 0
+                for Attachment in ctx.message.attachments:
+                    if ctx.message.attachments:
+                        NumberNew2 = NumberNew2 + 1
+                        List2.append(Attachment.url)
+                if NumberNew2 == 0:
+                    Embed.add_field(name='Files: ', value='None', inline=False)
+                elif NumberNew2 == 1:
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]})', inline=False)
+                elif NumberNew2 == 2:
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]})', inline=False)
+                elif NumberNew2 == 3:
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]})', inline=False)
+                elif NumberNew2 == 4: 
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]})', inline=False)
+                elif NumberNew2 == 5:
+                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]}) / [File]({List2[4]})', inline=False)
+                Embed.add_field(name="**Results: **", value=f"""
     
 <:upvote:974070425086754876> **Upvotes:** `{Number1}`
 <:downvote:974070395936317471> **Downvotes:** `{Number}`
