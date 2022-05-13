@@ -476,6 +476,7 @@ async def _Deafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason):
         Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
         Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
         Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+        BigSize = False
         List = []
         NumberNew = 0
         for Attackment in ctx.message.attachments:
@@ -496,17 +497,19 @@ async def _Deafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason):
         elif NumberNew == 5:
             Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
         else:
-            await ctx.send('Too many Files')
             BigSize = True
-        await Channel.send(embed=Infraction)
-        Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
-        Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
-        Cursor.execute(Q, Par)
-        Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
-        Database.commit()
-        await ctx.send(embed=Embed)
-        await Member.edit(deafen = True)
-        await Member.edit(mute = True)
+        if BigSize == False:
+            await Channel.send(embed=Infraction)
+            Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
+            Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
+            Cursor.execute(Q, Par)
+            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
+            Database.commit()
+            await ctx.send(embed=Embed)
+            await Member.edit(deafen = True)
+            await Member.edit(mute = True)
+        elif BigSize==True:
+            await ctx.send('Too many Files')
     else:
         await MissingPermission(ctx, ctx.author) 
 
@@ -747,6 +750,18 @@ async def _Unban(ctx, Member: Union[discord.Member,discord.Object],*,Reason):
             Infraction2 = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> warned <@{Member.id}>.")
             Infraction2.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction2.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
+            if NumberNew == 0:
+                Infraction2.add_field(name='Files: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             Infraction2.add_field(name='**Approved by: **', value=f'<@{interaction.user.id}>', inline=False)
             Infraction2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             for child in self.children: 
@@ -876,6 +891,18 @@ async def _Ban(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
             Infraction2.add_field(name='**Infraction Code: **', value=f'{Number}/{Code1}', inline=False)
             Infraction2.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction2.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
+            if NumberNew == 0:
+                Infraction2.add_field(name='Files: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             Infraction2.add_field(name='**Approved by: **', value=f'<@{interaction.user.id}>', inline=False)
             Infraction2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             for child in self.children: 
@@ -931,6 +958,7 @@ async def _Ban(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
             Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
             Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            BigSize == False
             List = []
             NumberNew = 0
             for Attackment in ctx.message.attachments:
@@ -951,19 +979,22 @@ async def _Ban(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
             elif NumberNew == 5:
                 Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             else:
-                await ctx.send('Too many Files')
                 BigSize = True
-            await ctx.channel.send(embed=Embed)
 
-            await Logging(ctx, ctx.message.content,ctx.author, User, Reason, ctx.channel)
-            Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
-            Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
-            Cursor.execute(Q, Par)
-            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
-            Database.commit()
-            await ctx.guild.ban(User, reason=Reason)
-            view = Button(timeout=15780000)
-            Msg = view.message = await Channel.send(embed=Infraction, view=view)
+
+            if BigSize == False:
+                await ctx.channel.send(embed=Embed)
+                await Logging(ctx, ctx.message.content,ctx.author, User, Reason, ctx.channel)
+                Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
+                Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
+                Cursor.execute(Q, Par)
+                Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
+                Database.commit()
+                await ctx.guild.ban(User, reason=Reason)
+                view = Button(timeout=15780000)
+                Msg = view.message = await Channel.send(embed=Infraction, view=view)
+            elif BigSize == True:
+                await ctx.send('Too many Files')
     else:
         await MissingPermission(ctx, ctx.author)
 
@@ -1031,6 +1062,18 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
             Infraction2.add_field(name='**Infraction Code: **', value=f'{Number}/{Code1}', inline=False)
             Infraction2.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction2.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
+            if NumberNew == 0:
+                Infraction2.add_field(name='Files: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             Infraction2.add_field(name='**Approved by: **', value=f'<@{interaction.user.id}>', inline=False)
             Infraction2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             for child in self.children: 
@@ -1085,6 +1128,7 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
             Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             List = []
             NumberNew = 0
+            BigSize = False
             for Attackment in ctx.message.attachments:
                 if ctx.message.attachments:
                     NumberNew = NumberNew + 1
@@ -1103,18 +1147,19 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
             elif NumberNew == 5:
                 Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             else:
-                await ctx.send('Too many Files')
                 BigSize = True
-            await Logging(ctx, ctx.message.content,ctx.author, Member, Reason, ctx.channel)
-            print(Time)
-            Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
-            Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
-            Cursor.execute(Q, Par)
-            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
-            Database.commit()
-            await Member.kick(reason=Reason)
-            view = Button(timeout=15780000)
-            Msg = view.message = await Channel.send(embed=Infraction, view=view)
+            if BigSize== False:
+                await Logging(ctx, ctx.message.content,ctx.author, Member, Reason, ctx.channel)
+                Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
+                Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
+                Cursor.execute(Q, Par)
+                Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
+                Database.commit()
+                await Member.kick(reason=Reason)
+                view = Button(timeout=15780000)
+                Msg = view.message = await Channel.send(embed=Infraction, view=view)
+            else:
+                await ctx.send('Too many')
     else:
         await MissingPermission(ctx, ctx.author)
 
@@ -1193,6 +1238,18 @@ async def _Warn(ctx, Member: discord.Member, *, Reason):
             Infraction2.add_field(name='**Infraction Code: **', value=f'{Number}/{Code1}', inline=False)
             Infraction2.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction2.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
+            if NumberNew == 0:
+                Infraction2.add_field(name='Files: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             Infraction2.add_field(name='**Approved by: **', value=f'<@{interaction.user.id}>', inline=False)
             Infraction2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             for child in self.children: 
@@ -1248,6 +1305,7 @@ async def _Warn(ctx, Member: discord.Member, *, Reason):
         Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
         Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
         List = []
+        BigSize = False
         NumberNew = 0
         for Attackment in ctx.message.attachments:
             if ctx.message.attachments:
@@ -1267,18 +1325,19 @@ async def _Warn(ctx, Member: discord.Member, *, Reason):
         elif NumberNew == 5:
             Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
         else:
-            await ctx.send('Too many Files')
             BigSize = True
-
-        await ctx.channel.send(embed=Main)
-    
-        Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
-        Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
-        Cursor.execute(Q, Par)
-        Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
-        Database.commit()
-        view = Button(timeout=15780000)
-        Msg = view.message = await Channel.send(f"<@{Member.id}>",embed=Infraction, view=view)
+            
+        if BigSize == False:
+            await ctx.channel.send(embed=Main)
+            Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
+            Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
+            Cursor.execute(Q, Par)
+            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
+            Database.commit()
+            view = Button(timeout=15780000)
+            Msg = view.message = await Channel.send(f"<@{Member.id}>",embed=Infraction, view=view)
+        else:
+            await ctx.send('Too many Files')
     else:
         await MissingPermission(ctx, ctx.author)
 
@@ -1993,6 +2052,7 @@ async def _RandomNumber(ctx, First_Number: int = None, Second_Number:int = None)
 async def _Verify(ctx):
 
 
+
     Today = date.today()
     Now = datetime.now()
     current_time = Now.strftime("%H:%M:%S")
@@ -2116,7 +2176,7 @@ async def _Verify(ctx):
         for y in row2:
             print(y)
             if Number == y[1]:
-                Verify.add_field(name='**Please put that code in your status and click Approve after: **', value=f'`{y[0]}`', inline=False)
+                Verify.add_field(name='**Please put that code in your status and click confirm after: **', value=f'`{y[0]}`', inline=False)
         Verify.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
         user_thumbnail = user_thumbnails[0]
         Verify.set_thumbnail(url=user_thumbnail.image_url)
