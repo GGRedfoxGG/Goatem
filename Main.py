@@ -2689,18 +2689,18 @@ async def _Suggest(ctx, *, Suggestion):
                         NumberNew2 = NumberNew2 + 1
                         List2.append(Attachment.url)
                 if NumberNew2 == 0:
-                    Embed.add_field(name='Files: ', value='None', inline=False)
+                    Embed2.add_field(name='Files: ', value='None', inline=False)
                 elif NumberNew2 == 1:
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]})', inline=False)
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]})', inline=False)
                 elif NumberNew2 == 2:
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]})', inline=False)
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]})', inline=False)
                 elif NumberNew2 == 3:
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]})', inline=False)
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]})', inline=False)
                 elif NumberNew2 == 4: 
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]})', inline=False)
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]})', inline=False)
                 elif NumberNew2 == 5:
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]}) / [File]({List2[4]})', inline=False)
-                Embed.add_field(name="**Results: **", value=f"""
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]}) / [File]({List2[4]})', inline=False)
+                Embed2.add_field(name="**Results: **", value=f"""
 
 <:upvote:974070425086754876> **Upvotes:** `{Number1}`
 <:downvote:974070395936317471> **Downvotes:** `{Number}`
@@ -2737,18 +2737,18 @@ async def _Suggest(ctx, *, Suggestion):
                         NumberNew2 = NumberNew2 + 1
                         List2.append(Attachment.url)
                 if NumberNew2 == 0:
-                    Embed.add_field(name='Files: ', value='None', inline=False)
+                    Embed2.add_field(name='Files: ', value='None', inline=False)
                 elif NumberNew2 == 1:
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]})', inline=False)
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]})', inline=False)
                 elif NumberNew2 == 2:
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]})', inline=False)
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]})', inline=False)
                 elif NumberNew2 == 3:
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]})', inline=False)
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]})', inline=False)
                 elif NumberNew2 == 4: 
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]})', inline=False)
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]})', inline=False)
                 elif NumberNew2 == 5:
-                    Embed.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]}) / [File]({List2[4]})', inline=False)
-                Embed.add_field(name="**Results: **", value=f"""
+                    Embed2.add_field(name='Files: ', value=f'[File]({List2[0]}) / [File]({List2[1]}) / [File]({List2[2]}) / [File]({List2[3]}) / [File]({List2[4]})', inline=False)
+                Embed2.add_field(name="**Results: **", value=f"""
     
 <:upvote:974070425086754876> **Upvotes:** `{Number1}`
 <:downvote:974070395936317471> **Downvotes:** `{Number}`
