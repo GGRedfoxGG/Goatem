@@ -2902,7 +2902,7 @@ async def _Suggest(ctx, *, Suggestion):
     elif BigFile == True:
         await ctx.send('Too many Pictures/Files!')
 
-@Client_Bot.command(aliases=['Polls', 'PostPoll', 'Create Poll'])
+@Client_Bot.command(aliases=['Polls'])
 async def _Polls(ctx, *, Poll):
     await RoleChecker(ctx, ctx.author)
     result_from_errorrank = await RoleChecker(ctx, ctx.author)
@@ -3080,5 +3080,4 @@ async def _Getroles(ctx):
 
 
 Client_Bot.run(os.getenv('Token')) 
-
 
