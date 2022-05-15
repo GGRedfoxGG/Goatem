@@ -2631,7 +2631,7 @@ async def _Forceverify(ctx, Discord_User: discord.Member,Roblox_ID: int, *, Reas
     else:
         await MissingPermission(ctx, ctx.author)
         
-@Client_Bot.command(aliases = ['Giveaway', 'Giveaways', 'Create Giveaway'],  pass_context=True)
+@Client_Bot.command(aliases = ['Giveaway', 'Giveaways'],  pass_context=True)
 async def _Giveaway(ctx, Duration_In_Hours:int):
     Today = date.today()
     Now = datetime.now()
