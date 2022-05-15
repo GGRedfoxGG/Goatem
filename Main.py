@@ -508,7 +508,14 @@ async def _Deafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason):
             await ctx.send(embed=Embed)
             await Member.edit(deafen = True)
             await Member.edit(mute = True)
-        elif BigSize==True:
+            InGroup = False
+            for member in ctx.guild.members:
+                if member.id == Member.id:
+                    InGroup = True
+            
+            if InGroup == True:
+                await Member.send(embed=Infraction)
+        elif BigSize == True:
             await ctx.send('Too many Files')
     else:
         await MissingPermission(ctx, ctx.author) 
@@ -990,9 +997,16 @@ async def _Ban(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
                 Cursor.execute(Q, Par)
                 Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
                 Database.commit()
-                await ctx.guild.ban(User, reason=Reason)
                 view = Button(timeout=15780000)
                 Msg = view.message = await Channel.send(embed=Infraction, view=view)
+                InGroup = False
+                for member in ctx.guild.members:
+                    if member.id == Member.id:
+                        InGroup = True
+                
+                if InGroup == True:
+                    await Member.send(embed=Infraction)
+                await ctx.guild.ban(User, reason=Reason)
             elif BigSize == True:
                 await ctx.send('Too many Files')
     else:
@@ -1155,9 +1169,16 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
                 Cursor.execute(Q, Par)
                 Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
                 Database.commit()
-                await Member.kick(reason=Reason)
                 view = Button(timeout=15780000)
                 Msg = view.message = await Channel.send(embed=Infraction, view=view)
+                InGroup = False
+                for member in ctx.guild.members:
+                    if member.id == Member.id:
+                        InGroup = True
+                
+                if InGroup == True:
+                    await Member.send(embed=Infraction)
+                await Member.kick(reason=Reason)
             else:
                 await ctx.send('Too many')
     else:
@@ -1336,6 +1357,13 @@ async def _Warn(ctx, Member: discord.Member, *, Reason):
             Database.commit()
             view = Button(timeout=15780000)
             Msg = view.message = await Channel.send(f"<@{Member.id}>",embed=Infraction, view=view)
+            InGroup = False
+            for member in ctx.guild.members:
+                if member.id == Member.id:
+                    InGroup = True
+            
+            if InGroup == True:
+                await Member.send(embed=Infraction)
         else:
             await ctx.send('Too many Files')
     else:
@@ -2417,6 +2445,13 @@ async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
             Msg = view.message = await Channel.send(embed=Infraction, view=view)
             await Member.timeout(discord.utils.utcnow() + timedelta(hours=Length))
             await ctx.send(embed=Embed)
+            InGroup = False
+            for member in ctx.guild.members:
+                if member.id == Member.id:
+                    InGroup = True
+            
+            if InGroup == True:
+                await Member.send(embed=Infraction)
         elif Length < 1:
             await MissingPermission(ctx, ctx.author)
         else:
