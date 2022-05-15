@@ -2527,7 +2527,7 @@ async def _Unmute(ctx, Member: discord.Member, *, Reason):
     else:
         await MissingPermission(ctx, ctx.author)
 
-@Client_Bot.command(aliases = ['Forceverify', 'Fverify', 'Force Verify'],  pass_context=True)
+@Client_Bot.command(aliases = ['Forceverify', 'Fverify'],  pass_context=True)
 async def _Forceverify(ctx, Discord_User: discord.Member,Roblox_ID: int, *, Reason):
     Today = date.today()
     Now = datetime.now()
