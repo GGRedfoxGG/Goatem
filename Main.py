@@ -34,11 +34,11 @@ from roblox import Client, AvatarThumbnailType
 import os
 
 
-client = Client(os.getenv('Roblox_TOKEN'))
+client = Client(os.environ('Roblox_TOKEN'))
 
 Client_Bot = commands.Bot(command_prefix=',',case_insensitive=True,intents=discord.Intents.all())
 Client_Bot.remove_command("help")
-Database = connect(host="containers-us-west-31.railway.app", database="railway", user="postgres", password=os.getenv('Password'))
+Database = connect(host="containers-us-west-31.railway.app", database="railway", user="postgres", password=os.environ('Password'))
 Cursor = Database.cursor()
 Guild = object()
 
@@ -3079,5 +3079,5 @@ async def _Getroles(ctx):
         
 
 
-Client_Bot.run(os.getenv('Token')) 
+Client_Bot.run(os.environ('Token')) 
 
