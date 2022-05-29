@@ -174,7 +174,6 @@ Joined at: <t:{Time2}:F> <t:{Time2}:R>
             for child in self.children: 
                 child.disabled = True
             await self.message.edit(view=self) 
-    await Channel.send(embed=Join)
     view = Button(timeout=15780000)
     view.message = await Channel.send(embed=Join, view=view)
 
