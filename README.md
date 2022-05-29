@@ -1,1 +1,1 @@
-# New Project
+# Goatem discord bot
