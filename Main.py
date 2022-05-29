@@ -146,10 +146,7 @@ async def on_member_join(Member):
 f'''
 
 Account ID: `{Member.id}`
-Created at: {Member.created_at.date()}
 Joined at: <t:{Time2}:F> <t:{Time2}:R>
-Account Name: {Member}
-Account Ping: <@{Member.id}>
 
 ''',
     inline=False)
@@ -158,7 +155,7 @@ Account Ping: <@{Member.id}>
 
     class Button(discord.ui.View):
         @discord.ui.button(label='User Information', style=discord.ButtonStyle.grey)
-        async def Info(self, Info: discord.ui.Button, interaction: discord.Interaction):
+        async def Info(self, interaction: discord.Interaction, Info: discord.ui.Button):
             UserInfo = discord.Embed(title='User Information')
             UserInfo.add_field(name="**User: **", value=f"<@{Member.id}>/`{Member.id}`", inline=False)
             UserInfo.add_field(name="**Created at: **", value=f"{Member.created_at.day}/{Member.created_at.month}/{Member.created_at.year}")
@@ -1404,7 +1401,7 @@ async def _Ticket(ctx):
             self.name = name
     class Button(discord.ui.View):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.green)
-        async def Claim_Button(self, claimed: discord.ui.Button, interaction: discord.Interaction):
+        async def Claim_Button(self, interaction: discord.Interaction, claimed: discord.ui.Button):
             if claimed.label == 'Claim':
                 claimed.label = 'Unclaim'
                 claimed.style = discord.ButtonStyle.red 
@@ -1493,7 +1490,7 @@ async def _Ticket(ctx):
                 Final_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
                 await interaction.response.edit_message(embed=Final_Embed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
-        async def Edit_Button(self, edit: discord.ui.Button, interaction: discord.Interaction):   
+        async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
             await interaction.user.send("Please reply to this text with your note!")
             await interaction.response.edit_message(view=self)
             Note = await Client_Bot.wait_for('message', check=lambda message: message.author == interaction.user)
@@ -1549,7 +1546,7 @@ async def _Ticket(ctx):
                 await interaction.message.edit(embed=NoteEdit, view=self)
 
         @discord.ui.button(label='Close', style=discord.ButtonStyle.red)
-        async def Close_Button(self, close: discord.ui.Button, interaction: discord.Interaction):  
+        async def Close_Button(self, interaction: discord.Interaction, close: discord.ui.Button):  
             Today3 = date.today()
             Now3 = datetime.now()
             current_time3 = Now3.strftime("%H:%M:%S")
@@ -1602,7 +1599,7 @@ async def _Ticket(ctx):
     
     class Tickets(discord.ui.View):
         @discord.ui.button(label='General', style=discord.ButtonStyle.green)
-        async def General(self, general: discord.ui.Button, interaction: discord.Interaction):   
+        async def General(self, interaction: discord.Interaction, general: discord.ui.Button):   
             Text = None
             TypeTicket.append("General")
             BigSize = False
@@ -1654,7 +1651,7 @@ async def _Ticket(ctx):
                 Main3 = view2.message = await GeneralReport.send(embed=Final_Embed, view=view2)
                 await interaction.response.edit_message(view=self, embed=Final_Embed)
         @discord.ui.button(label='Bug Report', style=discord.ButtonStyle.green)
-        async def bugreportf(self, bug: discord.ui.Button, interaction: discord.Interaction):      
+        async def bugreportf(self, interaction: discord.Interaction, bug: discord.ui.Button):      
             Text = None
             TypeTicket.append("Bug Report")
             BigSize = False
@@ -1706,7 +1703,7 @@ async def _Ticket(ctx):
                 Main3 = view2.message = await bugreport.send(embed=Final_Embed, view=view2)
                 await interaction.response.edit_message(view=self, embed=Final_Embed)
         @discord.ui.button(label='User Report', style=discord.ButtonStyle.green)
-        async def UserR(self, userr: discord.ui.Button, interaction: discord.Interaction):    
+        async def UserR(self, interaction: discord.Interaction, userr: discord.ui.Button):    
             Text = None
             TypeTicket.append("User Report")
             BigSize = False
@@ -1758,7 +1755,7 @@ async def _Ticket(ctx):
                 Main3 = view2.message = await UserReport.send(embed=Final_Embed, view=view2)
                 await interaction.response.edit_message(view=self, embed=Final_Embed)
         @discord.ui.button(label='Staff Report', style=discord.ButtonStyle.red)
-        async def Staff(self, staff: discord.ui.Button, interaction: discord.Interaction):     
+        async def Staff(self, interaction: discord.Interaction, staff: discord.ui.Button):     
             Text = None
             TypeTicket.append("Staff Report")
             BigSize = False
