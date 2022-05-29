@@ -1399,6 +1399,10 @@ async def _Ticket(ctx):
         ActualValue = None
         def __init__(self, name):
             self.name = name
+    class Message_Thread(object):
+        ActualValue = None
+        def __init__(self, name):
+            self.name = name
     class Button(discord.ui.View):
         @discord.ui.button(label='Claim', style=discord.ButtonStyle.green)
         async def Claim_Button(self, interaction: discord.Interaction, claimed: discord.ui.Button):
@@ -1444,11 +1448,9 @@ async def _Ticket(ctx):
                     Claimed_Embed.add_field(name='Suspect: ', value=f'None', inline=False)
                 Claimed_Embed.add_field(name='Date: ', value=f'<t:{Date_Time.ActualValue}:F> <t:{Date_Time.ActualValue}:R>', inline=False)
                 Claimed_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
-                Message = await interaction.message.create_thread(name=F"Ticket {Number} - {Code} - {TypeTicket[-1]}", auto_archive_duration=10080)
+                Message_Thread.ActualValue = await interaction.message.create_thread(name=F"Ticket {Number} - {Code} - {TypeTicket[-1]}", auto_archive_duration=10080)
                 view5 = link(query=f'https://discord.com/channels/{interaction.guild.id}/{interaction.channel.id}/{interaction.message.id}')
-                Message.add_user(user=ctx.author)
-                Message.add_user(user=interaction.user)
-                view5.message = await Message.send(embed=Claimed_Embed, view=view5)
+                view5.message = await Message_Thread.ActualValue.send(embed=Claimed_Embed, view=view5)
                 await interaction.response.edit_message(embed=Claimed_Embed,view=self)
             elif claimed.label == "Unclaim":
                 claimed.label = 'Claim'
@@ -1488,6 +1490,7 @@ async def _Ticket(ctx):
                     Final_Embed.add_field(name='Suspect: ', value=f'None', inline=False)
                 Final_Embed.add_field(name='Date: ', value=f'<t:{Date_Time.ActualValue}:F> <t:{Date_Time.ActualValue}:R>', inline=False)
                 Final_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
+                Message_Thread.ActualValue.delete()
                 await interaction.response.edit_message(embed=Final_Embed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
