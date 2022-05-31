@@ -2383,7 +2383,7 @@ async def on_message_edit(before,after):
 
         ''', inline=False)
         Embed.add_field(name='Channel: ', value=f'<#{before.channel.id}>', inline=False)
-        Embed.add_field(name='Jump to message: ', value=f'[Message link](https://discord.com/channels/{after.guild.id}/{after.channel.id}/{after.message.id})', inline=False)
+        Embed.add_field(name='Jump to message: ', value=f'[Message link](https://discord.com/channels/{after.guild.id}/{after.channel.id}/{after.id})', inline=False)
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         await Channel.send(embed=Embed)
         await Client_Bot.process_commands(before)
