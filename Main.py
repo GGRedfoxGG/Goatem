@@ -2323,7 +2323,7 @@ async def _Verify(ctx):
     
         await Logging(ctx, ctx.message.content,ctx.author, ctx.author, f"Report: {Report.content}", ctx.channel)
 
-@Client_Bot.event
+@Client_Bot.listen('on_message')
 async def on_message(message):
     Channel = Client_Bot.get_channel(974065047326294026)
     
@@ -2411,6 +2411,7 @@ async def on_message_delete(message):
         Embed.add_field(name='Channel: ', value=f'<#{message.channel.id}>', inline=False)
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         await Channel.send(embed=Embed)
+        await Client_Bot.process_commands(message)
 
 @Client_Bot.event
 async def on_member_update(before, after):
