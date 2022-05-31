@@ -3255,7 +3255,6 @@ Welcome {ctx.author} to your private thread, here you're can talk about anything
         
             """,color=0x60ff6e)
             Thread = await ctx.channel.create_thread(name=F"{Thread_Name}", message=None, auto_archive_duration=10080, type=ChannelType.private_thread, reason=None)
-            await ctx.message.delete()
             view = Button(timeout=15780000)
             view.message = await Thread.send(f'{ctx.author.mention}', embed=Thread_Embed, view=view)
         elif ctx.guild.premium_tier == 1 or ctx.guild.premium_tier == 0:
