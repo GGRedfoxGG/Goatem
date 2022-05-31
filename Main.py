@@ -1331,7 +1331,6 @@ async def _Warn(ctx, Member: discord.Member, *, Reason):
             Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
             Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
             Cursor.execute(Q, Par)
-            Database.commit()
             Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
             Database.commit()
             view = Button(timeout=15780000)
@@ -2870,11 +2869,11 @@ async def _Suggest(ctx, *, Suggestion):
     Is_Allowed = False
 
     role1 = [
-        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Staff
-        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Premium
-        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Boosters
-        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Champ
-        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Major cont
+        discord.utils.get(ctx.guild.roles, id=980155188050546698), # Staff
+        discord.utils.get(ctx.guild.roles, id=974044272485621843), # Premium
+        discord.utils.get(ctx.guild.roles, id=965964148926189599), # Boosters
+        discord.utils.get(ctx.guild.roles, id=978020438095577188), # Champ
+        discord.utils.get(ctx.guild.roles, id=966168176608034897), # Major cont
     ]
     for Main in role1:
         for member in ctx.guild.members:
