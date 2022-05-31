@@ -1450,12 +1450,8 @@ async def _Ticket(ctx):
                 Claimed_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
                 if ctx.guild.premium_tier == 2 or ctx.guild.premium_tier == 3:
                     Message_Thread.ActualValue = await interaction.channel.create_thread(name=F"Ticket {Number} - {Code} - {TypeTicket[-1]}", message=None, auto_archive_duration=10080, type=ChannelType.private_thread, reason=None)
-                    Message = await interaction.channel.fetch_message(Message_Thread.ActualValue.id)
-                    await Message.delete()
                 elif ctx.guild.premium_tier == 1 or ctx.guild.premium_tier == 0:
                     Message_Thread.ActualValue = await interaction.channel.create_thread(name=F"Ticket {Number} - {Code} - {TypeTicket[-1]}", message=None, auto_archive_duration=10080, type=ChannelType.public_thread, reason=None)
-                    Message = await interaction.channel.fetch_message(Message_Thread.ActualValue.id)
-                    await Message.delete()
                 view5 = link(query=f'https://discord.com/channels/{interaction.guild.id}/{interaction.channel.id}/{interaction.message.id}')
                 view5.message = await Message_Thread.ActualValue.send(f'{ctx.author.mention}', embed=Claimed_Embed, view=view5)
                 await interaction.response.edit_message(embed=Claimed_Embed,view=self)
