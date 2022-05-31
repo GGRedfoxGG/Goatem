@@ -822,10 +822,13 @@ async def _Unban(ctx, Member: Union[discord.Member,discord.Object],*,Reason):
 @Client_Bot.command(aliases = ['Clearwarnings', 'Clear Warnings'],  pass_context=True)
 async def _ClearWarnings(ctx, Member: Union[discord.Member,discord.Object], *, Reason):
     
-    Selected_Code = "select userid from warning_logs"
+    Selected_Code = "select thing from strike_logs"
     Cursor.execute(Selected_Code)
     records = Cursor.fetchall()
     Number = 0
+    for record in records:
+        Number = Number + 1
+    Number = Number + 1
     Type = 'Clear Warnings'
     Code1 = random.randint(0,999999999999999999)
 
@@ -1328,6 +1331,7 @@ async def _Warn(ctx, Member: discord.Member, *, Reason):
             Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
             Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
             Cursor.execute(Q, Par)
+            Database.commit()
             Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
             Database.commit()
             view = Button(timeout=15780000)
