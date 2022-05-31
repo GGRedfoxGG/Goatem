@@ -3269,7 +3269,6 @@ Welcome {ctx.author} to your thread, here you're can talk about anything you wan
             """,color=0x60ff6e)
             Thread = await ctx.channel.create_thread(name=F"{Thread_Name}", message=None, auto_archive_duration=10080, type=ChannelType.public_thread, reason=None)
             view = Button(timeout=15780000)
-            await ctx.message.delete()
             view.message = await Thread.send(f'{ctx.author.mention}', embed=Thread_Embed, view=view)
     else:
         await ctx.send("You're not allowed to create a thread!")
