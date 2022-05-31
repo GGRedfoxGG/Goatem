@@ -3247,7 +3247,7 @@ async def cThread(ctx, *,Thread_Name: str):
     if Is_Allowed == True:
         if ctx.guild.premium_tier == 2 or ctx.guild.premium_tier == 3:
             Thread_Embed = discord.Embed(title=F"{ctx.author}'s Thread", description=f"""
-Welcome {ctx.author} to your private thread, here you're can talk about anything you want **but NSFW**. You can add anyone by mentioning them in the thread and they will be added. 
+Welcome {ctx.author} to your private thread, here you can talk about anything you want **but NSFW**. You can add anyone by mentioning them in the thread and they will be added. 
 
 <:dot:973671662249705482> To report a user, please contact a developer and mention them in this thread so they can be added. 
 <:dot:973671662249705482> If the channel was archived, moderators are allowed to review it for any hostile/NSFW behaviour.
@@ -3259,7 +3259,7 @@ Welcome {ctx.author} to your private thread, here you're can talk about anything
         elif ctx.guild.premium_tier == 1 or ctx.guild.premium_tier == 0:
             Thread_Embed = discord.Embed(title=F"{ctx.author}'s Thread", description=f"""
             
-Welcome {ctx.author} to your thread, here you're can talk about anything you want **but NSFW**. You can add anyone by mentioning them in the thread and they will be added. 
+Welcome {ctx.author} to your thread, here you can talk about anything you want **but NSFW**. You can add anyone by mentioning them in the thread and they will be added. 
 
 <:dot:973671662249705482> To report a user, please contact a developer and mention them in this thread so they can be added. 
 <:dot:973671662249705482> If the channel was archived, moderators are allowed to review it for any hostile/NSFW behaviour.
