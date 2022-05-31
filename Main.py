@@ -7,7 +7,7 @@ from platform import python_version
 from pydoc import cli
 from ssl import ALERT_DESCRIPTION_ACCESS_DENIED
 from tokenize import group
-from discord import Embed, Member, __version__ as discord_version
+from discord import ChannelType, Embed, Member, __version__ as discord_version
 from psutil import Process, virtual_memory
 import datetime
 from datetime import datetime, timedelta, date
@@ -771,59 +771,56 @@ async def _Unban(ctx, Member: Union[discord.Member,discord.Object],*,Reason):
     await RoleChecker(ctx, ctx.author)
     result_from_errorrank = await RoleChecker(ctx, ctx.author)
     In_Group = result_from_errorrank
-
-    if In_Group == True or ctx.author.guild_permissions.administrator:
-        banned_members = await ctx.guild.bans()
-        for ban_entry in banned_members:
+    user = False
+    banned_members = await ctx.guild.bans()
+    for ban_entry in banned_members:
+        if ban_entry.user.id == User.id:
             user = ban_entry.user
-            if user.id == User.id:
-                await Logging(ctx, ctx.message.content,ctx.author, User, Reason, ctx.channel)
-                Embed = discord.Embed(title="Ban System")
-                Embed.add_field(name=f'__**{User}**__ was unbanned successfuly with the reason: ', value=f'{Reason}', inline=False)
-                Embed.set_footer(text=f'Unbanned by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                Channel = Client_Bot.get_channel(974063374260383784)
-                Infraction = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> unbanned <@{Member.id}>.")
-                Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
-                Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
-                Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-                List = []
-                NumberNew = 0
-                for Attackment in ctx.message.attachments:
-                    if ctx.message.attachments:
-                        NumberNew = NumberNew + 1
-                        List.append(Attackment.url)
+    if In_Group == True or ctx.author.guild_permissions.administrator:
+        if user == User:
+            await Logging(ctx, ctx.message.content,ctx.author, User, Reason, ctx.channel)
+            Embed = discord.Embed(title="Ban System", description=f'__**{User}**__ was unbanned successfuly with the reason: {Reason}')
+            Embed.set_footer(text=f'Unbanned by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            Channel = Client_Bot.get_channel(974063374260383784)
+            Infraction = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> unbanned <@{Member.id}>.")
+            Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
+            Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
+            Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
+            List = []
+            NumberNew = 0
+            for Attackment in ctx.message.attachments:
+                if ctx.message.attachments:
+                    NumberNew = NumberNew + 1
+                    List.append(Attackment.url)
 
-                if NumberNew == 0:
-                    Infraction.add_field(name='Files: ', value='None', inline=False)
-                elif NumberNew == 1:
-                    Infraction.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
-                elif NumberNew == 2:
-                    Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
-                elif NumberNew == 3:
-                    Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
-                elif NumberNew == 4: 
-                    Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
-                elif NumberNew == 5:
-                    Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
-                else:
-                    await ctx.send('Too many Files')
-                    BigSize = True
-                view = Button(timeout=15780000)
-                Msg = view.message = await Channel.send(embed=Infraction, view=view)
-                await ctx.channel.send(embed=Embed)
-                await ctx.guild.unban(user)
-                break
-            elif User not in banned_members:
-                Embed2 = discord.Embed(title="Ban System")
-                Embed2.add_field(name=f'__**{User}**__ can not be unbanned because he wasn not banned in the first place.', value=f'{Reason}', inline=False)
-                Embed2.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
-                await ctx.channel.send(embed=Embed2)
-                break
+            if NumberNew == 0:
+                Infraction.add_field(name='Files: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+            else:
+                await ctx.send('Too many Files')
+                BigSize = True
+            view = Button(timeout=15780000)
+            Msg = view.message = await Channel.send(embed=Infraction, view=view)
+            await ctx.channel.send(embed=Embed)
+            await ctx.guild.unban(user)
+        elif user == False:
+            Embed2 = discord.Embed(title="Ban System", description=f'__**{User}**__ can not be unbanned because he was not banned in the first place.')
+            Embed2.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
+            await ctx.channel.send(embed=Embed2)
     else:
         await MissingPermission(ctx, ctx.author)
 
 @Client_Bot.command(aliases = ['Clearwarnings', 'Clear Warnings'],  pass_context=True)
-async def _ClearWarnings(ctx, Member: discord.Member, *, Reason):
+async def _ClearWarnings(ctx, Member: Union[discord.Member,discord.Object], *, Reason):
     
     Selected_Code = "select userid from warning_logs"
     Cursor.execute(Selected_Code)
@@ -863,7 +860,7 @@ async def _ClearWarnings(ctx, Member: discord.Member, *, Reason):
 
 @Client_Bot.command(aliases = ['Version'],  pass_context=True)
 async def _Version(ctx):
-    await ctx.channel.send(f"Goat 1.9.6")
+    await ctx.channel.send(f"Goat 2.0.1")
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
 
 @Client_Bot.command(aliases = ['Ban'],  pass_context=True)
@@ -1447,9 +1444,16 @@ async def _Ticket(ctx):
                     Claimed_Embed.add_field(name='Suspect: ', value=f'None', inline=False)
                 Claimed_Embed.add_field(name='Date: ', value=f'<t:{Date_Time.ActualValue}:F> <t:{Date_Time.ActualValue}:R>', inline=False)
                 Claimed_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
-                Message_Thread.ActualValue = await interaction.message.create_thread(name=F"Ticket {Number} - {Code} - {TypeTicket[-1]}", auto_archive_duration=10080)
+                if ctx.guild.premium_tier == 2 or ctx.guild.premium_tier == 3:
+                    Message_Thread.ActualValue = await interaction.channel.create_thread(name=F"Ticket {Number} - {Code} - {TypeTicket[-1]}", message=None, auto_archive_duration=10080, type=ChannelType.private_thread, reason=None)
+                    Message = await interaction.channel.fetch_message(Message_Thread.ActualValue.id)
+                    await Message.delete()
+                elif ctx.guild.premium_tier == 1 or ctx.guild.premium_tier == 0:
+                    Message_Thread.ActualValue = await interaction.channel.create_thread(name=F"Ticket {Number} - {Code} - {TypeTicket[-1]}", message=None, auto_archive_duration=10080, type=ChannelType.public_thread, reason=None)
+                    Message = await interaction.channel.fetch_message(Message_Thread.ActualValue.id)
+                    await Message.delete()
                 view5 = link(query=f'https://discord.com/channels/{interaction.guild.id}/{interaction.channel.id}/{interaction.message.id}')
-                view5.message = await Message_Thread.ActualValue.send(embed=Claimed_Embed, view=view5)
+                view5.message = await Message_Thread.ActualValue.send(f'{ctx.author.mention}', embed=Claimed_Embed, view=view5)
                 await interaction.response.edit_message(embed=Claimed_Embed,view=self)
             elif claimed.label == "Unclaim":
                 claimed.label = 'Claim'
@@ -1489,7 +1493,7 @@ async def _Ticket(ctx):
                     Final_Embed.add_field(name='Suspect: ', value=f'None', inline=False)
                 Final_Embed.add_field(name='Date: ', value=f'<t:{Date_Time.ActualValue}:F> <t:{Date_Time.ActualValue}:R>', inline=False)
                 Final_Embed.add_field(name='Note: ', value=f'{Text[-1]}', inline=False)
-                Message_Thread.ActualValue.delete()
+                await Message_Thread.ActualValue.delete()
                 await interaction.response.edit_message(embed=Final_Embed,view=self)
         @discord.ui.button(label='Edit', style=discord.ButtonStyle.gray)
         async def Edit_Button(self, interaction: discord.Interaction, edit: discord.ui.Button):   
@@ -1598,6 +1602,7 @@ async def _Ticket(ctx):
                 child.disabled = True
             await interaction.response.edit_message(embed=Closed_Embed,view=self)
             await ctx.author.send(embed=Closed_Embed)
+            await Message_Thread.ActualValue.edit(name=f'Archived Ticket {Number} - {Code} - {TypeTicket[-1]}', archived=True)
     
     class Tickets(discord.ui.View):
         @discord.ui.button(label='General', style=discord.ButtonStyle.green)
@@ -1935,7 +1940,9 @@ async def _Help(ctx):
                 Fun = discord.Embed(title="**Help System**", description=f"Page information: __**Fun**__", color=0x7289da)
                 Fun.set_thumbnail(url=ctx.author.avatar.url)
                 Fun.add_field(name='Fun: ', value='''
-`Rps`  
+`,Cthread [Thread's Name]`
+
+`,Rps`  
 
 `,Giveaway [Duration in hours]`
             ''', inline=False)
@@ -2094,6 +2101,8 @@ async def _Help(ctx):
                 Fun = discord.Embed(title="**Help System**", description=f"Page information: __**Fun**__", color=0x7289da)
                 Fun.set_thumbnail(url=ctx.author.avatar.url)
                 Fun.add_field(name='Fun: ', value='''
+`,Cthread [Thread's Name]`
+
 `,Rps`   
 
 `,Giveaway [Duration in hours]`
@@ -2854,7 +2863,22 @@ Winner: N/A
 
 @Client_Bot.command(aliases = ['Suggest', 'Suggestion'])
 async def _Suggest(ctx, *, Suggestion):
-    Channel = Client_Bot.get_channel(974066321698459658)
+    Is_Allowed = False
+
+    role1 = [
+        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Staff
+        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Premium
+        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Boosters
+        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Champ
+        discord.utils.get(ctx.guild.roles, id=947936695918133338), # Major cont
+    ]
+    for Main in role1:
+        for member in ctx.guild.members:
+            if ctx.author == member:
+                for role in member.roles:
+                    if role == Main:
+                        Is_Allowed = True
+    Channel = Client_Bot.get_channel(974066321698459658) 
     class Button(discord.ui.View):
         @discord.ui.button(label='Upvote', style=discord.ButtonStyle.green)
         async def Approve(self, interaction: discord.Interaction,Yes: discord.ui.Button):  
@@ -2874,7 +2898,10 @@ async def _Suggest(ctx, *, Suggestion):
                     Number1 = Number1 + 1
                 for SaidNo in Said_No:
                     Number = Number + 1
-                Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
+                if Is_Allowed == True:
+                    Embed2 = discord.Embed(title='Important Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value) 
+                elif Is_Allowed == False:
+                    Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=0x2476ff)
                 List2 = []
                 NumberNew2 = 0
                 for Attachment in ctx.message.attachments:
@@ -2922,7 +2949,10 @@ async def _Suggest(ctx, *, Suggestion):
                     Number1 = Number1 + 1
                 for SaidNo in Said_No:
                     Number = Number + 1
-                Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
+                if Is_Allowed == True:
+                    Embed2 = discord.Embed(title='Important Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value) 
+                elif Is_Allowed == False:
+                    Embed2 = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=0x2476ff)
                 List2 = []
                 NumberNew2 = 0
                 for Attachment in ctx.message.attachments:
@@ -2963,7 +2993,10 @@ async def _Suggest(ctx, *, Suggestion):
     Said_Yes = []
     Said_No = []
     BigFile = False
-    Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value)
+    if Is_Allowed == True:
+        Embed = discord.Embed(title='Important Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value) 
+    elif Is_Allowed == False:
+        Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=0x2476ff)
     List = []
     NumberNew = 0
     for Attachment in ctx.message.attachments:
@@ -3174,7 +3207,69 @@ async def _Getroles(ctx):
         view = Button(120)
         view.message = await ctx.send(embed=Embed_Roles, view=view)
         
+@Client_Bot.command(aliases=['CreateThread'])
+async def cThread(ctx, *,Thread_Name: str): 
+    class Button(discord.ui.View):
+        @discord.ui.button(label='Archive Thread', style=discord.ButtonStyle.red)
+        async def archive_button(self, interaction: discord.Interaction, archive_button: discord.ui.Button):  
+            if interaction.user.id == ctx.author.id:
+                archive_button.disabled = True
+                await interaction.response.edit_message(view=view)
+                await Thread.edit(name=f'Archived: {Thread_Name}', archived=True)
+            else:
+                await interaction.response.send_message("You're not allowed to use this command!")
+        def __init__(self, timeout):
+            super().__init__(timeout=timeout)
+            self.response = None 
 
+        async def on_timeout(self):
+            for child in self.children: 
+                child.disabled = True
+            await self.message.edit(view=self) 
+
+    Is_Allowed = False
+    role1 = [
+        discord.utils.get(ctx.guild.roles, id=980155188050546698), # Staff
+        discord.utils.get(ctx.guild.roles, id=974044272485621843), # Premium
+        discord.utils.get(ctx.guild.roles, id=965964148926189599), # Boosters
+        discord.utils.get(ctx.guild.roles, id=978020438095577188), # Champ
+        discord.utils.get(ctx.guild.roles, id=966168176608034897), # Major cont
+    ]
+    for Main in role1:
+        for member in ctx.guild.members:
+            if ctx.author == member:
+                for role in member.roles:
+                    if role == Main:
+                        Is_Allowed = True
+
+    if Is_Allowed == True:
+        if ctx.guild.premium_tier == 2 or ctx.guild.premium_tier == 3:
+            Thread_Embed = discord.Embed(title=F"{ctx.author}'s Thread", description=f"""
+Welcome {ctx.author} to your private thread, here you're can talk about anything you want **but NSFW**. You can add anyone by mentioning them in the thread and they will be added. 
+
+<:dot:973671662249705482> To report a user, please contact a developer and mention them in this thread so they can be added. 
+<:dot:973671662249705482> If the channel was archived, moderators are allowed to review it for any hostile/NSFW behaviour.
+        
+            """,color=0x60ff6e)
+            Thread = await ctx.channel.create_thread(name=F"{Thread_Name}", message=None, auto_archive_duration=10080, type=ChannelType.private_thread, reason=None)
+            await ctx.message.delete()
+            view = Button(timeout=15780000)
+            view.message = await Thread.send(f'{ctx.author.mention}', embed=Thread_Embed, view=view)
+        elif ctx.guild.premium_tier == 1 or ctx.guild.premium_tier == 0:
+            Thread_Embed = discord.Embed(title=F"{ctx.author}'s Thread", description=f"""
+            
+Welcome {ctx.author} to your thread, here you're can talk about anything you want **but NSFW**. You can add anyone by mentioning them in the thread and they will be added. 
+
+<:dot:973671662249705482> To report a user, please contact a developer and mention them in this thread so they can be added. 
+<:dot:973671662249705482> If the channel was archived, moderators are allowed to review it for any hostile/NSFW behaviour.
+        
+            """,color=0x60ff6e)
+            Thread = await ctx.channel.create_thread(name=F"{Thread_Name}", message=None, auto_archive_duration=10080, type=ChannelType.public_thread, reason=None)
+            view = Button(timeout=15780000)
+            await ctx.message.delete()
+            view.message = await Thread.send(f'{ctx.author.mention}', embed=Thread_Embed, view=view)
+    else:
+        await ctx.send("You're not allowed to create a thread!")
 
 Client_Bot.run(os.environ['Token']) 
 
