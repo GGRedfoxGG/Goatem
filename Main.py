@@ -3211,7 +3211,6 @@ async def cThread(ctx, *,Thread_Name: str):
         @discord.ui.button(label='Archive Thread', style=discord.ButtonStyle.red)
         async def archive_button(self, interaction: discord.Interaction, archive_button: discord.ui.Button):  
             if interaction.user.id == ctx.author.id:
-                archive_button.disabled = True
                 await interaction.response.edit_message(view=view)
                 await Thread.edit(name=f'Archived: {Thread_Name}', archived=True)
             else:
