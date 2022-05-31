@@ -185,7 +185,8 @@ async def RoleChecker(ctx, User):
         discord.utils.get(ctx.guild.roles, id=966168175324561409), 
         discord.utils.get(ctx.guild.roles, id=966168170643746828), 
         discord.utils.get(ctx.guild.roles, id=966168171507761224), 
-        discord.utils.get(ctx.guild.roles, id=966168170115268618), 
+        discord.utils.get(ctx.guild.roles, id=980155188050546698),
+        discord.utils.get(ctx.guild.roles, id=966168170115268618),  
     ]
     for Main in role1:
         for member in ctx.guild.members:
@@ -2363,7 +2364,6 @@ async def on_message(message):
         view = Button(timeout=15780000)
         Msg = view.message = await Channel.send(f'**__Inactivity Notice:__** {message.content}', view=view)
         await message.delete()
-    await Client_Bot.process_commands(message)
         
 @Client_Bot.event
 async def on_message_edit(before,after):
@@ -2411,7 +2411,6 @@ async def on_message_delete(message):
         Embed.add_field(name='Channel: ', value=f'<#{message.channel.id}>', inline=False)
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         await Channel.send(embed=Embed)
-        await Client_Bot.process_commands(message)
 
 @Client_Bot.event
 async def on_member_update(before, after):
