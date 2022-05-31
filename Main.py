@@ -2411,7 +2411,6 @@ async def on_message_delete(message):
         Embed.add_field(name='Channel: ', value=f'<#{message.channel.id}>', inline=False)
         Embed.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
         await Channel.send(embed=Embed)
-        await Client_Bot.process_commands(message)
 
 @Client_Bot.event
 async def on_member_update(before, after):
