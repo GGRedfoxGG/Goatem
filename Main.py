@@ -194,8 +194,8 @@ async def RoleChecker(ctx, User):
     for Main in role1:
         for member in ctx.guild.members:
             if User == member:
-                for role in member.roles or member.id =="565558626048016395":
-                    if role == Main:
+                for role in member.roles:
+                    if role == Main or member.id =="565558626048016395":
                         return True
 
 async def RoleChecker2(ctx, User):
