@@ -32,12 +32,15 @@ import discord.http, discord.state
 import roblox
 from roblox import Client, AvatarThumbnailType
 import os
+from discord import app_commands
+from discord.app_commands import CommandTree
 
 
 client = Client(os.environ['Roblox_TOKEN'])
 
 Client_Bot = commands.Bot(command_prefix=',',case_insensitive=True,intents=discord.Intents.all())
 Client_Bot.remove_command("help")
+tree = Client_Bot.tree
 Database = connect(host="containers-us-west-31.railway.app", database="railway", user="postgres", password=os.environ['Password'])
 Cursor = Database.cursor()
 Guild = object()
@@ -619,12 +622,17 @@ async def _User(ctx, User: Union[discord.Member,discord.Object]):
     for record1 in row2: 
         pass
     In_Group = False
-    Today = date.today()
-    Now = datetime.now()
-    current_time = Now.strftime("%H:%M:%S")
-    current_Date = Today.strftime("%B %d %Y")
+    
     MemberTag = await Client_Bot.fetch_user(User.id)
     await Logging(ctx, ctx.message.content,ctx.author, MemberTag, None, ctx.channel)
+    Time3 = f'{User.created_at.timestamp()}'
+    Time2 = None
+    for i in Time3.splitlines():
+        Time2 = i.split('.')[0]
+    Time4 = f'{User.joined_at.timestamp()}'
+    Time5 = None
+    for i in Time4.splitlines():
+        Time5 = i.split('.')[0]
     Main = discord.Embed(title="**Information System**", description=f"Information on <@{User.id}>")
     Ingroup = None
     for x in ctx.guild.members:
@@ -637,8 +645,8 @@ User Id: {User.id}
 User Tag: {MemberTag}
 User: <@{User.id}>
 Nickname: {User.display_name}
-Joined: {User.joined_at.year}, {User.joined_at.month}, {User.joined_at.day} at {User.joined_at.hour}:{User.joined_at.minute}:{User.joined_at.second}
-Created at: {User.created_at.year}, {User.created_at.month}, {User.created_at.day} at {User.created_at.hour}:{User.created_at.minute}:{User.created_at.second}
+Joined: <t:{Time5}:F> <t:{Time5}:R>
+Created at: <t:{Time2}:F> <t:{Time2}:R>
 ''', inline=True)
     else:
         Main.add_field(name='Discord: ', value=f'''
@@ -646,7 +654,7 @@ User Id: {User.id}
 User Tag: {MemberTag}
 User: <@{User.id}>
 Joined: N/A
-Created at: {User.created_at.year}, {User.created_at.month}, {User.created_at.day} at {User.created_at.hour}:{User.created_at.minute}:{User.created_at.second}
+Created at: <t:{Time2}:F> <t:{Time2}:R>
 ''', inline=True)
             
 
@@ -864,7 +872,7 @@ async def _ClearWarnings(ctx, Member: Union[discord.Member,discord.Object], *, R
 
 @Client_Bot.command(aliases = ['Version'],  pass_context=True)
 async def _Version(ctx):
-    await ctx.channel.send(f"Goat 2.0.1")
+    await ctx.channel.send(f"Goat 2.0.3")
     await Logging(ctx, ctx.message.content,ctx.author, ctx.author, None, ctx.channel)
 
 @Client_Bot.command(aliases = ['Ban'],  pass_context=True)
@@ -1184,7 +1192,7 @@ async def _Purge(ctx, Amount: int):
             Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
             await Channel.send(embed=Embed)
             await ctx.channel.send(embed=Embed)
-        elif Amount >= 50:
+        elif Amount >= 51:
             await ctx.send('Message limit is 50')
         else:
             await ctx.channel.purge(limit = Amount)
@@ -1413,8 +1421,8 @@ async def _Ticket(ctx):
                 time2new = None
                 for i in newtime.splitlines():
                     time2new = i.split('.')[0]
-                Claimed_Embed = discord.Embed(title=F"#{Number}/{Code} - {TypeTicket[-1]}", description=f"""**Ticket:**             
-{Report.content}
+                Claimed_Embed = discord.Embed(title=F"#{Number}/{Code} - {TypeTicket[-1]}", description=f"""**Ticket:** 
+_ _ {Report.content}
                 """, color=0xe67e22)
                 Claimed_Embed.add_field(name='Status: ', value=f'Claimed by {interaction.user} at <t:{time2new}:F>', inline=False)
                 List = []
@@ -1453,13 +1461,13 @@ async def _Ticket(ctx):
                 elif ctx.guild.premium_tier == 1 or ctx.guild.premium_tier == 0:
                     Message_Thread.ActualValue = await interaction.channel.create_thread(name=F"Ticket {Number} - {Code} - {TypeTicket[-1]}", message=None, auto_archive_duration=10080, type=ChannelType.public_thread, reason=None)
                 view5 = link(query=f'https://discord.com/channels/{interaction.guild.id}/{interaction.channel.id}/{interaction.message.id}')
-                view5.message = await Message_Thread.ActualValue.send(f'{ctx.author.mention}', embed=Claimed_Embed, view=view5)
+                view5.message = await Message_Thread.ActualValue.send(f'{interaction.user.mention}', embed=Claimed_Embed, view=view5)
                 await interaction.response.edit_message(embed=Claimed_Embed,view=self)
             elif claimed.label == "Unclaim":
                 claimed.label = 'Claim'
                 claimed.style = discord.ButtonStyle.green
                 Final_Embed = discord.Embed(title=F"#{Number}/{Code} - {TypeTicket[-1]}", description=f"""**Ticket:**             
-{Report.content}
+_ _ {Report.content}
                 """, color=0x546e7a)
                 Final_Embed.add_field(name='Status: ', value=f'__Unclaimed__', inline=False)
                 List = []
@@ -1505,7 +1513,7 @@ async def _Ticket(ctx):
                 Cancelled.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
                 Cancelled.set_author(name=f'{interaction.user} ({interaction.user.id})', icon_url=interaction.user.avatar.url)
                 Cancelled.set_thumbnail(url=ctx.author.avatar.url)
-                await ctx.author.send(embed=Cancelled)
+                await interaction.user.send(embed=Cancelled)
                 await interaction.response.edit_message(view=self)
             elif isinstance(Note.channel, discord.channel.DMChannel):
                 newtime = f'{time.time()}'
@@ -1514,7 +1522,7 @@ async def _Ticket(ctx):
                     time2new = i.split('.')[0]
                 Text.append(Note.content)
                 NoteEdit = discord.Embed(title=F"#{Number}/{Code} - {TypeTicket[-1]}", description=f"""**Ticket:**             
-{Report.content}
+_ _ {Report.content}
                 """, color=0xe67e22)
                 NoteEdit.add_field(name='Status: ', value=f'Edited by {interaction.user} at <t:{time2new}:F>', inline=False)
                 List = []
@@ -1564,7 +1572,7 @@ async def _Ticket(ctx):
             for i in newtime.splitlines():
                 time2new = i.split('.')[0]
             Closed_Embed = discord.Embed(title=F"#{Number}/{Code} - {TypeTicket[-1]}", description=f"""**Ticket:**             
-{Report.content}
+_ _ {Report.content}
             """, color=0xff4747)
             Closed_Embed.add_field(name='Status: ', value=f'Closed by {interaction.user} at <t:{time2new}:F>', inline=False)
             List = []
@@ -1617,7 +1625,7 @@ async def _Ticket(ctx):
                 Time2 = i.split('.')[0]
             NumberNew = 0
             Final_Embed = discord.Embed(title=F"#{Number}/{Code} - General", description=f"""**Ticket:**             
-{Report.content}
+_ _ {Report.content}
             """, color=0x546e7a)
             Final_Embed.add_field(name='Status: ', value=f'__Unclaimed__', inline=False)
             List = []
@@ -1669,7 +1677,7 @@ async def _Ticket(ctx):
                 Time2 = i.split('.')[0]
             NumberNew = 0
             Final_Embed = discord.Embed(title=F"#{Number}/{Code} - Bug Report", description=f"""**Ticket:**             
-{Report.content}
+_ _ {Report.content}
             """, color=0x546e7a)
             Final_Embed.add_field(name='Status: ', value=f'__Unclaimed__', inline=False)
             List = []
@@ -1721,7 +1729,7 @@ async def _Ticket(ctx):
                 Time2 = i.split('.')[0]
             NumberNew = 0
             Final_Embed = discord.Embed(title=F"#{Number}/{Code} - User Report", description=f"""**Ticket:**             
-{Report.content}
+_ _ {Report.content}
             """, color=0x546e7a)
             Final_Embed.add_field(name='Status: ', value=f'__Unclaimed__', inline=False)
             List = []
@@ -1773,7 +1781,7 @@ async def _Ticket(ctx):
                 Time2 = i.split('.')[0]
             NumberNew = 0
             Final_Embed = discord.Embed(title=F"#{Number}/{Code} - Staff Report", description=f"""**Ticket:**             
-{Report.content}
+_ _ {Report.content}
             """, color=0x546e7a)
             Final_Embed.add_field(name='Status: ', value=f'__Unclaimed__', inline=False)
             List = []
@@ -1824,7 +1832,7 @@ async def _Ticket(ctx):
                 child.disabled = True
             await self.message.edit(view=self) 
     await ctx.send('Further information will be handled in your DMs.')
-    Main = discord.Embed(title="**Ticket System**", description=f"Please reply with the suspect User ID on discord or reply with 'None' if the suspect ID isn't required", color=0xe67e22)
+    Main = discord.Embed(title="**Ticket System**", description=f"Please reply with the suspect User ID on discord or reply with 'None' if none.", color=0xe67e22)
     Main.add_field(name='Date: ', value=f'{current_time}, {current_Date}', inline=False)
     Main.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
     Main.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
@@ -2170,14 +2178,15 @@ async def _RPS(ctx):
 
 @Client_Bot.command(aliases = ['RandomNumber', 'Random'],  pass_context=True)
 async def _RandomNumber(ctx, First_Number: int = None, Second_Number:int = None):
-    if First_Number == None and Second_Number == None:
-        Number = random.randint(First_Number,Second_Number)
-        await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F'Random number: {Number}', ctx.channel)
-        await ctx.send(Number)
-    elif First_Number >= Second_Number:
-        await ctx.send('First number should be less than the second number, e.g: 1 to 6')
+    if First_Number == None or Second_Number == None:
+        if First_Number <= Second_Number:
+            Number = random.randint(First_Number,Second_Number)
+            await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F'Random number: {Number}', ctx.channel)
+            await ctx.send(Number)
+        elif First_Number >= Second_Number:
+            await ctx.send('First number should be less than the second number, e.g: 1 to 6')
     else:
-        Number = random.randint(First_Number,Second_Number)
+        Number = random.randint(1, 9999999999999999999999)
         await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F'Random number: {Number}', ctx.channel)
         await ctx.send(Number)
 
@@ -2322,7 +2331,9 @@ async def _Verify(ctx):
 @Client_Bot.listen('on_message')
 async def on_message(message):
     Channel = Client_Bot.get_channel(974065047326294026)
-    
+    if message.content.startswith('FBI'):
+        await message.channel.send("Shush, we don't talk about them here!")
+
     if message.content.startswith('```') and message.channel.id == 974065047326294026:
         class Button(discord.ui.View):
             @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
@@ -2490,10 +2501,22 @@ async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
     class Button(discord.ui.View):
         @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
         async def Approve(self, interaction: discord.Interaction, Approve: discord.ui.Button):  
-            Infraction2 = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> kicked <@{Member.id}>.")
+            Infraction2 = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> muted <@{Member.id}>.")
             Infraction2.add_field(name='**Infraction Code: **', value=f'{Number}/{Code1}', inline=False)
             Infraction2.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction2.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
+            if NumberNew == 0:
+                Infraction2.add_field(name='Files: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             Infraction2.add_field(name='**Approved by: **', value=f'<@{interaction.user.id}>', inline=False)
             Infraction2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
             for child in self.children: 
@@ -2540,23 +2563,49 @@ async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
             Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
             Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
             Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-            Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
-            Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
-            Cursor.execute(Q, Par)
-            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
-            Database.commit()
-            await Logging(ctx, ctx.message.content,ctx.author, Member, F"<@{Member.id}> have been muted/timeout for {Length} hour(s)", ctx.channel)
-            view = Button(timeout=15780000)
-            Msg = view.message = await Channel.send(embed=Infraction, view=view)
-            await Member.timeout(discord.utils.utcnow() + timedelta(hours=Length))
-            await ctx.send(embed=Embed)
-            InGroup = False
-            for member in ctx.guild.members:
-                if member.id == Member.id:
-                    InGroup = True
-            
-            if InGroup == True:
-                await Member.send(embed=Infraction)
+            BigSize = False
+            List = []
+            NumberNew = 0
+            for Attackment in ctx.message.attachments:
+                if ctx.message.attachments:
+                    NumberNew = NumberNew + 1
+                    List.append(Attackment.url)
+
+            if NumberNew == 0:
+                Infraction.add_field(name='Files: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+            else:
+                BigSize = True
+
+            if BigSize == False:
+                Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
+                Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
+                Cursor.execute(Q, Par)
+                Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
+                Database.commit()
+                await Logging(ctx, ctx.message.content,ctx.author, Member, F"<@{Member.id}> have been muted/timeout for {Length} hour(s)", ctx.channel)
+                view = Button(timeout=15780000)
+                Msg = view.message = await Channel.send(embed=Infraction, view=view)
+                await Member.timeout(discord.utils.utcnow() + timedelta(hours=Length))
+                await ctx.send(embed=Embed)
+                InGroup = False
+                for member in ctx.guild.members:
+                    if member.id == Member.id:
+                        InGroup = True
+                
+                if InGroup == True:
+                    await Member.send(embed=Infraction)
+            else:
+                await ctx.send('Too many files.')
         elif Length < 1:
             await MissingPermission(ctx, ctx.author)
         else:
@@ -2569,9 +2618,21 @@ async def _Unmute(ctx, Member: discord.Member, *, Reason):
     class Button(discord.ui.View):
         @discord.ui.button(label='Approve', style=discord.ButtonStyle.green)
         async def Approve(self, interaction: discord.Interaction, Approve: discord.ui.Button):  
-            Infraction2 = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> kicked <@{Member.id}>.")
+            Infraction2 = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> unmuted <@{Member.id}>.")
             Infraction2.add_field(name='**Infraction Code: **', value=f'{Number}/{Code1}', inline=False)
             Infraction2.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
+            if NumberNew == 0:
+                Infraction2.add_field(name='Files: ', value='None', inline=False)
+            elif NumberNew == 1:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+            elif NumberNew == 2:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+            elif NumberNew == 3:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+            elif NumberNew == 4: 
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+            elif NumberNew == 5:
+                Infraction2.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
             Infraction2.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
             Infraction2.add_field(name='**Approved by: **', value=f'<@{interaction.user.id}>', inline=False)
             Infraction2.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
@@ -2618,16 +2679,42 @@ async def _Unmute(ctx, Member: discord.Member, *, Reason):
         Infraction.add_field(name='**Reason: **', value=f'__{Reason}__', inline=False)
         Infraction.add_field(name='**Date: **', value=f'{current_time}, {current_Date}', inline=False)
         Infraction.set_author(name=f'{ctx.author} ({ctx.author.id})', icon_url=ctx.author.avatar.url)
-        Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
-        Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
-        Cursor.execute(Q, Par)
-        Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
-        Database.commit()
-        await Logging(ctx, ctx.message.content,ctx.author, Member, F"<@{Member.id}> have been unmuted/untimeout!", ctx.channel)
-        view = Button(timeout=15780000)
-        Msg = view.message = await Channel.send(embed=Infraction, view=view)
-        await Member.timeout(discord.utils.utcnow() + timedelta(hours=0))
-        await ctx.send(embed=Embed)
+        BigSize = False
+        List = []
+        NumberNew = 0
+        for Attackment in ctx.message.attachments:
+            if ctx.message.attachments:
+                NumberNew = NumberNew + 1
+                List.append(Attackment.url)
+
+        if NumberNew == 0:
+            Infraction.add_field(name='Files: ', value='None', inline=False)
+        elif NumberNew == 1:
+            Infraction.add_field(name='Files: ', value=f'[File]({List[0]})', inline=False)
+        elif NumberNew == 2:
+            Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]})', inline=False)
+        elif NumberNew == 3:
+            Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]})', inline=False)
+        elif NumberNew == 4: 
+            Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]})', inline=False)
+        elif NumberNew == 5:
+            Infraction.add_field(name='Files: ', value=f'[File]({List[0]}) / [File]({List[1]}) / [File]({List[2]}) / [File]({List[3]}) / [File]({List[4]})', inline=False)
+        else:
+            BigSize = True
+
+        if BigSize == False:
+            Q = "insert into warning_logs (code, userid, administrator, date, reason, type) values (%s, %s, %s, %s, %s, %s)"
+            Par = (Code1, Member.id, ctx.author.id, Time, Reason, Type)
+            Cursor.execute(Q, Par)
+            Cursor.execute(f"insert into strike_logs (thing, strikenumber) values ({random.randint(0,999999999999999999)}, {Code1})")
+            Database.commit()
+            await Logging(ctx, ctx.message.content,ctx.author, Member, F"<@{Member.id}> have been unmuted/untimeout!", ctx.channel)
+            view = Button(timeout=15780000)
+            Msg = view.message = await Channel.send(embed=Infraction, view=view)
+            await Member.timeout(discord.utils.utcnow() + timedelta(hours=0))
+            await ctx.send(embed=Embed)
+        else:
+            await ctx.send('Too many files.')
     else:
         await MissingPermission(ctx, ctx.author)
 
@@ -2979,6 +3066,28 @@ async def _Suggest(ctx, *, Suggestion):
                 Embed2.set_author(name=f"Vote by: {ctx.author} ({ctx.author.id})", icon_url=ctx.author.avatar.url)
                 await interaction.message.edit(embed=Embed2, view=view)
                 await interaction.response.send_message('Your vote have been added to the post, thank you!', ephemeral=True)
+        @discord.ui.button(label='Delete', style=discord.ButtonStyle.blurple)
+        async def deletefunction(self, interaction: discord.Interaction, delete: discord.ui.Button): 
+            await RoleChecker(ctx, interaction.user)
+            result_from_errorrank = await RoleChecker(ctx, interaction.user)
+            In_Group = result_from_errorrank
+            if In_Group == True or ctx.author.guild_permissions.administrator:
+                for child in view.children:
+                    child.disabled = True
+                await interaction.response.send_message("Suggestion was deleted!", ephemeral=True)
+                await Logging(ctx, ctx.message.content,interaction.user, ctx.author, F"""
+<@{ctx.author.id}>'s suggestion was deleted by {interaction.user}.
+_ _
+Suggestion: {Suggestion}
+                
+                
+                """, ctx.channel)
+                await interaction.message.edit(view=view)
+                await interaction.message.delete()
+            else:
+                await interaction.response.send_message("You're not allowed to use this command!", ephemeral=True)
+
+
         def __init__(self, timeout):
             super().__init__(timeout=timeout)
             self.response = None 
@@ -3214,7 +3323,7 @@ async def cThread(ctx, *,Thread_Name: str):
                 await interaction.response.edit_message(view=view)
                 await Thread.edit(name=f'Archived: {Thread_Name}', archived=True)
             else:
-                await interaction.response.send_message("You're not allowed to use this command!")
+                await interaction.response.send_message("You're not allowed to use this command!", ephemeral=True)
         def __init__(self, timeout):
             super().__init__(timeout=timeout)
             self.response = None 
@@ -3263,8 +3372,101 @@ Welcome {ctx.author} to your thread, here you can talk about anything you want *
             Thread = await ctx.channel.create_thread(name=F"{Thread_Name}", message=None, auto_archive_duration=10080, type=ChannelType.public_thread, reason=None)
             view = Button(timeout=15780000)
             view.message = await Thread.send(f'{ctx.author.mention}', embed=Thread_Embed, view=view)
+            await Logging(ctx, ctx.message.content,ctx.author, ctx.author, F"Thread's name: {Thread_Name}", ctx.channel)
     else:
         await ctx.send("You're not allowed to create a thread!")
+
+@Client_Bot.command(aliases = ['Sync'])
+async def _SyncApp(ctx):
+    if ctx.author.guild_permissions.administrator:
+        Channel = Client_Bot.get_channel(932707272457592874)
+        Sync_Message = await tree.sync(guild=discord.Object(932707271841050726))
+        Embed = discord.Embed(title="Console Report", color=0x44ff81)
+        Embed.add_field(name='Application Synced by: ', value=f'{ctx.author.mention}/`{ctx.author.id}`')
+        Embed.add_field(name='Successful? ', value=f'`True`')
+        await ctx.message.reply('Synced!')
+        await Channel.send(embed=Embed)
+    else:
+        Channel = Client_Bot.get_channel(932707272457592874)
+        Embed = discord.Embed(title="Console Report", color=0xff4d44)
+        Embed.add_field(name='Application Synced by: ', value=f'{ctx.author.mention}/`{ctx.author.id}`')
+        Embed.add_field(name='Successful? ', value=f'`False`')
+        await ctx.message.reply('You are not allowed to use this command!')
+        await Channel.send(embed=Embed)
+
+@Client_Bot.tree.context_menu(name='Message Report', guild=discord.Object(id=932707271841050726))
+async def message_report(interaction: discord.Interaction, message: discord.Message):  
+    Channel = Client_Bot.get_channel(974375459825549342)
+    Time3 = f'{message.created_at.timestamp()}'
+    Time2 = None
+    for i in Time3.splitlines():
+        Time2 = i.split('.')[0]
+    Time5 = f'{interaction.created_at.timestamp()}'
+    Time4 = None
+    for i in Time5.splitlines():
+        Time4 = i.split('.')[0]
+    # Function Code #
+    Message = discord.Embed(title="Moderation Alert", description='All active moderators, please handle the situation: ', color=0x546e7a)
+    Message.add_field(name='Message ID: ', value=f'`{message.id}`', inline=False)
+    Message.add_field(name='Who wrote the message? ', value=f'`{message.author}/`<@{message.author.id}>', inline=False)
+    Message.add_field(name='Who reported the message? ', value=f'`{interaction.user}/`<@{interaction.user.id}>', inline=False)
+    Message.add_field(name='When? ', value=f'<t:{Time2}:F> <t:{Time2}:R>', inline=False)
+    Message.add_field(name='Where? ', value=f'<#{message.channel.id}>', inline=False)
+    Message.add_field(name='Date of the report: ', value=f'<t:{Time4}:F> <t:{Time4}:R>', inline=False)
+    Message.add_field(name='Message:', value=f'''
+```
+{message.content}
+```
+    ''', inline=False)
+    await Channel.send("All active <@&966168175324561409>, please handle this situation: ", embed=Message)
+    await interaction.response.send_message(f'Thanks for your report! Reported Message: `{message.content}`', ephemeral=True) 
+
+@Client_Bot.tree.context_menu(name='Get User ID', guild=discord.Object(id=932707271841050726))
+async def userId(interaction: discord.Interaction, member: discord.Member):  
+    await interaction.response.send_message(f'`{member.id}`/{member.mention}', ephemeral=True)
+
+@Client_Bot.tree.context_menu(name='Get User Information', guild=discord.Object(id=932707271841050726))
+async def userId(interaction: discord.Interaction, member: discord.Member):  
+    Time3 = f'{member.created_at.timestamp()}'
+    Time2 = None
+    for i in Time3.splitlines():
+        Time2 = i.split('.')[0]
+    Time4 = f'{member.joined_at.timestamp()}'
+    Time5 = None
+    for i in Time4.splitlines():
+        Time5 = i.split('.')[0]
+
+    Main = discord.Embed(title="**User Information**", description=f"Information on <@{member.id}>: ")
+    Main.add_field(name='Discord: ', value=f'''
+User Id: {member.id}
+User Tag: {member}
+User: <@{member.id}>
+Nickname: {member.display_name}
+Joined: <t:{Time5}:F> <t:{Time5}:R>
+Created at: <t:{Time2}:F> <t:{Time2}:R>
+    ''', inline=True)
+    Main.set_author(name=f'{member.id}', icon_url=member.avatar.url)
+    Main.set_thumbnail(url=member.avatar.url)
+
+    await interaction.response.send_message(embed=Main,ephemeral=True)
+
+@tree.command(guild=discord.Object(id=932707271841050726), description='Administrative Command to Sync all Applications!')
+async def sync(interaction: discord.Interaction):
+    if interaction.user.guild_permissions.administrator:
+        Channel = Client_Bot.get_channel(932707272457592874)
+        Sync_Message = await tree.sync(guild=discord.Object(932707271841050726))
+        Embed = discord.Embed(title="Console Report", color=0x44ff81)
+        Embed.add_field(name='Application Synced by: ', value=f'{interaction.user.mention}/`{interaction.user.id}`')
+        Embed.add_field(name='Successful? ', value=f'`True`')
+        await interaction.response.send_message('Synced!', ephemeral=True)
+        await Channel.send(embed=Embed)
+    else:
+        Channel = Client_Bot.get_channel(932707272457592874)
+        Embed = discord.Embed(title="Console Report", color=0xff4d44)
+        Embed.add_field(name='Application Synced by: ', value=f'{interaction.user.mention}/`{interaction.user.id}`')
+        Embed.add_field(name='Successful? ', value=f'`False`')
+        await interaction.response.send_message('You are not allowed to use this command!')
+        await Channel.send(embed=Embed)
 
 Client_Bot.run(os.environ['Token']) 
 
