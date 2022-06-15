@@ -299,7 +299,7 @@ async def _Nick(ctx, Member: Union[discord.Member,discord.Object],*,Nick):
         await Logging(ctx, ctx.message.content,ctx.author, User, f'Nickname is now changed to: {Nick}', ctx.channel)
         await Member.edit(nick=Nick)
         Embed = discord.Embed(title="Nickname System")
-        Embed.add_field(name=f'__**{User}**__ username was successfuly changed to ', value=f'{Nick}', inline=False)
+        Embed.add_field(name=f'__**{User}**__ username was successfully changed to ', value=f'{Nick}', inline=False)
         Embed.set_author(name=f'{User} ({User.id})', icon_url=User.avatar.url)
         Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
         await ctx.send(embed=Embed)
@@ -360,7 +360,7 @@ async def _SoftBan(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
             await MissingPermission(ctx, ctx.author)
         else:
             Embed = discord.Embed(title="Soft Ban System")
-            Embed.add_field(name=f'__**{User}**__ was soft banned successfuly for: ', value=f'{Reason}', inline=False)
+            Embed.add_field(name=f'__**{User}**__ was soft banned successfully for: ', value=f'{Reason}', inline=False)
             Embed.set_author(name=f'{User} ({User.id})', icon_url=User.avatar.url)
             Embed.set_thumbnail(url=User.avatar.url)
             Embed.set_footer(text=f'Soft Banned by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -451,7 +451,7 @@ async def _Deafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason):
     if In_Group == True or ctx.author.guild_permissions.administrator:
         await Logging(ctx, ctx.message.content,ctx.author, User, Reason, ctx.channel)
         Embed = discord.Embed(title="Deafen System")
-        Embed.add_field(name=f'__**{Member}**__ was successfuly voice deafened and muted.', value=f'Reason: {Reason}', inline=False)
+        Embed.add_field(name=f'__**{Member}**__ was successfully voice deafened and muted.', value=f'Reason: {Reason}', inline=False)
         Embed.set_author(name=f'{Member} ({Member.id})', icon_url=User.avatar.url)
         Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
         Channel = Client_Bot.get_channel(974063374260383784)
@@ -518,7 +518,7 @@ async def _Undeafen(ctx, Member: Union[discord.Member,discord.Object], *,Reason)
     if In_Group == True or ctx.author.guild_permissions.administrator:
         await Logging(ctx, ctx.message.content,ctx.author, User, Reason, ctx.channel)
         Embed = discord.Embed(title="Deafen System")
-        Embed.add_field(name=f'__**{Member}**__ was successfuly voice undeafened and unmuted.',value=f'Reason: {Reason}', inline=False)
+        Embed.add_field(name=f'__**{Member}**__ was successfully voice undeafened and unmuted.',value=f'Reason: {Reason}', inline=False)
         Embed.set_author(name=f'{Member} ({Member.id})', icon_url=User.avatar.url)
         Embed.set_footer(text=f'Requested by {ctx.author}.', icon_url=ctx.author.avatar.url)
         Channel = Client_Bot.get_channel(974063374260383784)
@@ -791,7 +791,7 @@ async def _Unban(ctx, Member: Union[discord.Member,discord.Object],*,Reason):
     if In_Group == True or ctx.author.guild_permissions.administrator:
         if user == User:
             await Logging(ctx, ctx.message.content,ctx.author, User, Reason, ctx.channel)
-            Embed = discord.Embed(title="Ban System", description=f'__**{User}**__ was unbanned successfuly with the reason: {Reason}')
+            Embed = discord.Embed(title="Ban System", description=f'__**{User}**__ was unbanned successfully with the reason: {Reason}')
             Embed.set_footer(text=f'Unbanned by {ctx.author}.', icon_url=ctx.author.avatar.url)
             Channel = Client_Bot.get_channel(974063374260383784)
             Infraction = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> unbanned <@{Member.id}>.")
@@ -946,7 +946,7 @@ async def _Ban(ctx, Member: Union[discord.Member,discord.Object],*, Reason):
         else:
             print(User)
             Embed = discord.Embed(title="Ban System")
-            Embed.add_field(name=f'__**{User}**__ was banned successfuly because of: ', value=f'{Reason}', inline=False)
+            Embed.add_field(name=f'__**{User}**__ was banned successfully because of: ', value=f'{Reason}', inline=False)
             Embed.set_footer(text=f'Banned by {ctx.author}.', icon_url=ctx.author.avatar.url)
             Channel = Client_Bot.get_channel(974063374260383784)
             Infraction = discord.Embed(title="**Infraction System**", description=f"<@{ctx.author.id}> banned <@{Member.id}>.")
@@ -1118,8 +1118,8 @@ async def _Kick(ctx, Member: discord.Member,*, Reason):
         if In_Group2==True or Member.guild_permissions.administrator:
             await MissingPermission(ctx, ctx.author)
         else:
-            Embed = discord.Embed(title="Member Was Kicked Successfuly")
-            Embed.add_field(name=f'__**{Member}**__ was kicked successfuly because of: ', value=f'{Reason}', inline=False)
+            Embed = discord.Embed(title="Member Was Kicked successfully")
+            Embed.add_field(name=f'__**{Member}**__ was kicked successfully because of: ', value=f'{Reason}', inline=False)
             Embed.set_author(name='Kicked ', icon_url=Member.avatar.url)
             Embed.set_thumbnail(url=Member.avatar.url)
             Embed.set_footer(text=f'Kicked by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -2555,8 +2555,8 @@ async def _Mute(ctx, Member: discord.Member,Length: int, *, Reason):
     In_Group = result_from_errorrank
     if In_Group == True or ctx.author.guild_permissions.administrator:
         if Length <= 48:
-            Embed = discord.Embed(title="Member Was muted Successfuly")
-            Embed.add_field(name=f'__**{Member}**__ was muted successfuly because of: ', value=f'{Reason}', inline=False)
+            Embed = discord.Embed(title="Member Was muted successfully")
+            Embed.add_field(name=f'__**{Member}**__ was muted successfully because of: ', value=f'{Reason}', inline=False)
             Embed.set_author(name='Muted ', icon_url=Member.avatar.url)
             Embed.set_thumbnail(url=Member.avatar.url)
             Embed.set_footer(text=f'Muted by {ctx.author}.', icon_url=ctx.author.avatar.url)
@@ -2671,8 +2671,8 @@ async def _Unmute(ctx, Member: discord.Member, *, Reason):
     result_from_errorrank = await RoleChecker(ctx, ctx.author)
     In_Group = result_from_errorrank
     if In_Group == True or ctx.author.guild_permissions.administrator:
-        Embed = discord.Embed(title="Member Was unmuted Successfuly")
-        Embed.add_field(name=f'__**{Member}**__ was unmuted successfuly because of: ', value=f'{Reason}', inline=False)
+        Embed = discord.Embed(title="Member Was unmuted successfully")
+        Embed.add_field(name=f'__**{Member}**__ was unmuted successfully because of: ', value=f'{Reason}', inline=False)
         Embed.set_author(name='Unmuted ', icon_url=Member.avatar.url)
         Embed.set_thumbnail(url=Member.avatar.url)
         Embed.set_footer(text=f'Unmuted by {ctx.author}.', icon_url=ctx.author.avatar.url)
