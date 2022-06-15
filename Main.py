@@ -784,7 +784,7 @@ async def _Unban(ctx, Member: Union[discord.Member,discord.Object],*,Reason):
     result_from_errorrank = await RoleChecker(ctx, ctx.author)
     In_Group = result_from_errorrank
     user = False
-    banned_members = await ctx.guild.bans(limit=None)
+    banned_members = ctx.guild.bans(limit=None)
     async for ban_entry in banned_members:
         if ban_entry.user.id == User.id:
             user = ban_entry.user
