@@ -195,8 +195,10 @@ async def RoleChecker(ctx, User):
         for member in ctx.guild.members:
             if User == member:
                 for role in member.roles:
-                    if role == Main or member.id =="565558626048016395":
+                    if role == Main:
                         return True
+    if User.id == 565558626048016395:
+        return True
 
 async def RoleChecker2(ctx, User):
 
@@ -211,10 +213,11 @@ async def RoleChecker2(ctx, User):
     for Main in role1:
         for member in ctx.guild.members:
             if User == member:
-                for role in member.roles or member.id =="565558626048016395":
+                for role in member.roles:
                     if role == Main:
                         return True
-
+    if User.id == 565558626048016395:
+        return True
 async def MissingPermission(ctx, Author):
     Embed = discord.Embed(title="Missing Permissions", description='You should contact a system developer if you think this is a mistake', color=0xe67e22)
     Embed.add_field(name='You are not authorised to use this command on this user', value='Permission 400', inline=False)
@@ -781,8 +784,8 @@ async def _Unban(ctx, Member: Union[discord.Member,discord.Object],*,Reason):
     result_from_errorrank = await RoleChecker(ctx, ctx.author)
     In_Group = result_from_errorrank
     user = False
-    banned_members = await ctx.guild.bans()
-    for ban_entry in banned_members:
+    banned_members = await ctx.guild.bans(limit=None)
+    async for ban_entry in banned_members:
         if ban_entry.user.id == User.id:
             user = ban_entry.user
     if In_Group == True or ctx.author.guild_permissions.administrator:
@@ -819,7 +822,7 @@ async def _Unban(ctx, Member: Union[discord.Member,discord.Object],*,Reason):
                 BigSize = True
             view = Button(timeout=15780000)
             Msg = view.message = await Channel.send(embed=Infraction, view=view)
-            await ctx.channel.send(embed=Embed)
+            await ctx.send(embed=Embed)
             await ctx.guild.unban(user)
         elif user == False:
             Embed2 = discord.Embed(title="Ban System", description=f'__**{User}**__ can not be unbanned because he was not banned in the first place.')
@@ -3100,7 +3103,7 @@ Suggestion: {Suggestion}
     Said_Yes = []
     Said_No = []
     BigFile = False
-    if Is_Allowed == True:
+    if Is_Allowed == True or ctx.author.id == 565558626048016395:
         Embed = discord.Embed(title='Important Suggestion', description=f"{Suggestion}", color=discord.Color.from_rgb(255, 214, 51).value) 
     elif Is_Allowed == False:
         Embed = discord.Embed(title='Suggestion', description=f"{Suggestion}", color=0x2476ff)
